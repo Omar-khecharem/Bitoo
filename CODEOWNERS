@@ -1,0 +1,20 @@
+# Default owners for all files
+* @Omar-khecharem
+
+# Architecture & documentation
+ARCHITECTURE.md @Omar-khecharem
+ADVANCED_ARCHITECTURE.md @Omar-khecharem
+
+# Core layers
+/lib/core/ @Omar-khecharem
+/lib/shared/ @Omar-khecharem
+
+# Features
+/lib/features/audio_engine/ @Omar-khecharem
+/lib/features/music_engine/ @Omar-khecharem
+/lib/features/player/ @Omar-khecharem
+/lib/features/home/ @Omar-khecharem
+/lib/features/permissions/ @Omar-khecharem
+
+# CI/CD
+/.github/ @Omar-khecharem

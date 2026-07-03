@@ -1,0 +1,104 @@
+# ── Dart & Flutter ──────────────────────────────────────────────
+.dart_tool/
+.packages
+.pub/
+build/
+*.js_
+*.js.deps
+*.js.map
+*.kotlin_metadata
+*.kotlin_module
+*.class
+*.jar
+*.aar
+*.dex
+*.apk
+*.aab
+*.ap_
+*.dylib
+*.so
+*.snapshot
+*.swp
+.DS_Store
+flutter_*.png
+coverage/
+
+# ── IDE & Editors ───────────────────────────────────────────────
+.idea/
+*.iml
+.vscode/
+*.sublime-*
+*.swp
+*.swo
+*~
+*.orig
+
+# ── OS ──────────────────────────────────────────────────────────
+Thumbs.db
+ehthumbs.db
+Desktop.ini
+$RECYCLE.BIN/
+*.lnk
+
+# ── Secrets & Credentials ──────────────────────────────────────
+*.key
+*.p12
+*.p8
+*.pfx
+*.jks
+*.keystore
+.env
+.env.local
+.env.production
+secrets.yaml
+service_account.json
+google-services.json
+GoogleService-Info.plist
+*.secret
+
+# ── Logs & Temp ─────────────────────────────────────────────────
+*.log
+*.log.*
+*.tmp
+*.temp
+.cache/
+*.pid
+npm-debug.log*
+
+# ── Testing ─────────────────────────────────────────────────────
+test/.test_cache/
+coverage/
+test_reports/
+
+# ── Gradle (Android) ───────────────────────────────────────────
+.gradle/
+local.properties
+android/.gradle/
+android/local.properties
+android/captures/
+android/.idea/
+*.hprof
+
+# ── iOS ─────────────────────────────────────────────────────────
+ios/Pods/
+ios/.symlinks/
+ios/Flutter/Flutter.framework
+ios/Flutter/Flutter.podspec
+ios/Flutter/Generated.xcconfig
+ios/Flutter/ephemeral/
+ios/ServiceDefinitions.json
+ios/Podfile.lock
+ios/*.xcworkspace
+ios/.idea/
+
+# ── Generated Files ─────────────────────────────────────────────
+*.freezed.dart
+*.g.dart
+*.gr.dart
+*.graphql.dart
+*.mocks.dart
+*.config.dart
+
+# ── Reporting & Coverage ──────────────────────────────────────
+test_reports/
+.allure/
