@@ -71,7 +71,7 @@ jobs:
         run: |
           awk '/^## /{if(c++) exit} c==1' CHANGELOG.md > release_notes.md
           echo "notes_file=release_notes.md" >> $GITHUB_OUTPUT
-      - uses: softprops/action-gh-release@v2
+      - uses: softprops/action-gh-release@v3
         with:
           tag_name: ${{ steps.version.outputs.tag }}
           name: BITOO ${{ steps.version.outputs.tag }}
