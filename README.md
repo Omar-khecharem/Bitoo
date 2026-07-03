@@ -2,7 +2,7 @@
 
 [![Flutter](https://img.shields.io/badge/Flutter-3.6+-02569B?logo=flutter)](https://flutter.dev)
 [![Dart](https://img.shields.io/badge/Dart-3.6+-0175C2?logo=dart)](https://dart.dev)
-[![License](https://img.shields.io/badge/License-MIT-green.svg)](LICENSE)
+[![License](https://img.shields.io/badge/License-NonCommercial-red.svg)](LICENSE)
 [![CI](https://github.com/Omar-khecharem/Bitoo/actions/workflows/ci.yml/badge.svg)](https://github.com/Omar-khecharem/Bitoo/actions/workflows/ci.yml)
 
 BITOO is a **high-performance local music player** for Android, built with Flutter. It scans your device for audio files, reads rich metadata, and delivers a premium, gesture-driven listening experience — all offline.
@@ -164,7 +164,7 @@ Please read [`CONTRIBUTING.md`](CONTRIBUTING.md) for details on our code of cond
 
 ## 📄 License
 
-This project is licensed under the MIT License — see the [`LICENSE`](LICENSE) file for details.
+This project is licensed under a **Non-Commercial License** — see the [`LICENSE`](LICENSE) file for details. Personal and educational use is permitted. Any commercial use is strictly prohibited.
 
 ---
 
