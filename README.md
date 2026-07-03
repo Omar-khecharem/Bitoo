@@ -24,12 +24,6 @@ BITOO is a **high-performance local music player** for Android, built with Flutt
 
 ---
 
-## 📱 Screenshots
-
-> _Screenshots to be added._
-
----
-
 ## 🚀 Getting Started
 
 ### Prerequisites
