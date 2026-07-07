@@ -38,7 +38,7 @@ jobs:
 
       # Build APKs
       - run: flutter build apk --release --split-per-abi
-      - uses: actions/upload-artifact@v4
+      - uses: actions/upload-artifact@v7
         with:
           name: release-apks
           path: build/app/outputs/flutter-apk/*.apk
@@ -46,7 +46,7 @@ jobs:
 
       # Build AAB
       - run: flutter build appbundle --release
-      - uses: actions/upload-artifact@v4
+      - uses: actions/upload-artifact@v7
         with:
           name: release-aab
           path: build/app/outputs/bundle/release/*.aab
