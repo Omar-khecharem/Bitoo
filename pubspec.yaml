@@ -42,7 +42,7 @@ dependencies:
   audio_service: ^0.18.16
   audio_session: ^0.1.21
 
-  cupertino_icons: ^1.0.8
+  cupertino_icons: ^1.0.9
 
 dev_dependencies:
   flutter_test:
