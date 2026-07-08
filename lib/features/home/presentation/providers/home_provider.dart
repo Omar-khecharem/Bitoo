@@ -1,10 +1,7 @@
 import 'dart:async';
 import 'package:flutter/foundation.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
-import '../../../music_engine/data/database/song.dart';
-import '../../../music_engine/data/database/album.dart';
-import '../../../music_engine/data/database/artist.dart';
-import '../../../music_engine/data/database/genre.dart';
+
 import '../../../music_engine/domain/repositories/music_repository.dart';
 import '../../../music_engine/presentation/providers/music_engine_provider.dart';
 

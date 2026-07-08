@@ -60,15 +60,30 @@ class FileScannerDataSource {
   bool _isAudioFile(String path) {
     if (FileFilters.isHiddenOrSystemPath(path)) return false;
     final ext = path.split('.').last.toLowerCase();
-    return AudioExtensions.supportedExtensions.contains(ext);
+    if (!AudioExtensions.supportedExtensions.contains(ext)) return false;
+    try {
+      return File(path).lengthSync() > 0;
+    } catch (_) {
+      return false;
+    }
   }
 
   List<Directory> getDefaultScanRoots() {
     final roots = <Directory>[];
     if (Platform.isAndroid) {
-      roots.add(Directory('/storage/emulated/0/Music'));
-      roots.add(Directory('/storage/emulated/0/Download'));
-      roots.add(Directory('/storage/emulated/0/audio'));
+      final candidates = [
+        '/storage/emulated/0/Music',
+        '/storage/emulated/0/Download',
+        '/storage/emulated/0/audio',
+        '/storage/emulated/0/Musique',
+        '/storage/emulated/0/Músicas',
+      ];
+      for (final p in candidates) {
+        final dir = Directory(p);
+        try {
+          if (dir.existsSync()) roots.add(dir);
+        } catch (_) {}
+      }
 
       // Try to find SD card or external storage
       try {

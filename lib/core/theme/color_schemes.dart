@@ -3,63 +3,55 @@ import 'package:flutter/material.dart';
 class AppColors {
   AppColors._();
 
-  // ─── Brand ───
-  static const Color primary50 = Color(0xFFF5F3FF);
-  static const Color primary100 = Color(0xFFEDE9FE);
-  static const Color primary200 = Color(0xFFDDD6FE);
-  static const Color primary300 = Color(0xFFC4B5FD);
-  static const Color primary400 = Color(0xFFA78BFA);
-  static const Color primary500 = Color(0xFF8B5CF6);
-  static const Color primary600 = Color(0xFF7C3AED);
-  static const Color primary700 = Color(0xFF6D28D9);
-  static const Color primary800 = Color(0xFF5B21B6);
-  static const Color primary900 = Color(0xFF4C1D95);
+  // ─── Music-inspired vibrant core palette ───
+  // Warm, joyful, artistic — like a music festival painting
+  static const Color vibrantAmber = Color(0xFFFF8C00);
+  static const Color vibrantCoral = Color(0xFFFF6B6B);
+  static const Color vibrantGold = Color(0xFFFFD700);
+  static const Color vibrantTeal = Color(0xFF00C9A7);
+  static const Color vibrantMagenta = Color(0xFFE040FB);
+  static const Color vibrantOrange = Color(0xFFFF6D00);
+  static const Color vibrantPurple = Color(0xFF9C27B0);
+  static const Color vibrantWarmPink = Color(0xFFFF4081);
 
-  static const Color secondary50 = Color(0xFFFFFBEB);
-  static const Color secondary100 = Color(0xFFFEF3C7);
-  static const Color secondary200 = Color(0xFFFDE68A);
-  static const Color secondary300 = Color(0xFFFCD34D);
-  static const Color secondary400 = Color(0xFFFBBF24);
-  static const Color secondary500 = Color(0xFFF59E0B);
-  static const Color secondary600 = Color(0xFFD97706);
-  static const Color secondary700 = Color(0xFFB45309);
+  // ─── Accent color variants (mutable helpers) ───
+  static Color primary500 = vibrantAmber;
+  static Color primary300 = const Color(0xFFFFB74D);
+  static Color primary700 = const Color(0xFFE65100);
+  static Color secondary500 = vibrantCoral;
+  static Color tertiary500 = vibrantMagenta;
 
-  static const Color tertiary50 = Color(0xFFFFF1F2);
-  static const Color tertiary100 = Color(0xFFFFE4E6);
-  static const Color tertiary200 = Color(0xFFFECDD3);
-  static const Color tertiary300 = Color(0xFFFDA4AF);
-  static const Color tertiary400 = Color(0xFFFB7185);
-  static const Color tertiary500 = Color(0xFFF43F5E);
-  static const Color tertiary600 = Color(0xFFE11D48);
-  static const Color tertiary700 = Color(0xFFBE123C);
+  // ─── Dark Mode (warm, deep) ───
+  static const Color darkBackground = Color(0xFF1A1210);
+  static const Color darkSurfaceDark = Color(0xFF221A18);
+  static const Color darkSurface = Color(0xFF2A2220);
+  static const Color darkSurfaceLight = Color(0xFF352D2B);
 
-  // ─── Dark Mode ───
-  static const Color darkBackground = Color(0xFF0A0A0F);
-  static const Color darkSurfaceDark = Color(0xFF12121A);
-  static const Color darkSurface = Color(0xFF1C1C26);
-  static const Color darkSurfaceLight = Color(0xFF262633);
+  static const Color darkTextPrimary = Color(0xFFFFF8F0);
+  static const Color darkTextSecondary = Color(0xFFD4C5B8);
+  static const Color darkTextTertiary = Color(0xFF8A7A6E);
 
-  static const Color darkTextPrimary = Color(0xFFF5F5F7);
-  static const Color darkTextSecondary = Color(0xFFA1A1AA);
-  static const Color darkTextTertiary = Color(0xFF52525B);
+  // ─── AMOLED Mode ───
+  static const Color amoledBackground = Color(0xFF000000);
+  static const Color amoledSurface = Color(0xFF0A0808);
+  static const Color amoledSurfaceLight = Color(0xFF141110);
+  static const Color amoledSurfaceCard = Color(0xFF1A1614);
 
-  // ─── Light Mode ───
-  static const Color lightBackground = Color(0xFFF8F8FA);
-  static const Color lightSurfaceDark = Color(0xFFF0F0F5);
-  static const Color lightSurface = Color(0xFFFFFFFF);
-  static const Color lightSurfaceLight = Color(0xFFFAFAFA);
+  // ─── Light Mode (warm, airy) ───
+  static const Color lightBackground = Color(0xFFFFFBF5);
+  static const Color lightSurfaceDark = Color(0xFFF5EDE4);
+  static const Color lightSurface = Color(0xFFFFFEFC);
+  static const Color lightSurfaceLight = Color(0xFFFFF9F0);
 
-  static const Color lightTextPrimary = Color(0xFF18181B);
-  static const Color lightTextSecondary = Color(0xFF71717A);
-  static const Color lightTextTertiary = Color(0xFFA1A1AA);
+  static const Color lightTextPrimary = Color(0xFF2C1810);
+  static const Color lightTextSecondary = Color(0xFF6B5A4E);
+  static const Color lightTextTertiary = Color(0xFFA69588);
 
   // ─── Glass ───
-  static Color glassBg(double opacity) => Colors.white.withValues(alpha: opacity);
-  static Color glassBorder(double opacity) => Colors.white.withValues(alpha: opacity);
-  static Color glassBgLight(double opacity) =>
-      Colors.black.withValues(alpha: opacity);
-  static Color glassBorderLight(double opacity) =>
-      Colors.black.withValues(alpha: opacity);
+  static Color glassDark(double opacity) => const Color(0xFF1A1210).withValues(alpha: opacity);
+  static Color glassLight(double opacity) => const Color(0xFFFFFBF5).withValues(alpha: opacity * 0.8);
+  static Color glassBorderDark(double opacity) => Colors.white.withValues(alpha: opacity);
+  static Color glassBorderLight(double opacity) => Colors.black.withValues(alpha: opacity * 0.15);
 
   static const double glassOpacitySubtle = 0.05;
   static const double glassOpacityMedium = 0.10;
@@ -67,64 +59,97 @@ class AppColors {
   static const double glassOpacityHeavy = 0.20;
 
   // ─── Semantic ───
-  static const Color error = Color(0xFFF43F5E);
+  static const Color error = Color(0xFFFF4D6D);
   static const Color success = Color(0xFF10B981);
   static const Color warning = Color(0xFFF59E0B);
-  static const Color info = Color(0xFF3B82F6);
+  static const Color info = Color(0xFF00E0FF);
+
+  // ─── Backward-compat getters (maps to current accent) ───
+  static Color get neonIndigo => primary500;
+  static Color get neonRose => secondary500;
+  static Color get neonBlue => tertiary500;
+
+  // ─── Update accent helpers ───
+  static void applyAccent({
+    required Color primary,
+    required Color secondary,
+    required Color tertiary,
+  }) {
+    primary500 = primary;
+    secondary500 = secondary;
+    tertiary500 = tertiary;
+  }
+
+  static void resetAccent() {
+    primary500 = vibrantAmber;
+    secondary500 = vibrantCoral;
+    tertiary500 = vibrantMagenta;
+  }
 }
 
 class AppGradients {
   AppGradients._();
 
-  static const LinearGradient primary = LinearGradient(
-    colors: [AppColors.primary500, Color(0xFF6366F1)],
+  static LinearGradient warmSunset = LinearGradient(
+    colors: [AppColors.vibrantAmber, AppColors.vibrantCoral],
     begin: Alignment.topLeft,
     end: Alignment.bottomRight,
   );
 
-  static const LinearGradient premium = LinearGradient(
-    colors: [AppColors.primary500, AppColors.tertiary500, AppColors.secondary500],
+  static LinearGradient sunsetToMagenta = LinearGradient(
+    colors: [AppColors.vibrantAmber, AppColors.vibrantMagenta],
+    begin: Alignment.topLeft,
+    end: Alignment.bottomRight,
+  );
+
+  static LinearGradient coralToGold = LinearGradient(
+    colors: [AppColors.vibrantCoral, AppColors.vibrantGold],
+    begin: Alignment.topLeft,
+    end: Alignment.bottomRight,
+  );
+
+  static LinearGradient warmPurple = LinearGradient(
+    colors: [AppColors.vibrantPurple, AppColors.vibrantWarmPink],
+    begin: Alignment.topLeft,
+    end: Alignment.bottomRight,
+  );
+
+  static LinearGradient premium = LinearGradient(
+    colors: [AppColors.vibrantAmber, AppColors.vibrantCoral, AppColors.vibrantMagenta],
     begin: Alignment.topLeft,
     end: Alignment.bottomRight,
     stops: [0.0, 0.5, 1.0],
   );
 
-  static const LinearGradient glassOverlay = LinearGradient(
-    colors: [Colors.transparent, Color(0x40000000)],
+  static LinearGradient glassOverlay = LinearGradient(
+    colors: [Colors.transparent, Color(0x80000000)],
     begin: Alignment.topCenter,
     end: Alignment.bottomCenter,
   );
 
-  static const LinearGradient buttonHover = LinearGradient(
-    colors: [AppColors.primary600, Color(0xFF4F46E5)],
-  );
+  static LinearGradient get primary => warmSunset;
+  static LinearGradient get blueToIndigo => warmSunset;
+  static LinearGradient get indigoToRose => sunsetToMagenta;
 }
 
-class DarkColors {
-  DarkColors._();
+class DarkColorTheme {
+  DarkColorTheme._();
 
-  static const Color background = AppColors.darkBackground;
-  static const Color surfaceDark = AppColors.darkSurfaceDark;
-  static const Color surface = AppColors.darkSurface;
-  static const Color surfaceLight = AppColors.darkSurfaceLight;
-  static const Color textPrimary = AppColors.darkTextPrimary;
-  static const Color textSecondary = AppColors.darkTextSecondary;
-  static const Color textTertiary = AppColors.darkTextTertiary;
+  Color background = AppColors.darkBackground;
+  Color surface = AppColors.darkSurface;
+  Color surfaceLight = AppColors.darkSurfaceLight;
+  Color textPrimary = AppColors.darkTextPrimary;
+  Color textSecondary = AppColors.darkTextSecondary;
+  Color textTertiary = AppColors.darkTextTertiary;
 }
 
-class LightColors {
-  LightColors._();
+class LightColorTheme {
+  LightColorTheme._();
 
-  static const Color background = AppColors.lightBackground;
-  static const Color surfaceDark = AppColors.lightSurfaceDark;
-  static const Color surface = AppColors.lightSurface;
-  static const Color surfaceLight = AppColors.lightSurfaceLight;
-  static const Color textPrimary = AppColors.lightTextPrimary;
-  static const Color textSecondary = AppColors.lightTextSecondary;
-  static const Color textTertiary = AppColors.lightTextTertiary;
-}
-
-extension ContextColors on BuildContext {
-  DarkColors get dark => DarkColors._();
-  LightColors get light => LightColors._();
+  Color background = AppColors.lightBackground;
+  Color surface = AppColors.lightSurface;
+  Color surfaceLight = AppColors.lightSurfaceLight;
+  Color textPrimary = AppColors.lightTextPrimary;
+  Color textSecondary = AppColors.lightTextSecondary;
+  Color textTertiary = AppColors.lightTextTertiary;
 }

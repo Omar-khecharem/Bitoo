@@ -214,7 +214,7 @@ class PremiumDialog extends StatelessWidget {
                           height: 48,
                           decoration: BoxDecoration(
                             gradient: isDestructive
-                                ? LinearGradient(colors: [AppColors.error, AppColors.tertiary600])
+                                ? LinearGradient(colors: [AppColors.error, AppColors.neonRose])
                                 : AppGradients.primary,
                             borderRadius: BorderRadius.circular(AppRadius.lg),
                           ),

@@ -1,20 +1,22 @@
 import 'dart:ui';
 import 'package:flutter/material.dart';
+import 'package:flutter_riverpod/flutter_riverpod.dart';
 import '../../../../core/theme/color_schemes.dart';
 import '../../../../core/theme/tokens.dart';
 import '../../domain/entities/playback_state.dart';
+import '../providers/player_provider.dart';
 import '../widgets/album_art_view.dart';
 import '../widgets/seek_bar.dart';
 import '../widgets/player_controls.dart';
 
-class TabletPlayerPage extends StatefulWidget {
+class TabletPlayerPage extends ConsumerStatefulWidget {
   const TabletPlayerPage({super.key});
 
   @override
-  State<TabletPlayerPage> createState() => _TabletPlayerPageState();
+  ConsumerState<TabletPlayerPage> createState() => _TabletPlayerPageState();
 }
 
-class _TabletPlayerPageState extends State<TabletPlayerPage> {
+class _TabletPlayerPageState extends ConsumerState<TabletPlayerPage> {
   AlbumArtMode _artMode = AlbumArtMode.standard;
   bool _isPlaying = true;
   double _volume = 0.7;
@@ -145,9 +147,17 @@ class _TabletPlayerPageState extends State<TabletPlayerPage> {
                           repeatMode: RepeatMode.all,
                           isShuffled: false,
                           isFavorite: false,
-                          onPlayPause: () => setState(() => _isPlaying = !_isPlaying),
-                          onNext: () {},
-                          onPrevious: () {},
+                          onPlayPause: () {
+                            final handler = ref.read(audioHandlerProvider);
+                            if (_isPlaying) {
+                              handler.pause();
+                            } else {
+                              handler.play();
+                            }
+                            setState(() => _isPlaying = !_isPlaying);
+                          },
+                          onNext: () => ref.read(audioHandlerProvider).skipToNext(),
+                          onPrevious: () => ref.read(audioHandlerProvider).skipToPrevious(),
                         ),
                         SizedBox(height: Spacing.xxl),
 

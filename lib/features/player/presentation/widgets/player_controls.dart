@@ -79,7 +79,7 @@ class PlayerControls extends StatelessWidget {
               _SecondaryButton(
                 icon: isFavorite ? Icons.favorite_rounded : Icons.favorite_outline_rounded,
                 isActive: isFavorite,
-                activeColor: AppColors.tertiary500,
+                activeColor: Theme.of(context).colorScheme.tertiary,
                 onTap: onFavoriteToggle,
                 size: 40,
               ),
@@ -166,13 +166,18 @@ class _PlayPauseButtonState extends State<_PlayPauseButton>
           width: 64,
           height: 64,
           decoration: BoxDecoration(
-            color: AppColors.darkTextPrimary,
+            gradient: AppGradients.indigoToRose,
             shape: BoxShape.circle,
             boxShadow: [
               BoxShadow(
-                color: AppColors.darkTextPrimary.withValues(alpha: 0.15),
+                color: AppColors.neonIndigo.withValues(alpha: 0.4),
                 blurRadius: 20,
                 spreadRadius: 2,
+              ),
+              BoxShadow(
+                color: AppColors.neonRose.withValues(alpha: 0.3),
+                blurRadius: 40,
+                spreadRadius: 4,
               ),
             ],
           ),
@@ -187,7 +192,7 @@ class _PlayPauseButtonState extends State<_PlayPauseButton>
                   : Icons.play_arrow_rounded,
               key: ValueKey(widget.isPlaying),
               size: 36,
-              color: AppColors.darkBackground,
+              color: Theme.of(context).colorScheme.onSurface,
             ),
           ),
         ),
@@ -246,7 +251,7 @@ class _SkipButtonState extends State<_SkipButton>
             child: child,
           );
         },
-        child: Icon(widget.icon, size: 32, color: AppColors.darkTextPrimary),
+        child: Icon(widget.icon, size: 28, color: Theme.of(context).colorScheme.onSurface),
       ),
     );
   }
@@ -268,14 +273,14 @@ class _ShuffleButton extends StatelessWidget {
         padding: EdgeInsets.all(8),
         decoration: BoxDecoration(
           color: isActive
-              ? AppColors.primary500.withValues(alpha: 0.15)
+              ? Theme.of(context).colorScheme.primary.withValues(alpha: 0.15)
               : Colors.transparent,
           borderRadius: BorderRadius.circular(8),
         ),
         child: Icon(
           Icons.shuffle_rounded,
           size: 22,
-          color: isActive ? AppColors.primary500 : AppColors.darkTextTertiary,
+          color: isActive ? Theme.of(context).colorScheme.primary : Theme.of(context).colorScheme.onSurface.withValues(alpha: 0.38),
         ),
       ),
     );
@@ -308,7 +313,7 @@ class _RepeatButton extends StatelessWidget {
         padding: EdgeInsets.all(8),
         decoration: BoxDecoration(
           color: _isActive
-              ? AppColors.primary500.withValues(alpha: 0.15)
+              ? Theme.of(context).colorScheme.primary.withValues(alpha: 0.15)
               : Colors.transparent,
           borderRadius: BorderRadius.circular(8),
         ),
@@ -318,14 +323,14 @@ class _RepeatButton extends StatelessWidget {
             Icon(
               _icon,
               size: 22,
-              color: _isActive ? AppColors.primary500 : AppColors.darkTextTertiary,
+              color: _isActive ? Theme.of(context).colorScheme.primary : Theme.of(context).colorScheme.onSurface.withValues(alpha: 0.38),
             ),
             if (mode == RepeatMode.one) ...[
               SizedBox(width: 2),
               Text(
                 '1',
                 style: AppTypography.labelSmall.copyWith(
-                  color: AppColors.primary500,
+                  color: Theme.of(context).colorScheme.primary,
                   fontWeight: FontWeight.w700,
                 ),
               ),
@@ -337,7 +342,7 @@ class _RepeatButton extends StatelessWidget {
   }
 }
 
-class _SecondaryButton extends StatelessWidget {
+class _SecondaryButton extends StatefulWidget {
   const _SecondaryButton({
     required this.icon,
     required this.isActive,
@@ -353,23 +358,78 @@ class _SecondaryButton extends StatelessWidget {
   final double size;
 
   @override
+  State<_SecondaryButton> createState() => _SecondaryButtonState();
+}
+
+class _SecondaryButtonState extends State<_SecondaryButton>
+    with SingleTickerProviderStateMixin {
+  late AnimationController _pulseController;
+  late Animation<double> _pulseAnimation;
+
+  @override
+  void initState() {
+    super.initState();
+    _pulseController = AnimationController(
+      vsync: this,
+      duration: const Duration(milliseconds: 300),
+    );
+    _pulseAnimation = Tween<double>(begin: 1.0, end: 1.3).animate(
+      CurvedAnimation(parent: _pulseController, curve: Curves.easeOut),
+    );
+  }
+
+  @override
+  void didUpdateWidget(_SecondaryButton oldWidget) {
+    super.didUpdateWidget(oldWidget);
+    if (widget.icon == Icons.favorite_rounded && oldWidget.icon != Icons.favorite_rounded) {
+      _pulseController.forward().then((_) => _pulseController.reverse());
+    }
+  }
+
+  @override
+  void dispose() {
+    _pulseController.dispose();
+    super.dispose();
+  }
+
+  @override
   Widget build(BuildContext context) {
     return GestureDetector(
-      onTap: onTap,
-      child: Container(
-        width: size,
-        height: size,
-        decoration: BoxDecoration(
-          color: Colors.white.withValues(alpha: AppColors.glassOpacityMedium),
-          shape: BoxShape.circle,
-        ),
-        child: Icon(
-          icon,
-          size: size * 0.55,
-          color: isActive
-              ? (activeColor ?? AppColors.primary500)
-              : AppColors.darkTextSecondary,
-        ),
+      onTap: () {
+        if (widget.icon == Icons.favorite_outline_rounded ||
+            widget.icon == Icons.favorite_rounded) {
+          _pulseController.forward().then((_) => _pulseController.reverse());
+        }
+        widget.onTap?.call();
+      },
+      child: AnimatedBuilder(
+        animation: _pulseAnimation,
+        builder: (context, child) {
+          return Transform.scale(
+            scale: _pulseAnimation.value,
+            child: Container(
+              width: widget.size,
+              height: widget.size,
+              decoration: BoxDecoration(
+                color: widget.isActive
+                    ? (Theme.of(context).brightness == Brightness.dark
+                        ? Colors.white.withValues(alpha: 0.15)
+                        : Colors.black.withValues(alpha: 0.15))
+                    : (Theme.of(context).brightness == Brightness.dark
+                        ? Colors.white.withValues(alpha: 0.06)
+                        : Colors.black.withValues(alpha: 0.06)),
+                shape: BoxShape.circle,
+              ),
+              child: Icon(
+                widget.icon,
+                size: widget.size * 0.55,
+                color: widget.isActive
+                    ? (widget.activeColor ?? Theme.of(context).colorScheme.primary)
+                    : Theme.of(context).colorScheme.onSurface.withValues(alpha: 0.38),
+              ),
+            ),
+          );
+        },
       ),
     );
   }

@@ -110,6 +110,11 @@ final allGenresProvider = FutureProvider.autoDispose<List<Genre>>((ref) async {
   return repo.getAllGenres();
 });
 
+final songsByGenreProvider = FutureProvider.autoDispose.family<List<Song>, String>((ref, genre) async {
+  final repo = await ref.read(musicRepositoryProvider.future);
+  return repo.getSongsByGenre(genre);
+});
+
 // ── Search (debounced) ──
 
 final searchQueryProvider = StateProvider<String>((ref) => '');

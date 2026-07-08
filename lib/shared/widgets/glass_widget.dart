@@ -29,6 +29,8 @@ class GlassWidget extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    final isDark = Theme.of(context).brightness == Brightness.dark;
+
     return Container(
       width: width,
       height: height,
@@ -40,9 +42,13 @@ class GlassWidget extends StatelessWidget {
           child: Container(
             padding: padding ?? EdgeInsets.all(Spacing.lg),
             decoration: BoxDecoration(
-              color: Colors.white.withValues(alpha: opacity),
+              color: isDark
+                  ? AppColors.glassDark(opacity)
+                  : AppColors.glassLight(opacity),
               border: Border.all(
-                color: Colors.white.withValues(alpha: borderOpacity),
+                color: isDark
+                    ? AppColors.glassBorderDark(borderOpacity)
+                    : AppColors.glassBorderLight(borderOpacity),
                 width: 0.5,
               ),
               borderRadius: BorderRadius.circular(borderRadius),
@@ -85,6 +91,8 @@ class GlassContainer extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    final isDark = Theme.of(context).brightness == Brightness.dark;
+
     final container = ClipRRect(
       borderRadius: BorderRadius.circular(borderRadius),
       child: BackdropFilter(
@@ -94,10 +102,16 @@ class GlassContainer extends StatelessWidget {
           height: height,
           padding: padding ?? EdgeInsets.all(Spacing.lg),
           decoration: BoxDecoration(
-            color: gradient != null ? null : Colors.white.withValues(alpha: opacity),
+            color: gradient != null
+                ? null
+                : isDark
+                    ? AppColors.glassDark(opacity)
+                    : AppColors.glassLight(opacity),
             gradient: gradient,
             border: Border.all(
-              color: Colors.white.withValues(alpha: borderOpacity),
+              color: isDark
+                  ? AppColors.glassBorderDark(borderOpacity)
+                  : AppColors.glassBorderLight(borderOpacity),
               width: 0.5,
             ),
             borderRadius: BorderRadius.circular(borderRadius),

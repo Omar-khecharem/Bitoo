@@ -53,6 +53,10 @@ abstract class MusicRepository {
   Future<void> removeSongFromPlaylist(int playlistId, String songPath);
   Future<void> reorderPlaylist(int playlistId, int oldIndex, int newIndex);
 
+  // ── Song Management ──
+  Future<void> deleteSong(int songId, String filePath);
+  Future<void> updateSongMetadata(int songId, {String? title, String? artist});
+
   // ── Storage ──
   Future<int> getArtworkCacheSize();
   Future<int> clearArtworkCache();

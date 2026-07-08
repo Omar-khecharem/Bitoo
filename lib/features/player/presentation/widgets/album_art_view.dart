@@ -98,7 +98,7 @@ class _AlbumArtViewState extends State<AlbumArtView>
           child: child,
         );
       },
-      child: _buildArtWithGlow(),
+      child: _buildPremiumArt(),
     );
   }
 
@@ -134,11 +134,11 @@ class _AlbumArtViewState extends State<AlbumArtView>
       height: widget.size,
       child: Stack(
         children: [
-          _buildArtWithGlow(),
+          _buildPremiumArt(),
           CustomPaint(
             painter: _CircularWavePainter(
               amplitude: widget.amplitude,
-              color: AppColors.primary500,
+              color: AppColors.neonIndigo,
               isPlaying: widget.isPlaying,
             ),
             size: Size(widget.size, widget.size),
@@ -148,28 +148,56 @@ class _AlbumArtViewState extends State<AlbumArtView>
     );
   }
 
-  Widget _buildArtWithGlow() {
+  Widget _buildPremiumArt() {
+    return SizedBox(
+      width: widget.size,
+      height: widget.size,
+      child: Stack(
+        children: [
+          // Sound wave bars
+          if (widget.isPlaying) _buildSoundWaves(),
+          // Main album container
+          Center(
+            child: Container(
+              width: widget.size * 0.88,
+              height: widget.size * 0.88,
+              decoration: BoxDecoration(
+                borderRadius: BorderRadius.circular(24),
+                gradient: AppGradients.indigoToRose,
+                boxShadow: [
+                  BoxShadow(
+                    color: AppColors.neonIndigo.withValues(alpha: 0.3),
+                    blurRadius: 30,
+                    spreadRadius: 2,
+                  ),
+                  BoxShadow(
+                    color: AppColors.neonRose.withValues(alpha: 0.2),
+                    blurRadius: 60,
+                    spreadRadius: 5,
+                  ),
+                ],
+              ),
+              child: ClipRRect(
+                borderRadius: BorderRadius.circular(24),
+                child: _buildArtImage(),
+              ),
+            ),
+          ),
+        ],
+      ),
+    );
+  }
+
+  Widget _buildSoundWaves() {
     return AnimatedBuilder(
       animation: _breatheController,
       builder: (context, child) {
-        return Container(
-          width: widget.size,
-          height: widget.size,
-          decoration: BoxDecoration(
-            borderRadius: BorderRadius.circular(widget.size * 0.06),
-            boxShadow: [
-              BoxShadow(
-                color: AppColors.primary500.withValues(alpha: 
-                  0.15 + 0.1 * widget.amplitude,
-                ),
-                blurRadius: 40 + 30 * widget.amplitude,
-                spreadRadius: 5 + 10 * widget.amplitude,
-              ),
-            ],
-          ),
-          child: ClipRRect(
-            borderRadius: BorderRadius.circular(widget.size * 0.06),
-            child: _buildArtImage(),
+        return CustomPaint(
+          size: Size(widget.size, widget.size),
+          painter: _SoundWavePainter(
+            amplitude: widget.amplitude,
+            time: _breatheController.value,
+            color: AppColors.neonIndigo,
           ),
         );
       },
@@ -180,9 +208,17 @@ class _AlbumArtViewState extends State<AlbumArtView>
     return Image.network(
       widget.imageUrl,
       fit: BoxFit.cover,
-      errorBuilder: (_, __, ___) => Container(
-        decoration: BoxDecoration(gradient: AppGradients.premium),
-        child: Icon(Icons.music_note_rounded, size: widget.size * 0.3, color: Colors.white24),
+      errorBuilder: (_, __, ___) => Center(
+        child: Text(
+          'B',
+          style: TextStyle(
+            fontFamily: 'Outfit',
+            fontWeight: FontWeight.w900,
+            fontSize: widget.size * 0.45,
+            color: Colors.white.withValues(alpha: 0.3),
+            letterSpacing: -4,
+          ),
+        ),
       ),
     );
   }
@@ -233,6 +269,48 @@ class _VinylPainter extends CustomPainter {
 
   @override
   bool shouldRepaint(covariant CustomPainter oldDelegate) => false;
+}
+
+class _SoundWavePainter extends CustomPainter {
+  _SoundWavePainter({
+    required this.amplitude,
+    required this.time,
+    required this.color,
+  });
+
+  final double amplitude;
+  final double time;
+  final Color color;
+
+  @override
+  void paint(Canvas canvas, Size size) {
+    final barCount = 24;
+    const maxBars = 24;
+    final barWidth = size.width / (maxBars * 2.5);
+    final spacing = barWidth * 1.5;
+    final totalWidth = barCount * (barWidth + spacing);
+    final startX = (size.width - totalWidth) / 2 + barWidth / 2;
+
+    for (var i = 0; i < barCount; i++) {
+      final dynamicVal = sin(time * 4 + i * 0.8) * 0.5 + 0.5;
+      final height = (size.height * 0.35) * (0.2 + 0.8 * dynamicVal) * amplitude;
+      final opacity = 0.1 + 0.3 * dynamicVal;
+      final x = startX + i * (barWidth + spacing);
+      final y = (size.height - height) / 2;
+
+      canvas.drawRRect(
+        RRect.fromRectAndRadius(
+          Rect.fromLTWH(x, y, barWidth, height),
+          const Radius.circular(2),
+        ),
+        Paint()..color = color.withValues(alpha: opacity),
+      );
+    }
+  }
+
+  @override
+  bool shouldRepaint(covariant _SoundWavePainter oldDelegate) =>
+      oldDelegate.amplitude != amplitude || oldDelegate.time != time;
 }
 
 class _CircularWavePainter extends CustomPainter {

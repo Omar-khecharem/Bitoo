@@ -30,8 +30,15 @@ class AlbumCard extends StatelessWidget {
         curve: Curves.easeOut,
         child: Container(
           decoration: BoxDecoration(
-            borderRadius: BorderRadius.circular(AppRadius.md),
-            boxShadow: AppShadows.shadowSM,
+            color: const Color(0xFF2A2A2A),
+            borderRadius: BorderRadius.circular(16),
+            boxShadow: [
+              BoxShadow(
+                color: Colors.black.withValues(alpha: 0.25),
+                blurRadius: 12,
+                offset: const Offset(0, 4),
+              ),
+            ],
           ),
           clipBehavior: Clip.antiAlias,
           child: AspectRatio(
@@ -45,11 +52,11 @@ class AlbumCard extends StatelessWidget {
                     children: [
                       Container(
                         decoration: BoxDecoration(
-                          color: AppColors.darkSurfaceLight,
-                          borderRadius: BorderRadius.circular(AppRadius.md),
+                          color: const Color(0xFF333333),
+                          borderRadius: BorderRadius.circular(16),
                         ),
                         child: ClipRRect(
-                          borderRadius: BorderRadius.circular(AppRadius.md),
+                          borderRadius: BorderRadius.circular(16),
                           child: Image.network(
                             imageUrl,
                             fit: BoxFit.cover,
@@ -76,9 +83,15 @@ class AlbumCard extends StatelessWidget {
                             width: 36,
                             height: 36,
                             decoration: BoxDecoration(
-                              color: AppColors.primary500,
+                              gradient: AppGradients.blueToIndigo,
                               shape: BoxShape.circle,
-                              boxShadow: AppShadows.glowPrimary,
+                              boxShadow: [
+                                BoxShadow(
+                                  color: AppColors.neonIndigo.withValues(alpha: 0.4),
+                                  blurRadius: 12,
+                                  offset: const Offset(0, 2),
+                                ),
+                              ],
                             ),
                             child: Icon(
                               Icons.play_arrow_rounded,
@@ -217,8 +230,15 @@ class PlaylistCard extends StatelessWidget {
       onTap: onTap,
       child: Container(
         decoration: BoxDecoration(
-          borderRadius: BorderRadius.circular(AppRadius.md),
-          boxShadow: AppShadows.shadowSM,
+          color: const Color(0xFF2A2A2A),
+          borderRadius: BorderRadius.circular(16),
+          boxShadow: [
+            BoxShadow(
+              color: Colors.black.withValues(alpha: 0.25),
+              blurRadius: 12,
+              offset: const Offset(0, 4),
+            ),
+          ],
         ),
         clipBehavior: Clip.antiAlias,
         child: AspectRatio(
@@ -233,8 +253,8 @@ class PlaylistCard extends StatelessWidget {
                   decoration: BoxDecoration(
                     gradient: LinearGradient(
                       colors: [
-                        AppColors.primary500.withValues(alpha: 0.6),
-                        AppColors.primary800,
+                        AppColors.neonIndigo.withValues(alpha: 0.5),
+                        AppColors.neonBlue.withValues(alpha: 0.3),
                       ],
                       begin: Alignment.topLeft,
                       end: Alignment.bottomRight,

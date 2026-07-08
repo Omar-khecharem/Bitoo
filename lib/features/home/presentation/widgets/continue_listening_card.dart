@@ -24,12 +24,15 @@ class ContinueListeningCard extends StatelessWidget {
       onTap: onTap,
       child: Container(
         decoration: BoxDecoration(
-          color: Colors.white.withValues(alpha: AppColors.glassOpacityMedium),
-          borderRadius: BorderRadius.circular(AppRadius.md),
-          border: Border.all(
-            color: Colors.white.withValues(alpha: AppColors.glassOpacityMedium),
-            width: 0.5,
-          ),
+          color: const Color(0xFF2A2A2A),
+          borderRadius: BorderRadius.circular(16),
+          boxShadow: [
+            BoxShadow(
+              color: Colors.black.withValues(alpha: 0.25),
+              blurRadius: 12,
+              offset: const Offset(0, 4),
+            ),
+          ],
         ),
         clipBehavior: Clip.antiAlias,
         child: Column(
@@ -40,11 +43,11 @@ class ContinueListeningCard extends StatelessWidget {
               child: Container(
                 width: double.infinity,
                 decoration: BoxDecoration(
-                  color: AppColors.darkSurfaceLight,
+                  color: const Color(0xFF333333),
                   gradient: LinearGradient(
                     colors: [
-                      AppColors.primary500.withValues(alpha: 0.2),
-                      AppColors.tertiary500.withValues(alpha: 0.2),
+                      AppColors.neonIndigo.withValues(alpha: 0.15),
+                      AppColors.neonRose.withValues(alpha: 0.15),
                     ],
                   ),
                 ),

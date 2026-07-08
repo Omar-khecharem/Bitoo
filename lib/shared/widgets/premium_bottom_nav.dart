@@ -15,34 +15,35 @@ class PremiumBottomNav extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return ClipRRect(
-      borderRadius: BorderRadius.vertical(top: Radius.circular(AppRadius.xl)),
-      child: BackdropFilter(
-        filter: ImageFilter.blur(sigmaX: 15, sigmaY: 15),
-        child: Container(
-          height: 72,
-          padding: EdgeInsets.only(top: Spacing.sm, bottom: Spacing.sm),
-          decoration: BoxDecoration(
-            color: Colors.white.withValues(alpha: AppColors.glassOpacityHeavy),
-            border: Border(
-              top: BorderSide(
-                color: Colors.white.withValues(alpha: AppColors.glassOpacityMedium),
+    return Padding(
+      padding: const EdgeInsets.symmetric(horizontal: 16, vertical: 8),
+      child: ClipRRect(
+        borderRadius: BorderRadius.circular(24),
+        child: BackdropFilter(
+          filter: ImageFilter.blur(sigmaX: 20, sigmaY: 20),
+          child: Container(
+            height: 64,
+            padding: EdgeInsets.only(top: Spacing.xs, bottom: Spacing.xs),
+            decoration: BoxDecoration(
+              color: const Color(0xCC1A1A1A),
+              border: Border.all(
+                color: Colors.white.withValues(alpha: 0.08),
                 width: 0.5,
               ),
             ),
-          ),
-          child: Row(
-            mainAxisAlignment: MainAxisAlignment.spaceEvenly,
-            children: List.generate(_tabs.length, (index) {
-              final isActive = index == currentIndex;
-              return _NavItem(
-                icon: _tabs[index].icon,
-                activeIcon: _tabs[index].activeIcon,
-                label: _tabs[index].label,
-                isActive: isActive,
-                onTap: () => onTap(index),
-              );
-            }),
+            child: Row(
+              mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+              children: List.generate(_tabs.length, (index) {
+                final isActive = index == currentIndex;
+                return _NavItem(
+                  icon: _tabs[index].icon,
+                  activeIcon: _tabs[index].activeIcon,
+                  label: _tabs[index].label,
+                  isActive: isActive,
+                  onTap: () => onTap(index),
+                );
+              }),
+            ),
           ),
         ),
       ),
@@ -81,7 +82,7 @@ class _NavItem extends StatelessWidget {
               width: isActive ? 40 : 0,
               height: 3,
               decoration: BoxDecoration(
-                color: isActive ? AppColors.primary500 : Colors.transparent,
+                color: isActive ? AppColors.neonIndigo : Colors.transparent,
                 borderRadius: BorderRadius.circular(1.5),
               ),
             ),
@@ -92,7 +93,7 @@ class _NavItem extends StatelessWidget {
                 isActive ? activeIcon : icon,
                 key: ValueKey(isActive),
                 size: isActive ? AppIconSizes.large : AppIconSizes.medium,
-                color: isActive ? AppColors.primary500 : AppColors.darkTextTertiary,
+                color: isActive ? AppColors.neonIndigo : AppColors.darkTextTertiary,
               ),
             ),
             SizedBox(height: 2),
@@ -102,7 +103,7 @@ class _NavItem extends StatelessWidget {
               child: Text(
                 label,
                 style: AppTypography.labelSmall.copyWith(
-                  color: AppColors.primary500,
+                  color: AppColors.neonIndigo,
                   fontWeight: FontWeight.w600,
                 ),
               ),

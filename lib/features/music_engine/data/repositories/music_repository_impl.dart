@@ -131,6 +131,7 @@ class MusicRepositoryImpl implements MusicRepository {
     }
 
     var scanned = 0;
+    final corruptedPaths = <String>{};
     for (final file in allFiles) {
       scanned++;
 
@@ -145,6 +146,7 @@ class MusicRepositoryImpl implements MusicRepository {
         final metadata = _metadataReader.extract(file.path);
         if (metadata == null) {
           debugPrint('extract returned null: ${file.path}');
+          corruptedPaths.add(file.path);
           corruptedCount++;
           continue;
         }
@@ -190,16 +192,34 @@ class MusicRepositoryImpl implements MusicRepository {
         newSongsCount++;
       } catch (e) {
         debugPrint('Error processing ${file.path}: $e');
+        corruptedPaths.add(file.path);
         corruptedCount++;
       }
     }
 
-    // Phase 3: Rebuild aggregate indexes
+    // Phase 3: Remove stale DB entries (files no longer on disk or unreadable)
+    final foundPaths = allFiles.map((f) => f.path).toSet();
+    var removedCount = 0;
+    for (final key in _db.songs.keys.toList()) {
+      final map = _db.getSongMap(key);
+      if (map != null) {
+        final path = map['filePath'] as String?;
+        if (path == null || !foundPaths.contains(path) || corruptedPaths.contains(path)) {
+          _db.deleteSong(key);
+          removedCount++;
+        }
+      }
+    }
+    if (removedCount > 0) {
+      debugPrint('Removed $removedCount stale songs from DB');
+    }
+
+    // Phase 5: Rebuild aggregate indexes
     await _rebuildAlbumIndex();
     await _rebuildArtistIndex();
     await _rebuildGenreIndex();
 
-    // Phase 4: Clean orphaned data
+    // Phase 6: Clean orphaned data
     final currentSha256s = _db.allSongMaps
         .map((m) => m['sha256'] as String)
         .toSet();
@@ -207,7 +227,7 @@ class MusicRepositoryImpl implements MusicRepository {
     _cleanOrphanedAlbums();
     _cleanOrphanedArtists();
 
-    // Phase 5: Update scan metadata
+    // Phase 7: Update scan metadata
     final songCount = _db.songCount;
     final albumCount = _db.albumCount;
     final artistCount = _db.artistCount;
@@ -247,7 +267,9 @@ class MusicRepositoryImpl implements MusicRepository {
           final ext = entity.path.split('.').last.toLowerCase();
           if (AudioExtensions.supportedExtensions.contains(ext) &&
               !FileFilters.isHiddenOrSystemPath(entity.path)) {
-            yield entity;
+            try {
+              if (entity.lengthSync() > 0) yield entity;
+            } catch (_) {}
           }
         }
       }
@@ -479,7 +501,9 @@ class MusicRepositoryImpl implements MusicRepository {
     final q = query.toLowerCase();
     final terms = q.split(RegExp(r'\s+'));
 
-    final allSongs = _db.allSongMaps.map(Song.fromMap).toList();
+    final allSongs = _db.allSongMaps
+        .map(Song.fromMap)
+        .toList();
     final seen = <int>{};
     final ranked = <_RankedSong>[];
 
@@ -668,6 +692,26 @@ class MusicRepositoryImpl implements MusicRepository {
     pMap['songPaths'] = paths;
     pMap['dateModified'] = DateTime.now().toIso8601String();
     await _db.putPlaylist(playlistId.toString(), pMap);
+  }
+
+  // ── Song Management ──
+
+  @override
+  Future<void> deleteSong(int songId, String filePath) async {
+    await _db.deleteSong(songId.toString());
+    try {
+      final file = File(filePath);
+      if (await file.exists()) await file.delete();
+    } catch (_) {}
+  }
+
+  @override
+  Future<void> updateSongMetadata(int songId, {String? title, String? artist}) async {
+    final map = _db.getSongMap(songId.toString());
+    if (map == null) return;
+    if (title != null) map['title'] = title;
+    if (artist != null) map['artist'] = artist;
+    await _db.putSong(songId.toString(), map);
   }
 
   // ── Storage ──

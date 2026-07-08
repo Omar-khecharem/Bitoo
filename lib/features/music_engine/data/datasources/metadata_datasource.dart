@@ -72,9 +72,7 @@ class MetadataDataSource {
           artworkBytes = metadata.pictures.first.bytes.toList();
         }
       } catch (_) {
-        title = AudioExtensions.titleFromPath(filePath);
-        artist = 'Unknown Artist';
-        albumTitle = 'Unknown Album';
+        return null;
       }
 
       FileStat? fileStat;

@@ -1,13 +1,11 @@
 import 'package:flutter/material.dart';
-import '../../core/theme/color_schemes.dart';
-import '../../core/theme/tokens.dart';
 
 class PremiumSearchBar extends StatefulWidget {
   const PremiumSearchBar({
     super.key,
     this.onChanged,
     this.onSubmitted,
-    this.hintText = 'Artists, songs, or podcasts...',
+    this.hintText = 'Artistes, chansons, albums...',
     this.controller,
     this.autofocus = false,
     this.onFilterTap,
@@ -26,91 +24,131 @@ class PremiumSearchBar extends StatefulWidget {
   State<PremiumSearchBar> createState() => _PremiumSearchBarState();
 }
 
-class _PremiumSearchBarState extends State<PremiumSearchBar>
-    with SingleTickerProviderStateMixin {
-  late AnimationController _focusController;
-  late Animation<double> _scaleAnimation;
+class _PremiumSearchBarState extends State<PremiumSearchBar> {
+  final FocusNode _focusNode = FocusNode();
   bool _isFocused = false;
 
   @override
   void initState() {
     super.initState();
-    _focusController = AnimationController(
-      vsync: this,
-      duration: AppDurations.standard,
-    );
-    _scaleAnimation = Tween<double>(begin: 1.0, end: 1.02).animate(
-      CurvedAnimation(parent: _focusController, curve: Curves.easeOut),
-    );
+    _focusNode.addListener(_onFocusChange);
   }
 
   @override
   void dispose() {
-    _focusController.dispose();
+    _focusNode.removeListener(_onFocusChange);
+    _focusNode.dispose();
     super.dispose();
+  }
+
+  void _onFocusChange() {
+    setState(() => _isFocused = _focusNode.hasFocus);
   }
 
   @override
   Widget build(BuildContext context) {
-    final height = widget.large ? 56.0 : 52.0;
-    final radius = widget.large ? AppRadius.xl : AppRadius.lg;
+    final height = widget.large ? 58.0 : 54.0;
+    final cs = Theme.of(context).colorScheme;
+    final isDark = Theme.of(context).brightness == Brightness.dark;
 
-    return AnimatedBuilder(
-      animation: _scaleAnimation,
-      builder: (context, child) {
-        return Transform.scale(scale: _scaleAnimation.value, child: child);
-      },
-      child: Container(
-        height: height,
-        decoration: BoxDecoration(
-          color: Colors.white.withValues(alpha: AppColors.glassOpacityMedium),
-          border: Border.all(
+    return Container(
+      height: height,
+      decoration: BoxDecoration(
+        borderRadius: BorderRadius.circular(28),
+        boxShadow: [
+          BoxShadow(
             color: _isFocused
-                ? AppColors.primary500.withValues(alpha: 0.4)
-                : Colors.white.withValues(alpha: AppColors.glassOpacityMedium),
-            width: 1,
+                ? cs.primary.withValues(alpha: 0.2)
+                : Colors.black.withValues(alpha: isDark ? 0.3 : 0.08),
+            blurRadius: _isFocused ? 20 : 12,
+            offset: const Offset(0, 4),
           ),
-          borderRadius: BorderRadius.circular(radius),
-          boxShadow: _isFocused ? AppShadows.glowPrimary : null,
-        ),
-        child: TextField(
+        ],
+      ),
+      child: ClipRRect(
+        borderRadius: BorderRadius.circular(28),
+        child: Container(
+          decoration: BoxDecoration(
+            color: _isFocused
+                ? cs.surface.withValues(alpha: isDark ? 0.85 : 0.95)
+                : cs.surface.withValues(alpha: isDark ? 0.75 : 0.9),
+            borderRadius: BorderRadius.circular(28),
+            border: Border.all(
+              color: _isFocused
+                  ? cs.primary.withValues(alpha: 0.3)
+                  : cs.onSurface.withValues(alpha: isDark ? 0.06 : 0.1),
+              width: 1.0,
+            ),
+          ),
+          child: TextField(
           controller: widget.controller,
+          focusNode: _focusNode,
           autofocus: widget.autofocus,
           onChanged: widget.onChanged,
           onSubmitted: widget.onSubmitted,
-          onTap: () {
-            setState(() => _isFocused = true);
-            _focusController.forward();
-          },
-          style: AppTypography.bodyLarge.copyWith(color: AppColors.darkTextPrimary),
+          style: TextStyle(
+            fontWeight: FontWeight.w400,
+            fontSize: 15,
+            color: cs.onSurface,
+          ),
           decoration: InputDecoration(
+            isDense: true,
+            contentPadding: const EdgeInsets.symmetric(
+              horizontal: 14,
+              vertical: 12,
+            ),
             border: InputBorder.none,
             enabledBorder: InputBorder.none,
             focusedBorder: InputBorder.none,
-            contentPadding: EdgeInsets.symmetric(
-              horizontal: Spacing.lg,
-              vertical: widget.large ? Spacing.lg : Spacing.md,
-            ),
             hintText: widget.hintText,
-            hintStyle: AppTypography.bodyLarge.copyWith(
-              color: AppColors.darkTextTertiary,
+            hintStyle: TextStyle(
+              fontWeight: FontWeight.w400,
+              fontSize: 15,
+              color: cs.onSurface.withValues(alpha: 0.4),
             ),
-            prefixIcon: Icon(
-              Icons.search_rounded,
-              size: AppIconSizes.small,
-              color: AppColors.darkTextTertiary,
+            prefixIcon: Padding(
+              padding: const EdgeInsets.only(left: 10, right: 6),
+              child: Icon(
+                Icons.search_rounded,
+                size: 20,
+                color: _isFocused
+                    ? cs.primary
+                    : cs.onSurface.withValues(alpha: 0.4),
+              ),
             ),
             suffixIcon: widget.onFilterTap != null
-                ? IconButton(
-                    icon: Icon(
-                      Icons.tune_rounded,
-                      size: AppIconSizes.small,
-                      color: AppColors.darkTextTertiary,
+                ? Padding(
+                    padding: const EdgeInsets.only(right: 2),
+                    child: IconButton(
+                      icon: Icon(
+                        Icons.tune_rounded,
+                        size: 20,
+                        color: cs.onSurface.withValues(alpha: 0.4),
+                      ),
+                      onPressed: widget.onFilterTap,
+                      splashRadius: 16,
                     ),
-                    onPressed: widget.onFilterTap,
                   )
-                : null,
+                : widget.controller != null &&
+                        widget.controller!.text.isNotEmpty
+                    ? Padding(
+                        padding: const EdgeInsets.only(right: 2),
+                        child: IconButton(
+                          icon: Icon(
+                            Icons.close_rounded,
+                            size: 20,
+                            color: cs.onSurface.withValues(alpha: 0.4),
+                          ),
+                          onPressed: () {
+                            widget.controller!.clear();
+                            widget.onChanged?.call('');
+                          },
+                          splashRadius: 16,
+                        ),
+                      )
+                    : null,
           ),
+        ),
         ),
       ),
     );
