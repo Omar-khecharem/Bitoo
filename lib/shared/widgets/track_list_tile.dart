@@ -40,7 +40,9 @@ class TrackListTile extends StatelessWidget {
                 child: Text(
                   '$rank',
                   style: AppTypography.bodyMedium.copyWith(
-                    color: isActive ? AppColors.primary500 : AppColors.darkTextTertiary,
+                    color: isActive
+                        ? AppColors.primary500
+                        : AppColors.darkTextTertiary,
                     fontWeight: isActive ? FontWeight.w600 : FontWeight.w400,
                   ),
                 ),
@@ -75,7 +77,9 @@ class TrackListTile extends StatelessWidget {
                   Text(
                     title,
                     style: AppTypography.titleMedium.copyWith(
-                      color: isActive ? AppColors.primary500 : AppColors.darkTextPrimary,
+                      color: isActive
+                          ? AppColors.primary500
+                          : AppColors.darkTextPrimary,
                       fontWeight: isActive ? FontWeight.w600 : FontWeight.w500,
                     ),
                     maxLines: 1,
@@ -151,7 +155,8 @@ class MiniPlayer extends StatelessWidget {
           color: Colors.white.withValues(alpha: AppColors.glassOpacityStrong),
           border: Border(
             top: BorderSide(
-              color: Colors.white.withValues(alpha: AppColors.glassOpacityMedium),
+              color:
+                  Colors.white.withValues(alpha: AppColors.glassOpacityMedium),
               width: 0.5,
             ),
           ),
@@ -224,7 +229,8 @@ class MiniPlayer extends StatelessWidget {
                             width: 40,
                             height: 40,
                             decoration: BoxDecoration(
-                              color: Colors.white.withValues(alpha: AppColors.glassOpacityMedium),
+                              color: Colors.white.withValues(
+                                  alpha: AppColors.glassOpacityMedium),
                               shape: BoxShape.circle,
                             ),
                             child: Icon(

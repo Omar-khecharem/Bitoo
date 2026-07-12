@@ -6,7 +6,8 @@ class VolumeBooster extends StatefulWidget {
   final double volume;
   final ValueChanged<double> onChanged;
 
-  const VolumeBooster({super.key, required this.volume, required this.onChanged});
+  const VolumeBooster(
+      {super.key, required this.volume, required this.onChanged});
 
   @override
   State<VolumeBooster> createState() => _VolumeBoosterState();
@@ -54,8 +55,10 @@ class _VolumeBoosterState extends State<VolumeBooster>
   bool get isBoosted => widget.volume > 1.0;
   double get displayLevel => (widget.volume / maxVolume).clamp(0.0, 1.0);
 
-  void _decrease() => widget.onChanged((widget.volume - step).clamp(minVolume, maxVolume));
-  void _increase() => widget.onChanged((widget.volume + step).clamp(minVolume, maxVolume));
+  void _decrease() =>
+      widget.onChanged((widget.volume - step).clamp(minVolume, maxVolume));
+  void _increase() =>
+      widget.onChanged((widget.volume + step).clamp(minVolume, maxVolume));
 
   @override
   Widget build(BuildContext context) {
@@ -71,7 +74,8 @@ class _VolumeBoosterState extends State<VolumeBooster>
             borderRadius: BorderRadius.circular(AppRadius.lg),
             border: Border.all(
               color: isBoosted
-                  ? AppColors.neonRose.withValues(alpha: 0.2 * _pulseAnimation.value)
+                  ? AppColors.neonRose
+                      .withValues(alpha: 0.2 * _pulseAnimation.value)
                   : Colors.white.withValues(alpha: 0.06),
             ),
           ),
@@ -108,18 +112,23 @@ class _VolumeBoosterState extends State<VolumeBooster>
                               gradient: LinearGradient(
                                 colors: isBoosted
                                     ? [AppColors.neonRose, Colors.orangeAccent]
-                                    : [AppColors.neonIndigo, AppColors.neonBlue],
+                                    : [
+                                        AppColors.neonIndigo,
+                                        AppColors.neonBlue
+                                      ],
                               ),
                               boxShadow: isBoosted
                                   ? [
                                       BoxShadow(
-                                        color: AppColors.neonRose.withValues(alpha: 0.4 * _pulseAnimation.value),
+                                        color: AppColors.neonRose.withValues(
+                                            alpha: 0.4 * _pulseAnimation.value),
                                         blurRadius: 6,
                                       ),
                                     ]
                                   : [
                                       BoxShadow(
-                                        color: AppColors.neonIndigo.withValues(alpha: 0.3),
+                                        color: AppColors.neonIndigo
+                                            .withValues(alpha: 0.3),
                                         blurRadius: 4,
                                       ),
                                     ],
@@ -138,7 +147,8 @@ class _VolumeBoosterState extends State<VolumeBooster>
                             fontSize: 9,
                             fontWeight: FontWeight.w700,
                             color: isBoosted
-                                ? AppColors.neonRose.withValues(alpha: 0.8 * _pulseAnimation.value)
+                                ? AppColors.neonRose.withValues(
+                                    alpha: 0.8 * _pulseAnimation.value)
                                 : Colors.white.withValues(alpha: 0.25),
                             letterSpacing: 1.5,
                           ),
@@ -194,8 +204,14 @@ class _VolumeButton extends StatelessWidget {
         decoration: BoxDecoration(
           gradient: LinearGradient(
             colors: isBoosted
-                ? [AppColors.neonRose.withValues(alpha: 0.3), AppColors.neonRose.withValues(alpha: 0.15)]
-                : [Colors.white.withValues(alpha: 0.1), Colors.white.withValues(alpha: 0.04)],
+                ? [
+                    AppColors.neonRose.withValues(alpha: 0.3),
+                    AppColors.neonRose.withValues(alpha: 0.15)
+                  ]
+                : [
+                    Colors.white.withValues(alpha: 0.1),
+                    Colors.white.withValues(alpha: 0.04)
+                  ],
             begin: Alignment.topLeft,
             end: Alignment.bottomRight,
           ),

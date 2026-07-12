@@ -11,22 +11,22 @@ class AnimationCurves {
   static const Cubic glassReveal = Cubic(0.34, 1.56, 0.64, 1.0);
 
   static SpringDescription get spring => SpringDescription(
-    damping: 0.7,
-    stiffness: 300,
-    mass: 1.0,
-  );
+        damping: 0.7,
+        stiffness: 300,
+        mass: 1.0,
+      );
 
   static SpringDescription get springBouncy => SpringDescription(
-    damping: 0.5,
-    stiffness: 200,
-    mass: 1.0,
-  );
+        damping: 0.5,
+        stiffness: 200,
+        mass: 1.0,
+      );
 
   static SpringDescription get springSnappy => SpringDescription(
-    damping: 0.8,
-    stiffness: 500,
-    mass: 0.5,
-  );
+        damping: 0.8,
+        stiffness: 500,
+        mass: 0.5,
+      );
 
   static const TransitionDuration transitionDuration = TransitionDuration();
 }

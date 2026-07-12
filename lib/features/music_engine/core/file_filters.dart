@@ -1,7 +1,13 @@
 import 'dart:io' show Platform;
 
 class FileFilters {
-  static const _hiddenPrefixes = ['.', '__', 'node_modules', 'System Volume Information', '\$RECYCLE.BIN'];
+  static const _hiddenPrefixes = [
+    '.',
+    '__',
+    'node_modules',
+    'System Volume Information',
+    '\$RECYCLE.BIN'
+  ];
 
   static const _systemPaths = [
     '/system',

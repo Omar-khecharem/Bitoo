@@ -54,19 +54,20 @@ class AppPreferences {
   }
 
   Map<String, dynamic> toMap() => {
-    'themeMode': themeMode.index,
-    'accentColor': accentColor.name,
-    'blurIntensity': blurIntensity,
-    'animationLevel': animationLevel,
-    'crossfadeEnabled': crossfadeEnabled,
-    'crossfadeDuration': crossfadeDuration,
-    'gaplessPlayback': gaplessPlayback,
-    'autoPlay': autoPlay,
-    'rememberPosition': rememberPosition,
-  };
+        'themeMode': themeMode.index,
+        'accentColor': accentColor.name,
+        'blurIntensity': blurIntensity,
+        'animationLevel': animationLevel,
+        'crossfadeEnabled': crossfadeEnabled,
+        'crossfadeDuration': crossfadeDuration,
+        'gaplessPlayback': gaplessPlayback,
+        'autoPlay': autoPlay,
+        'rememberPosition': rememberPosition,
+      };
 
   factory AppPreferences.fromMap(Map<String, dynamic> map) {
-    final accentName = map['accentColor'] as String? ?? AccentColor.festival.name;
+    final accentName =
+        map['accentColor'] as String? ?? AccentColor.festival.name;
     final accent = accentColors.firstWhere(
       (a) => a.name == accentName,
       orElse: () => AccentColor.festival,
@@ -153,6 +154,7 @@ class PreferencesNotifier extends StateNotifier<AppPreferences> {
   }
 }
 
-final preferencesProvider = StateNotifierProvider<PreferencesNotifier, AppPreferences>((ref) {
+final preferencesProvider =
+    StateNotifierProvider<PreferencesNotifier, AppPreferences>((ref) {
   return PreferencesNotifier();
 });

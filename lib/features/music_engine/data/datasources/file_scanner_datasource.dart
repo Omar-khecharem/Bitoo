@@ -47,13 +47,16 @@ class FileScannerDataSource {
 
   Stream<File> _walkDirectory(Directory dir) async* {
     try {
-      await for (final entity in dir.list(recursive: true, followLinks: false)) {
+      await for (final entity
+          in dir.list(recursive: true, followLinks: false)) {
         if (entity is File && _isAudioFile(entity.path)) {
           yield entity;
         }
       }
     } on PathAccessException {
+      // Ignore - directory access denied
     } on FileSystemException {
+      // Ignore - filesystem error
     }
   }
 
@@ -90,7 +93,8 @@ class FileScannerDataSource {
         final storageDir = Directory('/storage');
         if (storageDir.existsSync()) {
           for (final entity in storageDir.listSync()) {
-            if (entity is Directory && !FileFilters.isHiddenOrSystemPath(entity.path)) {
+            if (entity is Directory &&
+                !FileFilters.isHiddenOrSystemPath(entity.path)) {
               final name = entity.path.split('/').last;
               if (name != 'emulated') {
                 roots.add(entity);
@@ -114,7 +118,8 @@ class FileScannerDataSource {
         final storageDir = Directory('/storage');
         if (storageDir.existsSync()) {
           for (final entity in storageDir.listSync()) {
-            if (entity is Directory && !FileFilters.isHiddenOrSystemPath(entity.path)) {
+            if (entity is Directory &&
+                !FileFilters.isHiddenOrSystemPath(entity.path)) {
               if (!roots.any((r) => r.path == entity.path)) {
                 roots.add(entity);
               }

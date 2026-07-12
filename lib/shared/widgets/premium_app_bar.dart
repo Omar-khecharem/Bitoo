@@ -75,10 +75,12 @@ class _PremiumAppBarState extends State<PremiumAppBar> {
         child: Container(
           padding: EdgeInsets.only(top: MediaQuery.of(context).padding.top),
           decoration: BoxDecoration(
-            color: Colors.white.withValues(alpha: AppColors.glassOpacityHeavy * _glassOpacity),
+            color: Colors.white
+                .withValues(alpha: AppColors.glassOpacityHeavy * _glassOpacity),
             border: Border(
               bottom: BorderSide(
-                color: Colors.white.withValues(alpha: AppColors.glassOpacityMedium * _glassOpacity),
+                color: Colors.white.withValues(
+                    alpha: AppColors.glassOpacityMedium * _glassOpacity),
                 width: 0.5,
               ),
             ),
@@ -95,10 +97,12 @@ class _PremiumAppBarState extends State<PremiumAppBar> {
                       padding: EdgeInsets.only(right: Spacing.sm),
                       child: widget.leading ??
                           IconButton(
-                            icon: Icon(Icons.arrow_back_ios_new_rounded, size: 20),
+                            icon: Icon(Icons.arrow_back_ios_new_rounded,
+                                size: 20),
                             onPressed: widget.onBack,
                             style: IconButton.styleFrom(
-                              backgroundColor: Colors.white.withValues(alpha: AppColors.glassOpacityMedium),
+                              backgroundColor: Colors.white.withValues(
+                                  alpha: AppColors.glassOpacityMedium),
                               shape: CircleBorder(),
                             ),
                           ),

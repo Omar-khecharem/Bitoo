@@ -13,7 +13,8 @@ class PremiumBottomSheet extends StatelessWidget {
     this.showDragHandle = true,
   });
 
-  static Future<T?> show<T>(BuildContext context, {
+  static Future<T?> show<T>(
+    BuildContext context, {
     required Widget builder,
     double? maxHeight,
     bool showDragHandle = true,
@@ -41,7 +42,8 @@ class PremiumBottomSheet extends StatelessWidget {
 
     return Container(
       margin: EdgeInsets.fromLTRB(8, 0, 8, bottom + 8),
-      constraints: maxHeight != null ? BoxConstraints(maxHeight: maxHeight!) : null,
+      constraints:
+          maxHeight != null ? BoxConstraints(maxHeight: maxHeight!) : null,
       decoration: BoxDecoration(
         color: isDark ? cs.surface : cs.surface,
         borderRadius: BorderRadius.circular(20),
@@ -154,7 +156,8 @@ class PremiumConfirmDialog extends StatelessWidget {
     required this.onConfirm,
   });
 
-  static Future<bool?> show(BuildContext context, {
+  static Future<bool?> show(
+    BuildContext context, {
     required String title,
     required String message,
     String confirmLabel = 'Confirm',
@@ -193,10 +196,12 @@ class PremiumConfirmDialog extends StatelessWidget {
               width: 56,
               height: 56,
               decoration: BoxDecoration(
-                color: (confirmColor ?? AppColors.neonRose).withValues(alpha: 0.12),
+                color: (confirmColor ?? AppColors.neonRose)
+                    .withValues(alpha: 0.12),
                 shape: BoxShape.circle,
               ),
-              child: Icon(icon, size: 28, color: confirmColor ?? AppColors.neonRose),
+              child: Icon(icon,
+                  size: 28, color: confirmColor ?? AppColors.neonRose),
             ),
             SizedBox(height: 16),
           ],
@@ -235,7 +240,11 @@ class PremiumConfirmDialog extends StatelessWidget {
                 borderRadius: BorderRadius.circular(12),
               ),
             ),
-            child: Text(cancelLabel, style: TextStyle(fontSize: 15, fontWeight: FontWeight.w500, color: cs.onSurface.withValues(alpha: 0.6))),
+            child: Text(cancelLabel,
+                style: TextStyle(
+                    fontSize: 15,
+                    fontWeight: FontWeight.w500,
+                    color: cs.onSurface.withValues(alpha: 0.6))),
           ),
         ),
         SizedBox(height: 8),
@@ -252,7 +261,8 @@ class PremiumConfirmDialog extends StatelessWidget {
               ),
               elevation: 0,
             ),
-            child: Text(confirmLabel, style: TextStyle(fontSize: 15, fontWeight: FontWeight.w600)),
+            child: Text(confirmLabel,
+                style: TextStyle(fontSize: 15, fontWeight: FontWeight.w600)),
           ),
         ),
       ],
@@ -276,7 +286,8 @@ class PremiumInputDialog extends StatefulWidget {
     required this.onConfirm,
   });
 
-  static Future<String?> show(BuildContext context, {
+  static Future<String?> show(
+    BuildContext context, {
     required String title,
     required String hintText,
     String confirmLabel = 'Create',
@@ -352,9 +363,11 @@ class _PremiumInputDialogState extends State<PremiumInputDialog> {
               style: TextStyle(color: cs.onSurface, fontSize: 16),
               decoration: InputDecoration(
                 hintText: widget.hintText,
-                hintStyle: TextStyle(color: cs.onSurface.withValues(alpha: 0.3)),
+                hintStyle:
+                    TextStyle(color: cs.onSurface.withValues(alpha: 0.3)),
                 border: InputBorder.none,
-                contentPadding: const EdgeInsets.symmetric(horizontal: 16, vertical: 14),
+                contentPadding:
+                    const EdgeInsets.symmetric(horizontal: 16, vertical: 14),
               ),
             ),
           ),
@@ -365,17 +378,21 @@ class _PremiumInputDialogState extends State<PremiumInputDialog> {
         SizedBox(
           width: double.infinity,
           child: ElevatedButton(
-            onPressed: _isValid ? () => widget.onConfirm(_controller.text.trim()) : null,
+            onPressed: _isValid
+                ? () => widget.onConfirm(_controller.text.trim())
+                : null,
             style: ElevatedButton.styleFrom(
               foregroundColor: cs.onPrimary,
-              backgroundColor: _isValid ? cs.primary : cs.onSurface.withValues(alpha: 0.06),
+              backgroundColor:
+                  _isValid ? cs.primary : cs.onSurface.withValues(alpha: 0.06),
               padding: const EdgeInsets.symmetric(vertical: 14),
               shape: RoundedRectangleBorder(
                 borderRadius: BorderRadius.circular(12),
               ),
               elevation: 0,
             ),
-            child: Text(widget.confirmLabel, style: TextStyle(fontSize: 15, fontWeight: FontWeight.w600)),
+            child: Text(widget.confirmLabel,
+                style: TextStyle(fontSize: 15, fontWeight: FontWeight.w600)),
           ),
         ),
       ],

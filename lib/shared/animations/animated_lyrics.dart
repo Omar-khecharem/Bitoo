@@ -97,7 +97,8 @@ class _AnimatedLyricsViewState extends State<AnimatedLyricsView> {
         },
         child: ListView.builder(
           controller: _scrollController,
-          padding: EdgeInsets.symmetric(vertical: MediaQuery.of(context).size.height * 0.3),
+          padding: EdgeInsets.symmetric(
+              vertical: MediaQuery.of(context).size.height * 0.3),
           itemCount: widget.lines.length,
           itemBuilder: (context, index) {
             final line = widget.lines[index];
@@ -140,7 +141,9 @@ class _LyricLineWidget extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     final progress = line.durationMs > 0
-        ? ((currentPosition.inMilliseconds - line.timestampMs) / line.durationMs).clamp(0.0, 1.0)
+        ? ((currentPosition.inMilliseconds - line.timestampMs) /
+                line.durationMs)
+            .clamp(0.0, 1.0)
         : 0.0;
 
     return RepaintBoundary(

@@ -30,7 +30,8 @@ class AudioPlayerHandler extends BaseAudioHandler {
   int _shuffleIndex = 0;
 
   String? _lastPlaybackError;
-  final StreamController<String?> _errorController = StreamController<String?>.broadcast();
+  final StreamController<String?> _errorController =
+      StreamController<String?>.broadcast();
 
   String get currentPath => _currentPath;
   String get currentTitle => _currentTitle;
@@ -217,9 +218,10 @@ class AudioPlayerHandler extends BaseAudioHandler {
     try {
       await _player.setFilePath(originalPath);
     } catch (e) {
-      debugPrint('[AudioHandler] setFilePath failed ($e), trying cache copy...');
+      debugPrint(
+          '[AudioHandler] setFilePath failed ($e), trying cache copy...');
       final dir = await getTemporaryDirectory();
-      final cachePath = '${dir.path}/bitoo_cache_${_currentIndex}.mp3';
+      final cachePath = '${dir.path}/bitoo_cache_$_currentIndex.mp3';
       try {
         await file.copy(cachePath);
         await _player.setFilePath(cachePath);
@@ -256,7 +258,8 @@ class AudioPlayerHandler extends BaseAudioHandler {
 
   Future<void> setVolume(double volume) => _player.setVolume(volume);
 
-  Future<void> setFilePath(String path, {String title = '', String artist = ''}) async {
+  Future<void> setFilePath(String path,
+      {String title = '', String artist = ''}) async {
     final idx = _queue.indexWhere((item) => item.path == path);
     if (idx >= 0) {
       _currentIndex = idx;

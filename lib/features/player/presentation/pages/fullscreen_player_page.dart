@@ -34,7 +34,8 @@ class FullscreenPlayerPage extends ConsumerStatefulWidget {
   });
 
   @override
-  ConsumerState<FullscreenPlayerPage> createState() => _FullscreenPlayerPageState();
+  ConsumerState<FullscreenPlayerPage> createState() =>
+      _FullscreenPlayerPageState();
 }
 
 class _FullscreenPlayerPageState extends ConsumerState<FullscreenPlayerPage>
@@ -65,7 +66,8 @@ class _FullscreenPlayerPageState extends ConsumerState<FullscreenPlayerPage>
   String _artist = '';
 
   bool get _isOverlay => widget.overlayController != null;
-  double get _t => _isOverlay ? widget.expandProgress : (_entryAnimation?.value ?? 1.0);
+  double get _t =>
+      _isOverlay ? widget.expandProgress : (_entryAnimation?.value ?? 1.0);
 
   @override
   void initState() {
@@ -246,7 +248,9 @@ class _FullscreenPlayerPageState extends ConsumerState<FullscreenPlayerPage>
                 begin: Alignment.topCenter,
                 end: Alignment.bottomCenter,
                 colors: [
-                  isDark ? AppColors.darkBackground : AppColors.lightSurfaceDark,
+                  isDark
+                      ? AppColors.darkBackground
+                      : AppColors.lightSurfaceDark,
                   isDark ? const Color(0xFF0A0A1A) : AppColors.lightSurface,
                   isDark ? AppColors.darkBackground : AppColors.lightBackground,
                 ],
@@ -304,7 +308,8 @@ class _FullscreenPlayerPageState extends ConsumerState<FullscreenPlayerPage>
                     width: 40,
                     height: 4,
                     decoration: BoxDecoration(
-                      color: AppColors.darkTextTertiary.withValues(alpha: 0.3 * (morph ? (t - 0.5) / 0.5 : 1.0)),
+                      color: AppColors.darkTextTertiary.withValues(
+                          alpha: 0.3 * (morph ? (t - 0.5) / 0.5 : 1.0)),
                       borderRadius: BorderRadius.circular(2),
                     ),
                   ),
@@ -337,14 +342,19 @@ class _FullscreenPlayerPageState extends ConsumerState<FullscreenPlayerPage>
     // Interpolated values
     final artSize = lerpDouble(miniArtSize, fullArtSize, t)!;
     final artLeft = lerpDouble(Spacing.md, (screenWidth - fullArtSize) / 2, t)!;
-    final artBottom = lerpDouble(miniBottom + (miniHeight - miniArtSize) / 2, mq.size.height * 0.35, t)!;
+    final artBottom = lerpDouble(
+        miniBottom + (miniHeight - miniArtSize) / 2, mq.size.height * 0.35, t)!;
     final titleSize = lerpDouble(15, 24, t)!;
     final artistSize = lerpDouble(12, 14, t)!;
     final titleLeft = lerpDouble(miniArtSize + Spacing.md + Spacing.md, 0, t)!;
-    final titleBottom = lerpDouble(miniBottom + miniHeight / 2 + 2, mq.size.height * 0.35 + fullArtSize * 0.6 + Spacing.xl, t)!;
+    final titleBottom = lerpDouble(miniBottom + miniHeight / 2 + 2,
+        mq.size.height * 0.35 + fullArtSize * 0.6 + Spacing.xl, t)!;
     final controlsOpacity = (t < 0.3 ? 1.0 - (t / 0.3) : 0.0).clamp(0.0, 1.0);
     const fullControlsStart = 0.3;
-    final fullControlsOpacity = (t < fullControlsStart ? 0.0 : (t - fullControlsStart) / (1.0 - fullControlsStart)).clamp(0.0, 1.0);
+    final fullControlsOpacity = (t < fullControlsStart
+            ? 0.0
+            : (t - fullControlsStart) / (1.0 - fullControlsStart))
+        .clamp(0.0, 1.0);
 
     return Stack(
       children: [
@@ -409,7 +419,9 @@ class _FullscreenPlayerPageState extends ConsumerState<FullscreenPlayerPage>
             mainAxisSize: MainAxisSize.min,
             children: [
               Text(
-                _title.isNotEmpty ? _title : AudioExtensions.titleFromPath(_filePath),
+                _title.isNotEmpty
+                    ? _title
+                    : AudioExtensions.titleFromPath(_filePath),
                 style: TextStyle(
                   fontWeight: FontWeight.bold,
                   fontSize: titleSize,
@@ -446,16 +458,22 @@ class _FullscreenPlayerPageState extends ConsumerState<FullscreenPlayerPage>
                 children: [
                   _MorphMiniButton(
                     icon: Icons.skip_previous_rounded,
-                    onTap: () => ref.read(audioHandlerProvider).skipToPrevious(),
+                    onTap: () =>
+                        ref.read(audioHandlerProvider).skipToPrevious(),
                   ),
                   _MorphPlayButton(
                     isPlaying: _isPlaying,
                     progress: _duration.inMicroseconds > 0
-                        ? (_position.inMicroseconds / _duration.inMicroseconds).clamp(0.0, 1.0)
+                        ? (_position.inMicroseconds / _duration.inMicroseconds)
+                            .clamp(0.0, 1.0)
                         : 0.0,
                     onTap: () {
                       final h = ref.read(audioHandlerProvider);
-                      if (_isPlaying) { h.pause(); } else { h.play(); }
+                      if (_isPlaying) {
+                        h.pause();
+                      } else {
+                        h.play();
+                      }
                     },
                   ),
                   _MorphMiniButton(
@@ -493,12 +511,15 @@ class _FullscreenPlayerPageState extends ConsumerState<FullscreenPlayerPage>
             AppColors.darkSurface.withValues(alpha: 0.98),
           ],
         ),
-        borderRadius: BorderRadius.vertical(top: const Radius.circular(AppRadius.xl)),
+        borderRadius:
+            BorderRadius.vertical(top: const Radius.circular(AppRadius.xl)),
       ),
       child: ClipRRect(
-        borderRadius: BorderRadius.vertical(top: const Radius.circular(AppRadius.xl)),
+        borderRadius:
+            BorderRadius.vertical(top: const Radius.circular(AppRadius.xl)),
         child: Padding(
-          padding: EdgeInsets.fromLTRB(Spacing.md, Spacing.sm, Spacing.sm, Spacing.sm),
+          padding: EdgeInsets.fromLTRB(
+              Spacing.md, Spacing.sm, Spacing.sm, Spacing.sm),
           child: Row(
             children: [
               Container(
@@ -574,21 +595,29 @@ class _FullscreenPlayerPageState extends ConsumerState<FullscreenPlayerPage>
                     children: [
                       _MorphMiniButton(
                         icon: Icons.skip_previous_rounded,
-                        onTap: () => ref.read(audioHandlerProvider).skipToPrevious(),
+                        onTap: () =>
+                            ref.read(audioHandlerProvider).skipToPrevious(),
                       ),
                       _MorphPlayButton(
                         isPlaying: _isPlaying,
                         progress: showProgress && _duration.inMicroseconds > 0
-                            ? (_position.inMicroseconds / _duration.inMicroseconds).clamp(0.0, 1.0)
+                            ? (_position.inMicroseconds /
+                                    _duration.inMicroseconds)
+                                .clamp(0.0, 1.0)
                             : 0.0,
                         onTap: () {
                           final h = ref.read(audioHandlerProvider);
-                          if (_isPlaying) { h.pause(); } else { h.play(); }
+                          if (_isPlaying) {
+                            h.pause();
+                          } else {
+                            h.play();
+                          }
                         },
                       ),
                       _MorphMiniButton(
                         icon: Icons.skip_next_rounded,
-                        onTap: () => ref.read(audioHandlerProvider).skipToNext(),
+                        onTap: () =>
+                            ref.read(audioHandlerProvider).skipToNext(),
                       ),
                     ],
                   ),
@@ -628,7 +657,9 @@ class _FullscreenPlayerPageState extends ConsumerState<FullscreenPlayerPage>
           child: Column(
             children: [
               Text(
-                _title.isNotEmpty ? _title : AudioExtensions.titleFromPath(_filePath),
+                _title.isNotEmpty
+                    ? _title
+                    : AudioExtensions.titleFromPath(_filePath),
                 style: const TextStyle(
                   fontWeight: FontWeight.bold,
                   fontSize: 24,
@@ -747,7 +778,9 @@ class _FullscreenPlayerPageState extends ConsumerState<FullscreenPlayerPage>
               mainAxisAlignment: MainAxisAlignment.center,
               children: [
                 Text(
-                  _title.isNotEmpty ? _title : AudioExtensions.titleFromPath(_filePath),
+                  _title.isNotEmpty
+                      ? _title
+                      : AudioExtensions.titleFromPath(_filePath),
                   style: const TextStyle(
                     fontWeight: FontWeight.bold,
                     fontSize: 24,
@@ -901,5 +934,3 @@ class _MorphPlayButton extends StatelessWidget {
     );
   }
 }
-
-

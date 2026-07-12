@@ -27,7 +27,8 @@ final metadataReaderProvider = Provider<MetadataDataSource>((ref) {
   return MetadataDataSource();
 });
 
-final artworkCacheProvider = FutureProvider<ArtworkCacheDataSource>((ref) async {
+final artworkCacheProvider =
+    FutureProvider<ArtworkCacheDataSource>((ref) async {
   return ArtworkCacheDataSource.create();
 });
 
@@ -79,12 +80,14 @@ final allSongsProvider = FutureProvider.autoDispose<List<Song>>((ref) async {
   return repo.getAllSongs();
 });
 
-final songsByAlbumProvider = FutureProvider.autoDispose.family<List<Song>, String>((ref, album) async {
+final songsByAlbumProvider =
+    FutureProvider.autoDispose.family<List<Song>, String>((ref, album) async {
   final repo = await ref.read(musicRepositoryProvider.future);
   return repo.getSongsByAlbum(album);
 });
 
-final songsByArtistProvider = FutureProvider.autoDispose.family<List<Song>, String>((ref, artist) async {
+final songsByArtistProvider =
+    FutureProvider.autoDispose.family<List<Song>, String>((ref, artist) async {
   final repo = await ref.read(musicRepositoryProvider.future);
   return repo.getSongsByArtist(artist);
 });
@@ -98,7 +101,8 @@ final allAlbumsProvider = FutureProvider.autoDispose<List<Album>>((ref) async {
 
 // ── Artists ──
 
-final allArtistsProvider = FutureProvider.autoDispose<List<Artist>>((ref) async {
+final allArtistsProvider =
+    FutureProvider.autoDispose<List<Artist>>((ref) async {
   final repo = await ref.read(musicRepositoryProvider.future);
   return repo.getAllArtists();
 });
@@ -110,7 +114,8 @@ final allGenresProvider = FutureProvider.autoDispose<List<Genre>>((ref) async {
   return repo.getAllGenres();
 });
 
-final songsByGenreProvider = FutureProvider.autoDispose.family<List<Song>, String>((ref, genre) async {
+final songsByGenreProvider =
+    FutureProvider.autoDispose.family<List<Song>, String>((ref, genre) async {
   final repo = await ref.read(musicRepositoryProvider.future);
   return repo.getSongsByGenre(genre);
 });
@@ -119,7 +124,8 @@ final songsByGenreProvider = FutureProvider.autoDispose.family<List<Song>, Strin
 
 final searchQueryProvider = StateProvider<String>((ref) => '');
 
-final searchResultsProvider = FutureProvider.autoDispose<List<Song>>((ref) async {
+final searchResultsProvider =
+    FutureProvider.autoDispose<List<Song>>((ref) async {
   final query = ref.watch(searchQueryProvider);
   if (query.trim().isEmpty) return [];
 
@@ -134,33 +140,38 @@ final favoritesProvider = FutureProvider.autoDispose<List<Song>>((ref) async {
   return repo.getFavorites();
 });
 
-final isFavoriteProvider = FutureProvider.autoDispose.family<bool, String>((ref, filePath) async {
+final isFavoriteProvider =
+    FutureProvider.autoDispose.family<bool, String>((ref, filePath) async {
   final repo = await ref.read(musicRepositoryProvider.future);
   return repo.isFavorite(filePath);
 });
 
 // ── Recently Played ──
 
-final recentlyPlayedProvider = FutureProvider.autoDispose<List<Song>>((ref) async {
+final recentlyPlayedProvider =
+    FutureProvider.autoDispose<List<Song>>((ref) async {
   final repo = await ref.read(musicRepositoryProvider.future);
   return repo.getRecentlyPlayed();
 });
 
 // ── Playlists ──
 
-final allPlaylistsProvider = FutureProvider.autoDispose<List<PlaylistEntry>>((ref) async {
+final allPlaylistsProvider =
+    FutureProvider.autoDispose<List<PlaylistEntry>>((ref) async {
   final repo = await ref.read(musicRepositoryProvider.future);
   return repo.getPlaylists();
 });
 
-final playlistDetailProvider = FutureProvider.autoDispose.family<PlaylistEntry?, int>((ref, id) async {
+final playlistDetailProvider =
+    FutureProvider.autoDispose.family<PlaylistEntry?, int>((ref, id) async {
   final repo = await ref.read(musicRepositoryProvider.future);
   return repo.getPlaylist(id);
 });
 
 // ── Storage Stats ──
 
-final storageStatsProvider = FutureProvider.autoDispose<Map<String, int>>((ref) async {
+final storageStatsProvider =
+    FutureProvider.autoDispose<Map<String, int>>((ref) async {
   final repo = await ref.read(musicRepositoryProvider.future);
   return repo.getStorageStats();
 });

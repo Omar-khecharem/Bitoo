@@ -37,7 +37,8 @@ class _ScaleOnTapState extends State<ScaleOnTap>
       duration: widget.duration,
     );
     _scale = Tween<double>(begin: widget.scaleUp, end: widget.scaleDown)
-        .animate(CurvedAnimation(parent: _controller, curve: AnimationCurves.premiumEase));
+        .animate(CurvedAnimation(
+            parent: _controller, curve: AnimationCurves.premiumEase));
   }
 
   @override
@@ -332,7 +333,9 @@ class _HeartBounceState extends State<HeartBounce>
           child: child,
         ),
         child: Icon(
-          widget.isFilled ? Icons.favorite_rounded : Icons.favorite_outline_rounded,
+          widget.isFilled
+              ? Icons.favorite_rounded
+              : Icons.favorite_outline_rounded,
           size: widget.size,
           color: widget.isFilled ? widget.activeColor : widget.inactiveColor,
         ),
@@ -473,7 +476,8 @@ class _PulseRingState extends State<PulseRing>
         ),
         child: Center(child: child),
       ),
-      child: Icon(Icons.play_arrow_rounded, size: widget.size, color: Colors.white),
+      child: Icon(Icons.play_arrow_rounded,
+          size: widget.size, color: Colors.white),
     );
   }
 }
@@ -556,7 +560,8 @@ class _StaggeredFadeInState extends State<StaggeredFadeIn>
       duration: AppDurations.normal,
     );
     _opacity = Tween<double>(begin: 0.0, end: 1.0).animate(
-      CurvedAnimation(parent: _controller, curve: AnimationCurves.premiumEaseOut),
+      CurvedAnimation(
+          parent: _controller, curve: AnimationCurves.premiumEaseOut),
     );
     _slide = Tween<Offset>(
       begin: Offset(0, 0.15),

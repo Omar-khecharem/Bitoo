@@ -74,36 +74,41 @@ class AudioEngineReady extends AudioEngineState {
     double? albumGain,
     bool? replayGainEnabled,
     ReplayGainMode? replayGainMode,
-  }) => AudioEngineReady(
-    eqEnabled: eqEnabled ?? this.eqEnabled,
-    eqBands: eqBands ?? this.eqBands,
-    activePreset: activePreset ?? this.activePreset,
-    bassBoostEnabled: bassBoostEnabled ?? this.bassBoostEnabled,
-    bassBoostStrength: bassBoostStrength ?? this.bassBoostStrength,
-    virtualizerEnabled: virtualizerEnabled ?? this.virtualizerEnabled,
-    virtualizerStrength: virtualizerStrength ?? this.virtualizerStrength,
-    loudnessEnabled: loudnessEnabled ?? this.loudnessEnabled,
-    loudnessGainMillibels: loudnessGainMillibels ?? this.loudnessGainMillibels,
-    volumeNormalizationEnabled: volumeNormalizationEnabled ?? this.volumeNormalizationEnabled,
-    crossfadeDurationSeconds: crossfadeDurationSeconds ?? this.crossfadeDurationSeconds,
-    gaplessEnabled: gaplessEnabled ?? this.gaplessEnabled,
-    hiResMode: hiResMode ?? this.hiResMode,
-    outputFormat: outputFormat ?? this.outputFormat,
-    sampleRate: sampleRate ?? this.sampleRate,
-    bufferSizeFrames: bufferSizeFrames ?? this.bufferSizeFrames,
-    trackGain: trackGain ?? this.trackGain,
-    albumGain: albumGain ?? this.albumGain,
-    replayGainEnabled: replayGainEnabled ?? this.replayGainEnabled,
-    replayGainMode: replayGainMode ?? this.replayGainMode,
-  );
+  }) =>
+      AudioEngineReady(
+        eqEnabled: eqEnabled ?? this.eqEnabled,
+        eqBands: eqBands ?? this.eqBands,
+        activePreset: activePreset ?? this.activePreset,
+        bassBoostEnabled: bassBoostEnabled ?? this.bassBoostEnabled,
+        bassBoostStrength: bassBoostStrength ?? this.bassBoostStrength,
+        virtualizerEnabled: virtualizerEnabled ?? this.virtualizerEnabled,
+        virtualizerStrength: virtualizerStrength ?? this.virtualizerStrength,
+        loudnessEnabled: loudnessEnabled ?? this.loudnessEnabled,
+        loudnessGainMillibels:
+            loudnessGainMillibels ?? this.loudnessGainMillibels,
+        volumeNormalizationEnabled:
+            volumeNormalizationEnabled ?? this.volumeNormalizationEnabled,
+        crossfadeDurationSeconds:
+            crossfadeDurationSeconds ?? this.crossfadeDurationSeconds,
+        gaplessEnabled: gaplessEnabled ?? this.gaplessEnabled,
+        hiResMode: hiResMode ?? this.hiResMode,
+        outputFormat: outputFormat ?? this.outputFormat,
+        sampleRate: sampleRate ?? this.sampleRate,
+        bufferSizeFrames: bufferSizeFrames ?? this.bufferSizeFrames,
+        trackGain: trackGain ?? this.trackGain,
+        albumGain: albumGain ?? this.albumGain,
+        replayGainEnabled: replayGainEnabled ?? this.replayGainEnabled,
+        replayGainMode: replayGainMode ?? this.replayGainMode,
+      );
 
   AudioEngineReady withAppliedPreset(PresetConfig preset) => copyWith(
-    activePreset: preset.name,
-    eqBands: preset.bands,
-    bassBoostStrength: (preset.bassBoost * 1000).round(),
-    virtualizerStrength: (preset.virtualizerStrength * 1000).round(),
-    loudnessGainMillibels: preset.loudnessTargetGain ?? loudnessGainMillibels,
-  );
+        activePreset: preset.name,
+        eqBands: preset.bands,
+        bassBoostStrength: (preset.bassBoost * 1000).round(),
+        virtualizerStrength: (preset.virtualizerStrength * 1000).round(),
+        loudnessGainMillibels:
+            preset.loudnessTargetGain ?? loudnessGainMillibels,
+      );
 
   AudioEngineReady withBand(int index, double value) {
     final newBands = List<double>.from(eqBands);

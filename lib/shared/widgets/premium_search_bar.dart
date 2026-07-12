@@ -81,74 +81,74 @@ class _PremiumSearchBarState extends State<PremiumSearchBar> {
             ),
           ),
           child: TextField(
-          controller: widget.controller,
-          focusNode: _focusNode,
-          autofocus: widget.autofocus,
-          onChanged: widget.onChanged,
-          onSubmitted: widget.onSubmitted,
-          style: TextStyle(
-            fontWeight: FontWeight.w400,
-            fontSize: 15,
-            color: cs.onSurface,
-          ),
-          decoration: InputDecoration(
-            isDense: true,
-            contentPadding: const EdgeInsets.symmetric(
-              horizontal: 14,
-              vertical: 12,
-            ),
-            border: InputBorder.none,
-            enabledBorder: InputBorder.none,
-            focusedBorder: InputBorder.none,
-            hintText: widget.hintText,
-            hintStyle: TextStyle(
+            controller: widget.controller,
+            focusNode: _focusNode,
+            autofocus: widget.autofocus,
+            onChanged: widget.onChanged,
+            onSubmitted: widget.onSubmitted,
+            style: TextStyle(
               fontWeight: FontWeight.w400,
               fontSize: 15,
-              color: cs.onSurface.withValues(alpha: 0.4),
+              color: cs.onSurface,
             ),
-            prefixIcon: Padding(
-              padding: const EdgeInsets.only(left: 10, right: 6),
-              child: Icon(
-                Icons.search_rounded,
-                size: 20,
-                color: _isFocused
-                    ? cs.primary
-                    : cs.onSurface.withValues(alpha: 0.4),
+            decoration: InputDecoration(
+              isDense: true,
+              contentPadding: const EdgeInsets.symmetric(
+                horizontal: 14,
+                vertical: 12,
               ),
-            ),
-            suffixIcon: widget.onFilterTap != null
-                ? Padding(
-                    padding: const EdgeInsets.only(right: 2),
-                    child: IconButton(
-                      icon: Icon(
-                        Icons.tune_rounded,
-                        size: 20,
-                        color: cs.onSurface.withValues(alpha: 0.4),
-                      ),
-                      onPressed: widget.onFilterTap,
-                      splashRadius: 16,
-                    ),
-                  )
-                : widget.controller != null &&
-                        widget.controller!.text.isNotEmpty
-                    ? Padding(
-                        padding: const EdgeInsets.only(right: 2),
-                        child: IconButton(
-                          icon: Icon(
-                            Icons.close_rounded,
-                            size: 20,
-                            color: cs.onSurface.withValues(alpha: 0.4),
-                          ),
-                          onPressed: () {
-                            widget.controller!.clear();
-                            widget.onChanged?.call('');
-                          },
-                          splashRadius: 16,
+              border: InputBorder.none,
+              enabledBorder: InputBorder.none,
+              focusedBorder: InputBorder.none,
+              hintText: widget.hintText,
+              hintStyle: TextStyle(
+                fontWeight: FontWeight.w400,
+                fontSize: 15,
+                color: cs.onSurface.withValues(alpha: 0.4),
+              ),
+              prefixIcon: Padding(
+                padding: const EdgeInsets.only(left: 10, right: 6),
+                child: Icon(
+                  Icons.search_rounded,
+                  size: 20,
+                  color: _isFocused
+                      ? cs.primary
+                      : cs.onSurface.withValues(alpha: 0.4),
+                ),
+              ),
+              suffixIcon: widget.onFilterTap != null
+                  ? Padding(
+                      padding: const EdgeInsets.only(right: 2),
+                      child: IconButton(
+                        icon: Icon(
+                          Icons.tune_rounded,
+                          size: 20,
+                          color: cs.onSurface.withValues(alpha: 0.4),
                         ),
-                      )
-                    : null,
+                        onPressed: widget.onFilterTap,
+                        splashRadius: 16,
+                      ),
+                    )
+                  : widget.controller != null &&
+                          widget.controller!.text.isNotEmpty
+                      ? Padding(
+                          padding: const EdgeInsets.only(right: 2),
+                          child: IconButton(
+                            icon: Icon(
+                              Icons.close_rounded,
+                              size: 20,
+                              color: cs.onSurface.withValues(alpha: 0.4),
+                            ),
+                            onPressed: () {
+                              widget.controller!.clear();
+                              widget.onChanged?.call('');
+                            },
+                            splashRadius: 16,
+                          ),
+                        )
+                      : null,
+            ),
           ),
-        ),
         ),
       ),
     );

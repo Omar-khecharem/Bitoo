@@ -96,11 +96,13 @@ class _PrimaryButtonState extends State<PrimaryButton>
             borderRadius: BorderRadius.circular(radius),
             boxShadow: widget.onPressed != null ? AppShadows.glowPrimary : null,
           ),
-          child: widget.isLoading ? _LoadingIndicator() : _ButtonContent(
-            icon: widget.icon,
-            label: widget.label,
-            textStyle: textStyle.copyWith(color: Colors.white),
-          ),
+          child: widget.isLoading
+              ? _LoadingIndicator()
+              : _ButtonContent(
+                  icon: widget.icon,
+                  label: widget.label,
+                  textStyle: textStyle.copyWith(color: Colors.white),
+                ),
         ),
       ),
     );

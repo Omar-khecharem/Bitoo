@@ -89,7 +89,8 @@ class _PermissionWelcomePageState extends State<PermissionWelcomePage>
                             ),
                             boxShadow: [
                               BoxShadow(
-                                color: colorScheme.primary.withValues(alpha: 0.4),
+                                color:
+                                    colorScheme.primary.withValues(alpha: 0.4),
                                 blurRadius: 30,
                                 offset: const Offset(0, 10),
                               ),

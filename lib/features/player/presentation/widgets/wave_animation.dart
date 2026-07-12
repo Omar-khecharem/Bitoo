@@ -47,9 +47,7 @@ class _WaveAnimationState extends State<WaveAnimation>
 
   void _updateAmplitudes() {
     for (var i = 0; i < _displayAmplitudes.length; i++) {
-      final target = i < widget.amplitudes.length
-          ? widget.amplitudes[i]
-          : 0.0;
+      final target = i < widget.amplitudes.length ? widget.amplitudes[i] : 0.0;
       _displayAmplitudes[i] += (target - _displayAmplitudes[i]) * 0.3;
     }
     setState(() {});
@@ -236,17 +234,18 @@ class _ParticlePainter extends CustomPainter {
     for (var i = 0; i < 30; i++) {
       final angle = rng.nextDouble() * 2 * pi + time * 0.5;
       final speed = 0.5 + rng.nextDouble() * 1.5;
-      final radius = 20 + (time * speed % 100) + (amplitudes.isNotEmpty
-          ? amplitudes[i % amplitudes.length] * 40
-          : 0.0);
+      final radius = 20 +
+          (time * speed % 100) +
+          (amplitudes.isNotEmpty
+              ? amplitudes[i % amplitudes.length] * 40
+              : 0.0);
 
       final x = center.dx + radius * cos(angle + time * speed);
       final y = center.dy + radius * sin(angle + time * speed);
 
       final opacity = (1.0 - (radius / 150).clamp(0.0, 1.0));
-      final particleSize = 1.0 + (amplitudes.isNotEmpty
-          ? amplitudes[i % amplitudes.length] * 3
-          : 1.0);
+      final particleSize = 1.0 +
+          (amplitudes.isNotEmpty ? amplitudes[i % amplitudes.length] * 3 : 1.0);
 
       canvas.drawCircle(
         Offset(x, y),

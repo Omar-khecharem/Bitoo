@@ -75,8 +75,10 @@ class _FloatingLyricsOverlayState extends State<FloatingLyricsOverlay> {
               // Header
               Padding(
                 padding: EdgeInsets.fromLTRB(
-                  Spacing.lg, MediaQuery.of(context).padding.top + Spacing.lg,
-                  Spacing.lg, Spacing.md,
+                  Spacing.lg,
+                  MediaQuery.of(context).padding.top + Spacing.lg,
+                  Spacing.lg,
+                  Spacing.md,
                 ),
                 child: Row(
                   children: [
@@ -99,7 +101,8 @@ class _FloatingLyricsOverlayState extends State<FloatingLyricsOverlay> {
                         width: 36,
                         height: 36,
                         decoration: BoxDecoration(
-                          color: Colors.white.withValues(alpha: AppColors.glassOpacityMedium),
+                          color: Colors.white
+                              .withValues(alpha: AppColors.glassOpacityMedium),
                           shape: BoxShape.circle,
                         ),
                         child: Icon(
@@ -137,12 +140,15 @@ class _FloatingLyricsOverlayState extends State<FloatingLyricsOverlay> {
                       style: TextStyle(
                         fontFamily: 'Outfit',
                         fontSize: isCurrent ? 26 : (isPast ? 16 : 18),
-                        fontWeight: isCurrent ? FontWeight.w600 : FontWeight.w400,
+                        fontWeight:
+                            isCurrent ? FontWeight.w600 : FontWeight.w400,
                         color: isCurrent
                             ? AppColors.darkTextPrimary
                             : isPast
-                                ? AppColors.darkTextTertiary.withValues(alpha: 0.5)
-                                : AppColors.darkTextSecondary.withValues(alpha: 0.4),
+                                ? AppColors.darkTextTertiary
+                                    .withValues(alpha: 0.5)
+                                : AppColors.darkTextSecondary
+                                    .withValues(alpha: 0.4),
                         height: 1.8,
                       ),
                       child: Padding(

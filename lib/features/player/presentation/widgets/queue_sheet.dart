@@ -52,7 +52,10 @@ class _QueueSheetState extends State<QueueSheet> {
             // Header
             Padding(
               padding: EdgeInsets.fromLTRB(
-                Spacing.xl, Spacing.lg, Spacing.md, Spacing.sm,
+                Spacing.xl,
+                Spacing.lg,
+                Spacing.md,
+                Spacing.sm,
               ),
               child: Row(
                 children: [
@@ -72,7 +75,8 @@ class _QueueSheetState extends State<QueueSheet> {
                   Container(
                     padding: EdgeInsets.symmetric(horizontal: 8, vertical: 2),
                     decoration: BoxDecoration(
-                      color: Colors.white.withValues(alpha: AppColors.glassOpacityMedium),
+                      color: Colors.white
+                          .withValues(alpha: AppColors.glassOpacityMedium),
                       borderRadius: BorderRadius.circular(AppRadius.full),
                     ),
                     child: Text(
@@ -172,22 +176,25 @@ class _QueueSheetState extends State<QueueSheet> {
                     Expanded(
                       child: ListView(
                         scrollDirection: Axis.horizontal,
-                        children: List.generate(5, (i) => Container(
-                          width: 100,
-                          margin: EdgeInsets.only(right: Spacing.sm),
-                          decoration: BoxDecoration(
-                            color: AppColors.darkSurfaceLight,
-                            borderRadius: BorderRadius.circular(AppRadius.sm),
-                          ),
-                          child: Center(
-                            child: Text(
-                              'Track $i',
-                              style: AppTypography.bodySmall.copyWith(
-                                color: AppColors.darkTextTertiary,
-                              ),
-                            ),
-                          ),
-                        )),
+                        children: List.generate(
+                            5,
+                            (i) => Container(
+                                  width: 100,
+                                  margin: EdgeInsets.only(right: Spacing.sm),
+                                  decoration: BoxDecoration(
+                                    color: AppColors.darkSurfaceLight,
+                                    borderRadius:
+                                        BorderRadius.circular(AppRadius.sm),
+                                  ),
+                                  child: Center(
+                                    child: Text(
+                                      'Track $i',
+                                      style: AppTypography.bodySmall.copyWith(
+                                        color: AppColors.darkTextTertiary,
+                                      ),
+                                    ),
+                                  ),
+                                )),
                       ),
                     ),
                   ],
@@ -262,7 +269,9 @@ class _QueueItem extends StatelessWidget {
                   Text(
                     track.title,
                     style: AppTypography.titleMedium.copyWith(
-                      color: isCurrent ? AppColors.primary500 : AppColors.darkTextPrimary,
+                      color: isCurrent
+                          ? AppColors.primary500
+                          : AppColors.darkTextPrimary,
                       fontWeight: isCurrent ? FontWeight.w600 : FontWeight.w500,
                     ),
                     maxLines: 1,
@@ -305,7 +314,8 @@ class _EmptyQueue extends StatelessWidget {
             width: 64,
             height: 64,
             decoration: BoxDecoration(
-              color: Colors.white.withValues(alpha: AppColors.glassOpacityMedium),
+              color:
+                  Colors.white.withValues(alpha: AppColors.glassOpacityMedium),
               borderRadius: BorderRadius.circular(20),
             ),
             child: Icon(

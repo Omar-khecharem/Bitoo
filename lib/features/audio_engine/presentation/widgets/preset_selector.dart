@@ -72,7 +72,8 @@ class PresetSelector extends StatelessWidget {
                       preset.label,
                       style: TextStyle(
                         fontSize: 10,
-                        fontWeight: isActive ? FontWeight.w600 : FontWeight.w400,
+                        fontWeight:
+                            isActive ? FontWeight.w600 : FontWeight.w400,
                         color: isActive
                             ? const Color(0xFF8B5CF6)
                             : Colors.white.withValues(alpha: 0.5),

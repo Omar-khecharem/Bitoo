@@ -65,7 +65,8 @@ class _AlbumArtViewState extends State<AlbumArtView>
     }
     if (widget.bpm != oldWidget.bpm) {
       final beatDuration = (60.0 / widget.bpm);
-      _breatheController.duration = Duration(milliseconds: (beatDuration * 1000).round());
+      _breatheController.duration =
+          Duration(milliseconds: (beatDuration * 1000).round());
     }
   }
 
@@ -166,7 +167,10 @@ class _AlbumArtViewState extends State<AlbumArtView>
               decoration: BoxDecoration(
                 borderRadius: BorderRadius.circular(24),
                 gradient: LinearGradient(
-                  colors: [cs.primary.withValues(alpha: 0.6), cs.secondary.withValues(alpha: 0.3)],
+                  colors: [
+                    cs.primary.withValues(alpha: 0.6),
+                    cs.secondary.withValues(alpha: 0.3)
+                  ],
                 ),
                 boxShadow: [
                   BoxShadow(
@@ -271,7 +275,8 @@ class _VinylPainter extends CustomPainter {
     for (var i = 0; i < 20; i++) {
       final radius = outerRadius * (0.55 + i * 0.015);
       final groovePaint = Paint()
-        ..color = Color.fromRGBO(255, 255, 255, (0.01 + i * 0.002).clamp(0.0, 0.05))
+        ..color =
+            Color.fromRGBO(255, 255, 255, (0.01 + i * 0.002).clamp(0.0, 0.05))
         ..style = PaintingStyle.stroke
         ..strokeWidth = 0.5;
       canvas.drawCircle(center, radius, groovePaint);
@@ -283,7 +288,8 @@ class _VinylPainter extends CustomPainter {
     canvas.drawCircle(center, labelRadius, labelPaint);
 
     // Label hole
-    canvas.drawCircle(center, labelRadius * 0.25, Paint()..color = const Color(0xFF1A1A1A));
+    canvas.drawCircle(
+        center, labelRadius * 0.25, Paint()..color = const Color(0xFF1A1A1A));
   }
 
   @override
@@ -312,7 +318,8 @@ class _SoundWavePainter extends CustomPainter {
 
     for (var i = 0; i < barCount; i++) {
       final dynamicVal = sin(time * 4 + i * 0.8) * 0.5 + 0.5;
-      final height = (size.height * 0.35) * (0.2 + 0.8 * dynamicVal) * amplitude;
+      final height =
+          (size.height * 0.35) * (0.2 + 0.8 * dynamicVal) * amplitude;
       final opacity = 0.1 + 0.3 * dynamicVal;
       final x = startX + i * (barWidth + spacing);
       final y = (size.height - height) / 2;

@@ -29,7 +29,8 @@ class _SleepTimerSheetState extends State<SleepTimerSheet>
           Padding(
             padding: EdgeInsets.only(top: Spacing.md),
             child: Container(
-              width: 40, height: 4,
+              width: 40,
+              height: 4,
               decoration: BoxDecoration(
                 color: AppColors.darkTextTertiary.withValues(alpha: 0.3),
                 borderRadius: BorderRadius.circular(2),
@@ -37,22 +38,27 @@ class _SleepTimerSheetState extends State<SleepTimerSheet>
             ),
           ),
           Padding(
-            padding: EdgeInsets.fromLTRB(Spacing.xl, Spacing.lg, Spacing.md, Spacing.sm),
+            padding: EdgeInsets.fromLTRB(
+                Spacing.xl, Spacing.lg, Spacing.md, Spacing.sm),
             child: Row(
               children: [
-                Icon(Icons.timer_outlined, size: AppIconSizes.small, color: AppColors.darkTextPrimary),
+                Icon(Icons.timer_outlined,
+                    size: AppIconSizes.small, color: AppColors.darkTextPrimary),
                 SizedBox(width: Spacing.sm),
                 Text('Sleep Timer', style: AppTypography.titleLarge),
                 Spacer(),
                 GestureDetector(
                   onTap: () => Navigator.of(context).pop(),
                   child: Container(
-                    width: 36, height: 36,
+                    width: 36,
+                    height: 36,
                     decoration: BoxDecoration(
-                      color: Colors.white.withValues(alpha: AppColors.glassOpacityMedium),
+                      color: Colors.white
+                          .withValues(alpha: AppColors.glassOpacityMedium),
                       shape: BoxShape.circle,
                     ),
-                    child: Icon(Icons.close_rounded, size: 18, color: AppColors.darkTextSecondary),
+                    child: Icon(Icons.close_rounded,
+                        size: 18, color: AppColors.darkTextSecondary),
                   ),
                 ),
               ],
@@ -112,23 +118,29 @@ class _SleepTimerSheetState extends State<SleepTimerSheet>
                   onTap: () => setState(() => _selectedMinutes = minutes),
                   child: AnimatedContainer(
                     duration: AppDurations.standard,
-                    padding: EdgeInsets.symmetric(horizontal: Spacing.xl, vertical: Spacing.md),
+                    padding: EdgeInsets.symmetric(
+                        horizontal: Spacing.xl, vertical: Spacing.md),
                     decoration: BoxDecoration(
                       color: isSelected
                           ? AppColors.primary500.withValues(alpha: 0.15)
-                          : Colors.white.withValues(alpha: AppColors.glassOpacityMedium),
+                          : Colors.white
+                              .withValues(alpha: AppColors.glassOpacityMedium),
                       border: Border.all(
                         color: isSelected
                             ? AppColors.primary500.withValues(alpha: 0.3)
-                            : Colors.white.withValues(alpha: AppColors.glassOpacityMedium),
+                            : Colors.white.withValues(
+                                alpha: AppColors.glassOpacityMedium),
                       ),
                       borderRadius: BorderRadius.circular(AppRadius.md),
                     ),
                     child: Text(
                       '${minutes}m',
                       style: AppTypography.titleMedium.copyWith(
-                        color: isSelected ? AppColors.primary500 : AppColors.darkTextPrimary,
-                        fontWeight: isSelected ? FontWeight.w600 : FontWeight.w400,
+                        color: isSelected
+                            ? AppColors.primary500
+                            : AppColors.darkTextPrimary,
+                        fontWeight:
+                            isSelected ? FontWeight.w600 : FontWeight.w400,
                       ),
                     ),
                   ),
@@ -142,12 +154,15 @@ class _SleepTimerSheetState extends State<SleepTimerSheet>
             padding: EdgeInsets.symmetric(horizontal: Spacing.xl),
             child: Row(
               children: [
-                Icon(Icons.music_note_rounded, size: AppIconSizes.small, color: AppColors.darkTextSecondary),
+                Icon(Icons.music_note_rounded,
+                    size: AppIconSizes.small,
+                    color: AppColors.darkTextSecondary),
                 SizedBox(width: Spacing.sm),
                 Expanded(
                   child: Text(
                     'Stop after current track',
-                    style: AppTypography.titleSmall.copyWith(color: AppColors.darkTextSecondary),
+                    style: AppTypography.titleSmall
+                        .copyWith(color: AppColors.darkTextSecondary),
                   ),
                 ),
                 Switch(
@@ -163,12 +178,15 @@ class _SleepTimerSheetState extends State<SleepTimerSheet>
             padding: EdgeInsets.fromLTRB(Spacing.xl, 0, Spacing.xl, Spacing.xl),
             child: Row(
               children: [
-                Icon(Icons.trending_down_rounded, size: AppIconSizes.small, color: AppColors.darkTextSecondary),
+                Icon(Icons.trending_down_rounded,
+                    size: AppIconSizes.small,
+                    color: AppColors.darkTextSecondary),
                 SizedBox(width: Spacing.sm),
                 Expanded(
                   child: Text(
                     'Fade out over last 30 seconds',
-                    style: AppTypography.titleSmall.copyWith(color: AppColors.darkTextSecondary),
+                    style: AppTypography.titleSmall
+                        .copyWith(color: AppColors.darkTextSecondary),
                   ),
                 ),
                 Switch(
@@ -182,7 +200,8 @@ class _SleepTimerSheetState extends State<SleepTimerSheet>
           // Start button
           if (_selectedMinutes != null)
             Padding(
-              padding: EdgeInsets.fromLTRB(Spacing.xl, 0, Spacing.xl, Spacing.xl),
+              padding:
+                  EdgeInsets.fromLTRB(Spacing.xl, 0, Spacing.xl, Spacing.xl),
               child: Container(
                 width: double.infinity,
                 height: 48,
@@ -193,7 +212,8 @@ class _SleepTimerSheetState extends State<SleepTimerSheet>
                 child: Center(
                   child: Text(
                     'Start Timer',
-                    style: AppTypography.labelLarge.copyWith(color: Colors.white),
+                    style:
+                        AppTypography.labelLarge.copyWith(color: Colors.white),
                   ),
                 ),
               ),

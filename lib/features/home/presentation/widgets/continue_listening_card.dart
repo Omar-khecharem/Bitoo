@@ -102,7 +102,8 @@ class ContinueListeningCard extends StatelessWidget {
                           Expanded(
                             flex: 100 - (progress * 100).round(),
                             child: Container(
-                              color: AppColors.darkTextTertiary.withValues(alpha: 0.15),
+                              color: AppColors.darkTextTertiary
+                                  .withValues(alpha: 0.15),
                             ),
                           ),
                         ],

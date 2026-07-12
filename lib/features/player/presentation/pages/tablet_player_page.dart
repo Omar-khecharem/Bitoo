@@ -79,26 +79,33 @@ class _TabletPlayerPageState extends ConsumerState<TabletPlayerPage> {
                         Row(
                           mainAxisSize: MainAxisSize.min,
                           children: [
-                            Icon(Icons.shuffle_rounded, size: 20, color: AppColors.darkTextTertiary),
+                            Icon(Icons.shuffle_rounded,
+                                size: 20, color: AppColors.darkTextTertiary),
                             SizedBox(width: Spacing.xl),
-                            Icon(Icons.skip_previous_rounded, size: 28, color: AppColors.darkTextPrimary),
+                            Icon(Icons.skip_previous_rounded,
+                                size: 28, color: AppColors.darkTextPrimary),
                             SizedBox(width: Spacing.xxl),
                             Container(
-                              width: 56, height: 56,
+                              width: 56,
+                              height: 56,
                               decoration: BoxDecoration(
                                 color: AppColors.darkTextPrimary,
                                 shape: BoxShape.circle,
                               ),
                               child: Icon(
-                                _isPlaying ? Icons.pause_rounded : Icons.play_arrow_rounded,
+                                _isPlaying
+                                    ? Icons.pause_rounded
+                                    : Icons.play_arrow_rounded,
                                 size: 32,
                                 color: AppColors.darkBackground,
                               ),
                             ),
                             SizedBox(width: Spacing.xxl),
-                            Icon(Icons.skip_next_rounded, size: 28, color: AppColors.darkTextPrimary),
+                            Icon(Icons.skip_next_rounded,
+                                size: 28, color: AppColors.darkTextPrimary),
                             SizedBox(width: Spacing.xl),
-                            Icon(Icons.repeat_rounded, size: 20, color: AppColors.darkTextTertiary),
+                            Icon(Icons.repeat_rounded,
+                                size: 20, color: AppColors.darkTextTertiary),
                           ],
                         ),
                       ],
@@ -110,7 +117,8 @@ class _TabletPlayerPageState extends ConsumerState<TabletPlayerPage> {
                 Expanded(
                   flex: 5,
                   child: Padding(
-                    padding: EdgeInsets.fromLTRB(Spacing.xl, Spacing.xxl, Spacing.xxl, Spacing.xxl),
+                    padding: EdgeInsets.fromLTRB(
+                        Spacing.xl, Spacing.xxl, Spacing.xxl, Spacing.xxl),
                     child: Column(
                       crossAxisAlignment: CrossAxisAlignment.start,
                       children: [
@@ -156,8 +164,10 @@ class _TabletPlayerPageState extends ConsumerState<TabletPlayerPage> {
                             }
                             setState(() => _isPlaying = !_isPlaying);
                           },
-                          onNext: () => ref.read(audioHandlerProvider).skipToNext(),
-                          onPrevious: () => ref.read(audioHandlerProvider).skipToPrevious(),
+                          onNext: () =>
+                              ref.read(audioHandlerProvider).skipToNext(),
+                          onPrevious: () =>
+                              ref.read(audioHandlerProvider).skipToPrevious(),
                         ),
                         SizedBox(height: Spacing.xxl),
 
@@ -187,7 +197,8 @@ class _TabletPlayerPageState extends ConsumerState<TabletPlayerPage> {
                         Text(
                           'The side-by-side layout lets you follow lyrics while viewing album art.',
                           style: AppTypography.bodyMedium.copyWith(
-                            color: AppColors.darkTextTertiary.withValues(alpha: 0.6),
+                            color: AppColors.darkTextTertiary
+                                .withValues(alpha: 0.6),
                           ),
                         ),
                       ],

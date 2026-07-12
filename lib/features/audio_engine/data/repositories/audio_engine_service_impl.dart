@@ -53,7 +53,8 @@ class AudioEngineServiceImpl implements AudioEngineService {
       _channel.isEffectAvailable('loudnessEnhancer');
 
   @override
-  Future<bool> isHiResSupported(String mimeType, int sampleRate, int bitDepth) async =>
+  Future<bool> isHiResSupported(
+          String mimeType, int sampleRate, int bitDepth) async =>
       _channel.isHiResSupported(mimeType, sampleRate, bitDepth);
 
   @override
@@ -92,7 +93,8 @@ class AudioEngineServiceImpl implements AudioEngineService {
   Future<void> setVirtualizerEnabled(bool enabled) async {
     await _channel.setVirtualizerEnabled(enabled);
     if (_state is AudioEngineReady) {
-      _state = (_state as AudioEngineReady).copyWith(virtualizerEnabled: enabled);
+      _state =
+          (_state as AudioEngineReady).copyWith(virtualizerEnabled: enabled);
       _stateController.add(_state);
     }
   }
@@ -110,7 +112,8 @@ class AudioEngineServiceImpl implements AudioEngineService {
   Future<void> setVolumeNormalizationEnabled(bool enabled) async {
     await _channel.setVolumeNormalizationEnabled(enabled);
     if (_state is AudioEngineReady) {
-      _state = (_state as AudioEngineReady).copyWith(volumeNormalizationEnabled: enabled);
+      _state = (_state as AudioEngineReady)
+          .copyWith(volumeNormalizationEnabled: enabled);
       _stateController.add(_state);
     }
   }
@@ -119,7 +122,8 @@ class AudioEngineServiceImpl implements AudioEngineService {
   Future<void> setBandLevel(int bandIndex, int millibels) async {
     await _channel.setBandLevel(bandIndex, millibels);
     if (_state is AudioEngineReady) {
-      _state = (_state as AudioEngineReady).withBand(bandIndex, millibels / 100.0);
+      _state =
+          (_state as AudioEngineReady).withBand(bandIndex, millibels / 100.0);
       _stateController.add(_state);
     }
   }
@@ -140,7 +144,8 @@ class AudioEngineServiceImpl implements AudioEngineService {
   Future<void> setBassBoostStrength(int strength) async {
     await _channel.setBassBoostStrength(strength);
     if (_state is AudioEngineReady) {
-      _state = (_state as AudioEngineReady).copyWith(bassBoostStrength: strength);
+      _state =
+          (_state as AudioEngineReady).copyWith(bassBoostStrength: strength);
       _stateController.add(_state);
     }
   }
@@ -149,7 +154,8 @@ class AudioEngineServiceImpl implements AudioEngineService {
   Future<void> setVirtualizerStrength(int strength) async {
     await _channel.setVirtualizerStrength(strength);
     if (_state is AudioEngineReady) {
-      _state = (_state as AudioEngineReady).copyWith(virtualizerStrength: strength);
+      _state =
+          (_state as AudioEngineReady).copyWith(virtualizerStrength: strength);
       _stateController.add(_state);
     }
   }
@@ -158,7 +164,8 @@ class AudioEngineServiceImpl implements AudioEngineService {
   Future<void> setLoudnessGain(int gainMillibels) async {
     await _channel.setLoudnessGain(gainMillibels);
     if (_state is AudioEngineReady) {
-      _state = (_state as AudioEngineReady).copyWith(loudnessGainMillibels: gainMillibels);
+      _state = (_state as AudioEngineReady)
+          .copyWith(loudnessGainMillibels: gainMillibels);
       _stateController.add(_state);
     }
   }
@@ -179,8 +186,11 @@ class AudioEngineServiceImpl implements AudioEngineService {
   @override
   Future<void> resetToFlat() async {
     await applyPreset(const PresetConfig(
-      name: 'flat', label: 'Flat',
-      bands: PresetConfig.flat, bassBoost: 0, virtualizerStrength: 0,
+      name: 'flat',
+      label: 'Flat',
+      bands: PresetConfig.flat,
+      bassBoost: 0,
+      virtualizerStrength: 0,
     ));
   }
 
@@ -188,7 +198,8 @@ class AudioEngineServiceImpl implements AudioEngineService {
   Future<void> setCrossfadeDuration(double seconds) async {
     await _channel.setCrossfadeDuration(seconds);
     if (_state is AudioEngineReady) {
-      _state = (_state as AudioEngineReady).copyWith(crossfadeDurationSeconds: seconds);
+      _state = (_state as AudioEngineReady)
+          .copyWith(crossfadeDurationSeconds: seconds);
       _stateController.add(_state);
     }
   }
@@ -221,7 +232,8 @@ class AudioEngineServiceImpl implements AudioEngineService {
   }
 
   @override
-  Future<void> setReplayGain(double trackGain, double albumGain, ReplayGainMode mode) async {
+  Future<void> setReplayGain(
+      double trackGain, double albumGain, ReplayGainMode mode) async {
     await _channel.setReplayGain(trackGain, albumGain, mode.name);
     if (_state is AudioEngineReady) {
       _state = (_state as AudioEngineReady).copyWith(

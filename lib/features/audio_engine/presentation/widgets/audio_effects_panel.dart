@@ -46,7 +46,8 @@ class _AudioEffectsPanelState extends State<AudioEffectsPanel> {
   @override
   Widget build(BuildContext context) {
     final s = widget.state;
-    final isLandscape = MediaQuery.of(context).orientation == Orientation.landscape;
+    final isLandscape =
+        MediaQuery.of(context).orientation == Orientation.landscape;
 
     return Container(
       height: isLandscape
@@ -63,7 +64,8 @@ class _AudioEffectsPanelState extends State<AudioEffectsPanel> {
           Divider(color: Colors.white.withValues(alpha: 0.06), height: 1),
           Expanded(
             child: SingleChildScrollView(
-              padding: EdgeInsets.only(bottom: MediaQuery.of(context).padding.bottom + 24),
+              padding: EdgeInsets.only(
+                  bottom: MediaQuery.of(context).padding.bottom + 24),
               child: Column(
                 children: [
                   _buildEqualizerSection(s),
@@ -83,7 +85,8 @@ class _AudioEffectsPanelState extends State<AudioEffectsPanel> {
     return Padding(
       padding: EdgeInsets.only(top: 12),
       child: Container(
-        width: 40, height: 4,
+        width: 40,
+        height: 4,
         decoration: BoxDecoration(
           color: Colors.white.withValues(alpha: 0.3),
           borderRadius: BorderRadius.circular(2),
@@ -97,21 +100,27 @@ class _AudioEffectsPanelState extends State<AudioEffectsPanel> {
       padding: EdgeInsets.fromLTRB(24, 20, 16, 12),
       child: Row(
         children: [
-          Icon(Icons.tune_rounded, size: 20, color: Colors.white.withValues(alpha: 0.9)),
+          Icon(Icons.tune_rounded,
+              size: 20, color: Colors.white.withValues(alpha: 0.9)),
           SizedBox(width: 8),
-          Text('Audio Effects', style: TextStyle(
-            fontSize: 20, fontWeight: FontWeight.w600, color: Colors.white,
-          )),
+          Text('Audio Effects',
+              style: TextStyle(
+                fontSize: 20,
+                fontWeight: FontWeight.w600,
+                color: Colors.white,
+              )),
           Spacer(),
           GestureDetector(
             onTap: widget.onClose,
             child: Container(
-              width: 36, height: 36,
+              width: 36,
+              height: 36,
               decoration: BoxDecoration(
                 color: Colors.white.withValues(alpha: 0.1),
                 shape: BoxShape.circle,
               ),
-              child: Icon(Icons.close_rounded, size: 18, color: Colors.white.withValues(alpha: 0.6)),
+              child: Icon(Icons.close_rounded,
+                  size: 18, color: Colors.white.withValues(alpha: 0.6)),
             ),
           ),
         ],
@@ -130,11 +139,15 @@ class _AudioEffectsPanelState extends State<AudioEffectsPanel> {
             children: [
               Row(
                 children: [
-                  Icon(Icons.graphic_eq_rounded, size: 18, color: Colors.white.withValues(alpha: 0.5)),
+                  Icon(Icons.graphic_eq_rounded,
+                      size: 18, color: Colors.white.withValues(alpha: 0.5)),
                   SizedBox(width: 8),
-                  Text('Equalizer', style: TextStyle(
-                    fontSize: 16, fontWeight: FontWeight.w500, color: Colors.white.withValues(alpha: 0.9),
-                  )),
+                  Text('Equalizer',
+                      style: TextStyle(
+                        fontSize: 16,
+                        fontWeight: FontWeight.w500,
+                        color: Colors.white.withValues(alpha: 0.9),
+                      )),
                 ],
               ),
               Switch(
@@ -217,10 +230,12 @@ class _AudioEffectsPanelState extends State<AudioEffectsPanel> {
       child: Column(
         crossAxisAlignment: CrossAxisAlignment.start,
         children: [
-          Text('Advanced', style: TextStyle(
-            fontSize: 14, fontWeight: FontWeight.w500,
-            color: Colors.white.withValues(alpha: 0.5),
-          )),
+          Text('Advanced',
+              style: TextStyle(
+                fontSize: 14,
+                fontWeight: FontWeight.w500,
+                color: Colors.white.withValues(alpha: 0.5),
+              )),
           SizedBox(height: 12),
           _ToggleTile(
             icon: Icons.volume_up_rounded,
@@ -241,21 +256,28 @@ class _AudioEffectsPanelState extends State<AudioEffectsPanel> {
             SizedBox(height: 16),
             Row(
               children: [
-                Icon(Icons.high_quality_rounded, size: 18, color: Colors.white.withValues(alpha: 0.5)),
+                Icon(Icons.high_quality_rounded,
+                    size: 18, color: Colors.white.withValues(alpha: 0.5)),
                 SizedBox(width: 8),
-                Text('Hi-Res Output', style: TextStyle(
-                  fontSize: 14, fontWeight: FontWeight.w500, color: Colors.white.withValues(alpha: 0.9),
-                )),
+                Text('Hi-Res Output',
+                    style: TextStyle(
+                      fontSize: 14,
+                      fontWeight: FontWeight.w500,
+                      color: Colors.white.withValues(alpha: 0.9),
+                    )),
                 Spacer(),
                 DropdownButton<HiResMode>(
                   value: s.hiResMode,
                   dropdownColor: const Color(0xFF262633),
-                  style: TextStyle(color: Colors.white.withValues(alpha: 0.7), fontSize: 13),
+                  style: TextStyle(
+                      color: Colors.white.withValues(alpha: 0.7), fontSize: 13),
                   underline: SizedBox(),
-                  items: HiResMode.values.map((mode) => DropdownMenuItem(
-                    value: mode,
-                    child: Text(mode.label),
-                  )).toList(),
+                  items: HiResMode.values
+                      .map((mode) => DropdownMenuItem(
+                            value: mode,
+                            child: Text(mode.label),
+                          ))
+                      .toList(),
                   onChanged: (v) => widget.onHiResModeChanged?.call(v!),
                 ),
               ],
@@ -307,13 +329,17 @@ class _EffectSliderTile extends StatelessWidget {
       children: [
         Row(
           children: [
-            Icon(icon, size: 20, color: Colors.white.withValues(alpha: enabled ? 0.7 : 0.3)),
+            Icon(icon,
+                size: 20,
+                color: Colors.white.withValues(alpha: enabled ? 0.7 : 0.3)),
             SizedBox(width: 8),
             Expanded(
-              child: Text(label, style: TextStyle(
-                fontSize: 14, fontWeight: FontWeight.w500,
-                color: Colors.white.withValues(alpha: enabled ? 0.9 : 0.4),
-              )),
+              child: Text(label,
+                  style: TextStyle(
+                    fontSize: 14,
+                    fontWeight: FontWeight.w500,
+                    color: Colors.white.withValues(alpha: enabled ? 0.9 : 0.4),
+                  )),
             ),
             if (onToggle != null)
               SizedBox(
@@ -326,18 +352,25 @@ class _EffectSliderTile extends StatelessWidget {
                 ),
               ),
             SizedBox(width: 8),
-            Text(displayValue, style: TextStyle(
-              fontSize: 13, color: Colors.white.withValues(alpha: enabled ? 0.5 : 0.3),
-            )),
+            Text(displayValue,
+                style: TextStyle(
+                  fontSize: 13,
+                  color: Colors.white.withValues(alpha: enabled ? 0.5 : 0.3),
+                )),
           ],
         ),
         SizedBox(height: 4),
         SliderTheme(
           data: SliderTheme.of(context).copyWith(
-            activeTrackColor: enabled ? const Color(0xFF8B5CF6) : Colors.white.withValues(alpha: 0.1),
-            inactiveTrackColor: Colors.white.withValues(alpha: enabled ? 0.1 : 0.05),
+            activeTrackColor: enabled
+                ? const Color(0xFF8B5CF6)
+                : Colors.white.withValues(alpha: 0.1),
+            inactiveTrackColor:
+                Colors.white.withValues(alpha: enabled ? 0.1 : 0.05),
             trackHeight: 3,
-            thumbColor: enabled ? const Color(0xFF8B5CF6) : Colors.white.withValues(alpha: 0.2),
+            thumbColor: enabled
+                ? const Color(0xFF8B5CF6)
+                : Colors.white.withValues(alpha: 0.2),
             thumbShape: RoundSliderThumbShape(enabledThumbRadius: 6),
             overlayColor: const Color(0xFF8B5CF6).withValues(alpha: 0.1),
           ),
@@ -386,21 +419,29 @@ class _ToggleTile extends StatelessWidget {
         ),
         child: Row(
           children: [
-            Icon(icon, size: 22, color: value
-                ? const Color(0xFF8B5CF6)
-                : Colors.white.withValues(alpha: 0.4)),
+            Icon(icon,
+                size: 22,
+                color: value
+                    ? const Color(0xFF8B5CF6)
+                    : Colors.white.withValues(alpha: 0.4)),
             SizedBox(width: 12),
             Expanded(
               child: Column(
                 crossAxisAlignment: CrossAxisAlignment.start,
                 children: [
-                  Text(label, style: TextStyle(
-                    fontSize: 14, fontWeight: FontWeight.w500,
-                    color: value ? const Color(0xFF8B5CF6) : Colors.white.withValues(alpha: 0.8),
-                  )),
-                  Text(subtitle, style: TextStyle(
-                    fontSize: 11, color: Colors.white.withValues(alpha: 0.3),
-                  )),
+                  Text(label,
+                      style: TextStyle(
+                        fontSize: 14,
+                        fontWeight: FontWeight.w500,
+                        color: value
+                            ? const Color(0xFF8B5CF6)
+                            : Colors.white.withValues(alpha: 0.8),
+                      )),
+                  Text(subtitle,
+                      style: TextStyle(
+                        fontSize: 11,
+                        color: Colors.white.withValues(alpha: 0.3),
+                      )),
                 ],
               ),
             ),

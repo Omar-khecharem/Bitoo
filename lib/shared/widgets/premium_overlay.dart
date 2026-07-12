@@ -135,7 +135,8 @@ class PremiumDialog extends StatelessWidget {
             decoration: BoxDecoration(
               color: AppColors.darkSurface,
               border: Border.all(
-                color: Colors.white.withValues(alpha: AppColors.glassOpacityMedium),
+                color: Colors.white
+                    .withValues(alpha: AppColors.glassOpacityMedium),
                 width: 0.5,
               ),
               borderRadius: BorderRadius.circular(AppRadius.xl),
@@ -156,7 +157,9 @@ class PremiumDialog extends StatelessWidget {
                     ),
                     child: Icon(
                       icon,
-                      color: isDestructive ? AppColors.error : AppColors.primary500,
+                      color: isDestructive
+                          ? AppColors.error
+                          : AppColors.primary500,
                       size: 24,
                     ),
                   ),
@@ -191,7 +194,8 @@ class PremiumDialog extends StatelessWidget {
                         child: Container(
                           height: 48,
                           decoration: BoxDecoration(
-                            color: Colors.white.withValues(alpha: AppColors.glassOpacityMedium),
+                            color: Colors.white.withValues(
+                                alpha: AppColors.glassOpacityMedium),
                             borderRadius: BorderRadius.circular(AppRadius.lg),
                           ),
                           child: Center(
@@ -214,7 +218,10 @@ class PremiumDialog extends StatelessWidget {
                           height: 48,
                           decoration: BoxDecoration(
                             gradient: isDestructive
-                                ? LinearGradient(colors: [AppColors.error, AppColors.neonRose])
+                                ? LinearGradient(colors: [
+                                    AppColors.error,
+                                    AppColors.neonRose
+                                  ])
                                 : AppGradients.primary,
                             borderRadius: BorderRadius.circular(AppRadius.lg),
                           ),

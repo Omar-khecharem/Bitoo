@@ -66,14 +66,18 @@ class _SettingsPageState extends ConsumerState<SettingsPage> {
                     title: 'Blur Intensity',
                     subtitle: '${(prefs.blurIntensity * 100).round()}%',
                     value: prefs.blurIntensity,
-                    onChanged: (v) => ref.read(preferencesProvider.notifier).setBlurIntensity(v),
+                    onChanged: (v) => ref
+                        .read(preferencesProvider.notifier)
+                        .setBlurIntensity(v),
                   ),
                   _buildSliderTile(
                     icon: Icons.animation_rounded,
                     title: 'Animation Level',
                     subtitle: '${(prefs.animationLevel * 100).round()}%',
                     value: prefs.animationLevel,
-                    onChanged: (v) => ref.read(preferencesProvider.notifier).setAnimationLevel(v),
+                    onChanged: (v) => ref
+                        .read(preferencesProvider.notifier)
+                        .setAnimationLevel(v),
                   ),
                 ]),
                 const SizedBox(height: 8),
@@ -83,7 +87,9 @@ class _SettingsPageState extends ConsumerState<SettingsPage> {
                     title: 'Crossfade',
                     subtitle: 'Smooth transition between tracks',
                     value: prefs.crossfadeEnabled,
-                    onChanged: (v) => ref.read(preferencesProvider.notifier).setCrossfadeEnabled(v),
+                    onChanged: (v) => ref
+                        .read(preferencesProvider.notifier)
+                        .setCrossfadeEnabled(v),
                   ),
                   if (prefs.crossfadeEnabled)
                     _buildSliderTile(
@@ -94,28 +100,35 @@ class _SettingsPageState extends ConsumerState<SettingsPage> {
                       min: 1,
                       max: 12,
                       divisions: 11,
-                      onChanged: (v) => ref.read(preferencesProvider.notifier).setCrossfadeDuration(v),
+                      onChanged: (v) => ref
+                          .read(preferencesProvider.notifier)
+                          .setCrossfadeDuration(v),
                     ),
                   _buildToggleTile(
                     icon: Icons.music_note_rounded,
                     title: 'Gapless Playback',
                     subtitle: 'Seamless transition between tracks',
                     value: prefs.gaplessPlayback,
-                    onChanged: (v) => ref.read(preferencesProvider.notifier).setGaplessPlayback(v),
+                    onChanged: (v) => ref
+                        .read(preferencesProvider.notifier)
+                        .setGaplessPlayback(v),
                   ),
                   _buildToggleTile(
                     icon: Icons.play_circle_rounded,
                     title: 'Auto-play',
                     subtitle: 'Automatically play music on app start',
                     value: prefs.autoPlay,
-                    onChanged: (v) => ref.read(preferencesProvider.notifier).setAutoPlay(v),
+                    onChanged: (v) =>
+                        ref.read(preferencesProvider.notifier).setAutoPlay(v),
                   ),
                   _buildToggleTile(
                     icon: Icons.bookmark_rounded,
                     title: 'Remember Position',
                     subtitle: 'Resume from where you left off',
                     value: prefs.rememberPosition,
-                    onChanged: (v) => ref.read(preferencesProvider.notifier).setRememberPosition(v),
+                    onChanged: (v) => ref
+                        .read(preferencesProvider.notifier)
+                        .setRememberPosition(v),
                   ),
                 ]),
                 const SizedBox(height: 8),
@@ -129,9 +142,11 @@ class _SettingsPageState extends ConsumerState<SettingsPage> {
                       ScaffoldMessenger.of(context).showSnackBar(
                         SnackBar(
                           content: const Text('Rescanning music library...'),
-                          backgroundColor: Theme.of(context).colorScheme.primary,
+                          backgroundColor:
+                              Theme.of(context).colorScheme.primary,
                           behavior: SnackBarBehavior.floating,
-                          shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(12)),
+                          shape: RoundedRectangleBorder(
+                              borderRadius: BorderRadius.circular(12)),
                         ),
                       );
                     },
@@ -175,7 +190,8 @@ class _SettingsPageState extends ConsumerState<SettingsPage> {
                             end: Alignment.bottomRight,
                           ),
                         ),
-                        child: const Icon(Icons.music_note_rounded, color: Colors.white, size: 24),
+                        child: const Icon(Icons.music_note_rounded,
+                            color: Colors.white, size: 24),
                       ),
                     ),
                   ),
@@ -184,7 +200,8 @@ class _SettingsPageState extends ConsumerState<SettingsPage> {
                     title: 'Diagnostic Audio',
                     subtitle: 'Test all audio files',
                     onTap: () => Navigator.of(context).push(
-                      MaterialPageRoute(builder: (_) => const MusicDiagnosticsPage()),
+                      MaterialPageRoute(
+                          builder: (_) => const MusicDiagnosticsPage()),
                     ),
                   ),
                 ]),
@@ -215,20 +232,28 @@ class _SettingsPageState extends ConsumerState<SettingsPage> {
             padding: const EdgeInsets.fromLTRB(20, 16, 20, 12),
             child: Row(
               children: [
-                Icon(Icons.brightness_6_rounded, size: 18, color: AppColors.neonIndigo),
+                Icon(Icons.brightness_6_rounded,
+                    size: 18, color: AppColors.neonIndigo),
                 SizedBox(width: 8),
                 Text(
                   'Choose Theme',
                   style: TextStyle(
                     fontSize: 16,
                     fontWeight: FontWeight.w600,
-                    color: Theme.of(context).colorScheme.onSurface.withValues(alpha: 0.85),
+                    color: Theme.of(context)
+                        .colorScheme
+                        .onSurface
+                        .withValues(alpha: 0.85),
                   ),
                 ),
               ],
             ),
           ),
-          Divider(color: Theme.of(context).brightness == Brightness.dark ? Colors.white.withValues(alpha: 0.06) : Colors.black.withValues(alpha: 0.06), height: 1),
+          Divider(
+              color: Theme.of(context).brightness == Brightness.dark
+                  ? Colors.white.withValues(alpha: 0.06)
+                  : Colors.black.withValues(alpha: 0.06),
+              height: 1),
           ...AppThemeMode.values.map((mode) {
             final isSelected = prefs.themeMode == mode;
             return GestureDetector(
@@ -237,10 +262,13 @@ class _SettingsPageState extends ConsumerState<SettingsPage> {
                 Navigator.of(context).pop();
               },
               child: Container(
-                padding: const EdgeInsets.symmetric(horizontal: 20, vertical: 14),
+                padding:
+                    const EdgeInsets.symmetric(horizontal: 20, vertical: 14),
                 margin: const EdgeInsets.symmetric(horizontal: 8),
                 decoration: BoxDecoration(
-                  color: isSelected ? AppColors.neonIndigo.withValues(alpha: 0.12) : Colors.transparent,
+                  color: isSelected
+                      ? AppColors.neonIndigo.withValues(alpha: 0.12)
+                      : Colors.transparent,
                   borderRadius: BorderRadius.circular(12),
                 ),
                 child: Row(
@@ -248,7 +276,12 @@ class _SettingsPageState extends ConsumerState<SettingsPage> {
                     Icon(
                       _themeIcon(mode),
                       size: 20,
-                      color: isSelected ? AppColors.neonIndigo : Theme.of(context).colorScheme.onSurface.withValues(alpha: 0.4),
+                      color: isSelected
+                          ? AppColors.neonIndigo
+                          : Theme.of(context)
+                              .colorScheme
+                              .onSurface
+                              .withValues(alpha: 0.4),
                     ),
                     SizedBox(width: 12),
                     Expanded(
@@ -256,13 +289,20 @@ class _SettingsPageState extends ConsumerState<SettingsPage> {
                         _themeLabel(mode),
                         style: TextStyle(
                           fontSize: 15,
-                          fontWeight: isSelected ? FontWeight.w600 : FontWeight.w400,
-                          color: isSelected ? AppColors.neonIndigo : Theme.of(context).colorScheme.onSurface.withValues(alpha: 0.7),
+                          fontWeight:
+                              isSelected ? FontWeight.w600 : FontWeight.w400,
+                          color: isSelected
+                              ? AppColors.neonIndigo
+                              : Theme.of(context)
+                                  .colorScheme
+                                  .onSurface
+                                  .withValues(alpha: 0.7),
                         ),
                       ),
                     ),
                     if (isSelected)
-                      Icon(Icons.check_rounded, size: 18, color: AppColors.neonIndigo),
+                      Icon(Icons.check_rounded,
+                          size: 18, color: AppColors.neonIndigo),
                   ],
                 ),
               ),
@@ -293,20 +333,28 @@ class _SettingsPageState extends ConsumerState<SettingsPage> {
             padding: const EdgeInsets.fromLTRB(20, 16, 20, 12),
             child: Row(
               children: [
-                Icon(Icons.palette_rounded, size: 18, color: AppColors.neonIndigo),
+                Icon(Icons.palette_rounded,
+                    size: 18, color: AppColors.neonIndigo),
                 SizedBox(width: 8),
                 Text(
                   'Accent Color',
                   style: TextStyle(
                     fontSize: 16,
                     fontWeight: FontWeight.w600,
-                    color: Theme.of(context).colorScheme.onSurface.withValues(alpha: 0.85),
+                    color: Theme.of(context)
+                        .colorScheme
+                        .onSurface
+                        .withValues(alpha: 0.85),
                   ),
                 ),
               ],
             ),
           ),
-          Divider(color: Theme.of(context).brightness == Brightness.dark ? Colors.white.withValues(alpha: 0.06) : Colors.black.withValues(alpha: 0.06), height: 1),
+          Divider(
+              color: Theme.of(context).brightness == Brightness.dark
+                  ? Colors.white.withValues(alpha: 0.06)
+                  : Colors.black.withValues(alpha: 0.06),
+              height: 1),
           Padding(
             padding: const EdgeInsets.all(16),
             child: GridView.builder(
@@ -324,7 +372,9 @@ class _SettingsPageState extends ConsumerState<SettingsPage> {
                 final isSelected = prefs.accentColor.name == color.name;
                 return GestureDetector(
                   onTap: () {
-                    ref.read(preferencesProvider.notifier).setAccentColor(color);
+                    ref
+                        .read(preferencesProvider.notifier)
+                        .setAccentColor(color);
                     Navigator.of(context).pop();
                   },
                   child: Container(
@@ -332,7 +382,11 @@ class _SettingsPageState extends ConsumerState<SettingsPage> {
                       color: color.primary.withValues(alpha: 0.2),
                       shape: BoxShape.circle,
                       border: Border.all(
-                        color: isSelected ? color.primary : (Theme.of(context).brightness == Brightness.dark ? Colors.white.withValues(alpha: 0.1) : Colors.black.withValues(alpha: 0.1)),
+                        color: isSelected
+                            ? color.primary
+                            : (Theme.of(context).brightness == Brightness.dark
+                                ? Colors.white.withValues(alpha: 0.1)
+                                : Colors.black.withValues(alpha: 0.1)),
                         width: isSelected ? 3 : 1,
                       ),
                       boxShadow: isSelected
@@ -353,7 +407,8 @@ class _SettingsPageState extends ConsumerState<SettingsPage> {
                           shape: BoxShape.circle,
                         ),
                         child: isSelected
-                            ? Icon(Icons.check_rounded, size: 18, color: Colors.white)
+                            ? Icon(Icons.check_rounded,
+                                size: 18, color: Colors.white)
                             : null,
                       ),
                     ),
@@ -382,10 +437,12 @@ class _SettingsPageState extends ConsumerState<SettingsPage> {
         if (mounted) {
           ScaffoldMessenger.of(context).showSnackBar(
             SnackBar(
-              content: Text('Cache cleared: ${(cleared / 1024 / 1024).toStringAsFixed(1)} MB freed'),
+              content: Text(
+                  'Cache cleared: ${(cleared / 1024 / 1024).toStringAsFixed(1)} MB freed'),
               backgroundColor: AppColors.success,
               behavior: SnackBarBehavior.floating,
-              shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(12)),
+              shape: RoundedRectangleBorder(
+                  borderRadius: BorderRadius.circular(12)),
             ),
           );
         }
@@ -396,7 +453,8 @@ class _SettingsPageState extends ConsumerState<SettingsPage> {
               content: Text('Error: $e'),
               backgroundColor: AppColors.error,
               behavior: SnackBarBehavior.floating,
-              shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(12)),
+              shape: RoundedRectangleBorder(
+                  borderRadius: BorderRadius.circular(12)),
             ),
           );
         }
@@ -417,20 +475,28 @@ class _SettingsPageState extends ConsumerState<SettingsPage> {
               padding: const EdgeInsets.fromLTRB(20, 16, 20, 12),
               child: Row(
                 children: [
-                  Icon(Icons.storage_rounded, size: 18, color: AppColors.neonIndigo),
+                  Icon(Icons.storage_rounded,
+                      size: 18, color: AppColors.neonIndigo),
                   SizedBox(width: 8),
                   Text(
                     'Storage Info',
                     style: TextStyle(
                       fontSize: 16,
                       fontWeight: FontWeight.w600,
-                      color: Theme.of(context).colorScheme.onSurface.withValues(alpha: 0.85),
+                      color: Theme.of(context)
+                          .colorScheme
+                          .onSurface
+                          .withValues(alpha: 0.85),
                     ),
                   ),
                 ],
               ),
             ),
-            Divider(color: Theme.of(context).brightness == Brightness.dark ? Colors.white.withValues(alpha: 0.06) : Colors.black.withValues(alpha: 0.06), height: 1),
+            Divider(
+                color: Theme.of(context).brightness == Brightness.dark
+                    ? Colors.white.withValues(alpha: 0.06)
+                    : Colors.black.withValues(alpha: 0.06),
+                height: 1),
             _storageTile('Songs', '${stats['songs'] ?? 0}'),
             _storageTile('Albums', '${stats['albums'] ?? 0}'),
             _storageTile('Artists', '${stats['artists'] ?? 0}'),
@@ -454,12 +520,20 @@ class _SettingsPageState extends ConsumerState<SettingsPage> {
           Expanded(
             child: Text(
               label,
-              style: TextStyle(fontSize: 15, color: Theme.of(context).colorScheme.onSurface.withValues(alpha: 0.7)),
+              style: TextStyle(
+                  fontSize: 15,
+                  color: Theme.of(context)
+                      .colorScheme
+                      .onSurface
+                      .withValues(alpha: 0.7)),
             ),
           ),
           Text(
             value,
-            style: TextStyle(fontSize: 15, fontWeight: FontWeight.w600, color: Theme.of(context).colorScheme.onSurface),
+            style: TextStyle(
+                fontSize: 15,
+                fontWeight: FontWeight.w600,
+                color: Theme.of(context).colorScheme.onSurface),
           ),
         ],
       ),
@@ -479,7 +553,11 @@ class _SettingsPageState extends ConsumerState<SettingsPage> {
       decoration: BoxDecoration(
         color: color,
         shape: BoxShape.circle,
-        border: Border.all(color: Theme.of(context).brightness == Brightness.dark ? Colors.white.withValues(alpha: 0.2) : Colors.black.withValues(alpha: 0.2), width: 1),
+        border: Border.all(
+            color: Theme.of(context).brightness == Brightness.dark
+                ? Colors.white.withValues(alpha: 0.2)
+                : Colors.black.withValues(alpha: 0.2),
+            width: 1),
       ),
     );
   }
@@ -496,7 +574,10 @@ class _SettingsPageState extends ConsumerState<SettingsPage> {
               fontFamily: 'Inter',
               fontWeight: FontWeight.w600,
               fontSize: 12,
-              color: Theme.of(context).colorScheme.onSurfaceVariant.withValues(alpha: 0.7),
+              color: Theme.of(context)
+                  .colorScheme
+                  .onSurfaceVariant
+                  .withValues(alpha: 0.7),
               letterSpacing: 1,
             ),
           ),
@@ -511,7 +592,9 @@ class _SettingsPageState extends ConsumerState<SettingsPage> {
               return Column(
                 children: [
                   if (i > 0)
-                    Divider(height: 0.5, color: Theme.of(context).dividerTheme.color),
+                    Divider(
+                        height: 0.5,
+                        color: Theme.of(context).dividerTheme.color),
                   children[i],
                 ],
               );
@@ -566,7 +649,9 @@ class _SettingsPageState extends ConsumerState<SettingsPage> {
           activeColor: AppColors.neonIndigo,
           activeTrackColor: AppColors.neonIndigo.withValues(alpha: 0.4),
           inactiveThumbColor: Theme.of(context).colorScheme.onSurfaceVariant,
-          inactiveTrackColor: Theme.of(context).brightness == Brightness.dark ? Colors.white12 : Colors.black12,
+          inactiveTrackColor: Theme.of(context).brightness == Brightness.dark
+              ? Colors.white12
+              : Colors.black12,
         ),
       ),
     );
@@ -611,7 +696,10 @@ class _SettingsPageState extends ConsumerState<SettingsPage> {
             SliderTheme(
               data: SliderThemeData(
                 activeTrackColor: AppColors.neonIndigo,
-                inactiveTrackColor: Theme.of(context).brightness == Brightness.dark ? Colors.white12 : Colors.black12,
+                inactiveTrackColor:
+                    Theme.of(context).brightness == Brightness.dark
+                        ? Colors.white12
+                        : Colors.black12,
                 trackHeight: 3,
                 thumbColor: Theme.of(context).colorScheme.primary,
                 thumbShape: const RoundSliderThumbShape(enabledThumbRadius: 5),
@@ -682,7 +770,10 @@ class _SettingsPageState extends ConsumerState<SettingsPage> {
             color: Theme.of(context).colorScheme.onSurfaceVariant,
           ),
         ),
-        trailing: trailing ?? Icon(Icons.chevron_right_rounded, size: 20, color: Theme.of(context).colorScheme.onSurfaceVariant),
+        trailing: trailing ??
+            Icon(Icons.chevron_right_rounded,
+                size: 20,
+                color: Theme.of(context).colorScheme.onSurfaceVariant),
         onTap: onTap,
       ),
     );

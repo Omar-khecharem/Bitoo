@@ -65,7 +65,8 @@ class _FloatingPlayerState extends State<FloatingPlayer>
                   decoration: BoxDecoration(
                     color: AppColors.darkSurface,
                     border: Border.all(
-                      color: Colors.white.withValues(alpha: AppColors.glassOpacityMedium),
+                      color: Colors.white
+                          .withValues(alpha: AppColors.glassOpacityMedium),
                       width: 0.5,
                     ),
                     borderRadius: BorderRadius.circular(AppRadius.lg),
@@ -88,7 +89,8 @@ class _FloatingPlayerState extends State<FloatingPlayer>
                             width: 64,
                             height: 64,
                             color: AppColors.darkSurfaceLight,
-                            child: Icon(Icons.music_note_rounded, size: 24, color: AppColors.darkTextTertiary),
+                            child: Icon(Icons.music_note_rounded,
+                                size: 24, color: AppColors.darkTextTertiary),
                           ),
                         ),
                       ),
@@ -109,7 +111,8 @@ class _FloatingPlayerState extends State<FloatingPlayer>
                               ),
                               Text(
                                 widget.artistName,
-                                style: AppTypography.bodySmall.copyWith(color: AppColors.darkTextTertiary),
+                                style: AppTypography.bodySmall.copyWith(
+                                    color: AppColors.darkTextTertiary),
                                 maxLines: 1,
                                 overflow: TextOverflow.ellipsis,
                               ),
@@ -126,11 +129,14 @@ class _FloatingPlayerState extends State<FloatingPlayer>
                           height: 40,
                           margin: EdgeInsets.only(right: 4),
                           decoration: BoxDecoration(
-                            color: Colors.white.withValues(alpha: AppColors.glassOpacityMedium),
+                            color: Colors.white.withValues(
+                                alpha: AppColors.glassOpacityMedium),
                             shape: BoxShape.circle,
                           ),
                           child: Icon(
-                            widget.isPlaying ? Icons.pause_rounded : Icons.play_arrow_rounded,
+                            widget.isPlaying
+                                ? Icons.pause_rounded
+                                : Icons.play_arrow_rounded,
                             size: 20,
                             color: AppColors.darkTextPrimary,
                           ),
@@ -149,9 +155,8 @@ class _FloatingPlayerState extends State<FloatingPlayer>
 
   void _snapToEdge() {
     final screenWidth = MediaQuery.of(context).size.width;
-    final targetX = _position.dx > screenWidth / 2 - 100
-        ? screenWidth - 216
-        : 16.0;
+    final targetX =
+        _position.dx > screenWidth / 2 - 100 ? screenWidth - 216 : 16.0;
     setState(() => _position = Offset(targetX, _position.dy));
   }
 }

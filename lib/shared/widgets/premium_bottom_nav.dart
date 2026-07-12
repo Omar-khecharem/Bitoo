@@ -39,10 +39,12 @@ class PremiumBottomNav extends StatelessWidget {
           child: Container(
             height: 64,
             decoration: BoxDecoration(
-              color: (isDark ? const Color(0xFF2A2220) : const Color(0xFFFFFEFC))
-                  .withValues(alpha: 0.85),
+              color:
+                  (isDark ? const Color(0xFF2A2220) : const Color(0xFFFFFEFC))
+                      .withValues(alpha: 0.85),
               border: Border.all(
-                color: (isDark ? Colors.white : Colors.black).withValues(alpha: 0.08),
+                color: (isDark ? Colors.white : Colors.black)
+                    .withValues(alpha: 0.08),
                 width: 0.5,
               ),
             ),
@@ -161,7 +163,8 @@ class _NavItemState extends State<_NavItem>
                   style: TextStyle(
                     fontFamily: 'Inter',
                     fontSize: 10 + t * 0.5,
-                    fontWeight: widget.isActive ? FontWeight.w600 : FontWeight.w400,
+                    fontWeight:
+                        widget.isActive ? FontWeight.w600 : FontWeight.w400,
                     color: widget.isActive
                         ? cs.primary
                         : cs.onSurface.withValues(alpha: 0.45),
@@ -195,7 +198,8 @@ class _BounceOutCurve extends Curve {
   double transformInternal(double t) {
     const overshoot = 1.1;
     const damping = 15.0;
-    return 1.0 + (overshoot - 1.0) * (1.0 - _dampedOscillator(t * damping)) * (1.0 - t);
+    return 1.0 +
+        (overshoot - 1.0) * (1.0 - _dampedOscillator(t * damping)) * (1.0 - t);
   }
 
   static double _dampedOscillator(double x) {

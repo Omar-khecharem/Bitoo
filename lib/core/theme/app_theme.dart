@@ -29,49 +29,49 @@ class AccentColor {
 }
 
 const List<AccentColor> accentColors = [
-  const AccentColor(
+  AccentColor(
     name: 'Festival',
     color: Color(0xFFFFB300),
     primary: Color(0xFFFFB300),
     secondary: Color(0xFFFF6F00),
     tertiary: Color(0xFFE040FB),
   ),
-  const AccentColor(
+  AccentColor(
     name: 'Sunset',
     color: Color(0xFFFF6D00),
     primary: Color(0xFFFF6D00),
     secondary: Color(0xFFFF4081),
     tertiary: Color(0xFF9C27B0),
   ),
-  const AccentColor(
+  AccentColor(
     name: 'Jazz',
     color: Color(0xFF9C27B0),
     primary: Color(0xFF9C27B0),
     secondary: Color(0xFFFFD700),
     tertiary: Color(0xFFE040FB),
   ),
-  const AccentColor(
+  AccentColor(
     name: 'Tropical',
     color: Color(0xFF00C9A7),
     primary: Color(0xFF00C9A7),
     secondary: Color(0xFFFFB300),
     tertiary: Color(0xFFFF6B6B),
   ),
-  const AccentColor(
+  AccentColor(
     name: 'Electric',
     color: Color(0xFF2979FF),
     primary: Color(0xFF2979FF),
     secondary: Color(0xFFE040FB),
     tertiary: Color(0xFFFF4081),
   ),
-  const AccentColor(
+  AccentColor(
     name: 'Rock',
     color: Color(0xFFFF3D00),
     primary: Color(0xFFFF3D00),
     secondary: Color(0xFFFF9100),
     tertiary: Color(0xFFFFAB00),
   ),
-  const AccentColor(
+  AccentColor(
     name: 'Classic',
     color: Color(0xFFD4AF37),
     primary: Color(0xFFD4AF37),
@@ -79,7 +79,7 @@ const List<AccentColor> accentColors = [
     tertiary: Color(0xFF800020),
     label: Color(0xFF2C1810),
   ),
-  const AccentColor(
+  AccentColor(
     name: 'Midnight',
     color: Color(0xFF304FFE),
     primary: Color(0xFF304FFE),
@@ -93,7 +93,8 @@ class AppTheme {
 
   static ThemeData dark({AccentColor? accent}) {
     final a = accent ?? accentColors[0];
-    AppColors.applyAccent(primary: a.primary, secondary: a.secondary, tertiary: a.tertiary);
+    AppColors.applyAccent(
+        primary: a.primary, secondary: a.secondary, tertiary: a.tertiary);
 
     final colorScheme = ColorScheme.dark(
       primary: a.primary,
@@ -114,7 +115,8 @@ class AppTheme {
 
   static ThemeData light({AccentColor? accent}) {
     final a = accent ?? accentColors[0];
-    AppColors.applyAccent(primary: a.primary, secondary: a.secondary, tertiary: a.tertiary);
+    AppColors.applyAccent(
+        primary: a.primary, secondary: a.secondary, tertiary: a.tertiary);
 
     final colorScheme = ColorScheme.light(
       primary: a.primary,
@@ -135,7 +137,8 @@ class AppTheme {
 
   static ThemeData amoled({AccentColor? accent}) {
     final a = accent ?? accentColors[0];
-    AppColors.applyAccent(primary: a.primary, secondary: a.secondary, tertiary: a.tertiary);
+    AppColors.applyAccent(
+        primary: a.primary, secondary: a.secondary, tertiary: a.tertiary);
 
     final colorScheme = ColorScheme.dark(
       primary: a.primary,
@@ -159,8 +162,10 @@ class AppTheme {
     required bool isDark,
   }) {
     final bg = isDark ? AppColors.darkBackground : AppColors.lightBackground;
-    final surface = isDark ? AppColors.amoledSurfaceCard : AppColors.lightSurface;
-    final textSecondary = isDark ? AppColors.darkTextSecondary : AppColors.lightTextSecondary;
+    final surface =
+        isDark ? AppColors.amoledSurfaceCard : AppColors.lightSurface;
+    final textSecondary =
+        isDark ? AppColors.darkTextSecondary : AppColors.lightTextSecondary;
 
     return ThemeData(
       useMaterial3: true,
@@ -191,9 +196,8 @@ class AppTheme {
 
       // ─── Bottom Sheet ───
       bottomSheetTheme: BottomSheetThemeData(
-        backgroundColor: isDark
-            ? AppColors.darkSurfaceLight
-            : AppColors.lightSurfaceDark,
+        backgroundColor:
+            isDark ? AppColors.darkSurfaceLight : AppColors.lightSurfaceDark,
         elevation: 0,
         shape: RoundedRectangleBorder(
           borderRadius: BorderRadius.vertical(top: Radius.circular(24)),
@@ -202,9 +206,8 @@ class AppTheme {
 
       // ─── Dialog ───
       dialogTheme: DialogTheme(
-        backgroundColor: isDark
-            ? AppColors.darkSurfaceLight
-            : AppColors.lightSurfaceDark,
+        backgroundColor:
+            isDark ? AppColors.darkSurfaceLight : AppColors.lightSurfaceDark,
         elevation: 0,
         shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(24)),
       ),
@@ -274,9 +277,8 @@ class AppTheme {
 
       // ─── Snackbar ───
       snackBarTheme: SnackBarThemeData(
-        backgroundColor: isDark
-            ? AppColors.darkSurfaceLight
-            : AppColors.lightSurfaceDark,
+        backgroundColor:
+            isDark ? AppColors.darkSurfaceLight : AppColors.lightSurfaceDark,
         contentTextStyle: TextStyle(color: colorScheme.onSurface),
         behavior: SnackBarBehavior.floating,
         shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(12)),
@@ -285,8 +287,9 @@ class AppTheme {
       // ─── Slider ───
       sliderTheme: SliderThemeData(
         activeTrackColor: colorScheme.primary,
-        inactiveTrackColor:
-            isDark ? Colors.white.withValues(alpha: 0.15) : Colors.black.withValues(alpha: 0.12),
+        inactiveTrackColor: isDark
+            ? Colors.white.withValues(alpha: 0.15)
+            : Colors.black.withValues(alpha: 0.12),
         thumbColor: colorScheme.primary,
         overlayColor: colorScheme.primary.withValues(alpha: 0.12),
         trackHeight: 4,
@@ -297,7 +300,9 @@ class AppTheme {
       switchTheme: SwitchThemeData(
         thumbColor: WidgetStateProperty.resolveWith((states) {
           if (states.contains(WidgetState.selected)) return colorScheme.primary;
-          return isDark ? AppColors.darkTextTertiary : AppColors.lightTextTertiary;
+          return isDark
+              ? AppColors.darkTextTertiary
+              : AppColors.lightTextTertiary;
         }),
         trackColor: WidgetStateProperty.resolveWith((states) {
           if (states.contains(WidgetState.selected)) {
@@ -312,24 +317,23 @@ class AppTheme {
       // ─── Input ───
       inputDecorationTheme: InputDecorationTheme(
         filled: true,
-        fillColor: isDark
-            ? AppColors.amoledSurfaceCard
-            : AppColors.lightSurfaceDark,
+        fillColor:
+            isDark ? AppColors.amoledSurfaceCard : AppColors.lightSurfaceDark,
         border: OutlineInputBorder(
           borderRadius: BorderRadius.circular(14),
           borderSide: BorderSide.none,
         ),
         contentPadding: EdgeInsets.symmetric(horizontal: 16, vertical: 12),
         hintStyle: TextStyle(
-          color: isDark ? AppColors.darkTextTertiary : AppColors.lightTextTertiary,
+          color:
+              isDark ? AppColors.darkTextTertiary : AppColors.lightTextTertiary,
         ),
       ),
 
       // ─── Chip ───
       chipTheme: ChipThemeData(
-        backgroundColor: isDark
-            ? AppColors.amoledSurfaceCard
-            : AppColors.lightSurfaceDark,
+        backgroundColor:
+            isDark ? AppColors.amoledSurfaceCard : AppColors.lightSurfaceDark,
         labelStyle: TextStyle(color: colorScheme.onSurface),
         padding: EdgeInsets.symmetric(horizontal: 8, vertical: 4),
         shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(20)),
@@ -337,9 +341,7 @@ class AppTheme {
 
       // ─── PopupMenu ───
       popupMenuTheme: PopupMenuThemeData(
-        color: isDark
-            ? AppColors.darkSurfaceLight
-            : AppColors.lightSurfaceDark,
+        color: isDark ? AppColors.darkSurfaceLight : AppColors.lightSurfaceDark,
         elevation: 8,
         shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(16)),
       ),
@@ -356,9 +358,8 @@ class AppTheme {
 
       // ─── NavigationBar (NavigationBar) ───
       navigationBarTheme: NavigationBarThemeData(
-        backgroundColor: isDark
-            ? AppColors.darkSurfaceLight
-            : AppColors.lightSurfaceDark,
+        backgroundColor:
+            isDark ? AppColors.darkSurfaceLight : AppColors.lightSurfaceDark,
         elevation: 0,
         indicatorColor: colorScheme.primary.withValues(alpha: 0.2),
         labelTextStyle: WidgetStateProperty.resolveWith((states) {

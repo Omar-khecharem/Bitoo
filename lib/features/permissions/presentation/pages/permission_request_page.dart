@@ -15,8 +15,7 @@ class PermissionRequestPage extends ConsumerStatefulWidget {
       _PermissionRequestPageState();
 }
 
-class _PermissionRequestPageState
-    extends ConsumerState<PermissionRequestPage> {
+class _PermissionRequestPageState extends ConsumerState<PermissionRequestPage> {
   final PageController _pageController = PageController();
   int _currentPage = 0;
 
@@ -100,7 +99,8 @@ class _PermissionRequestPageState
                 ),
               ),
               Padding(
-                padding: const EdgeInsets.symmetric(horizontal: 24, vertical: 8),
+                padding:
+                    const EdgeInsets.symmetric(horizontal: 24, vertical: 8),
                 child: Text(
                   _titles[_currentPage],
                   style: theme.textTheme.titleMedium?.copyWith(
@@ -113,8 +113,7 @@ class _PermissionRequestPageState
                 child: PageView(
                   controller: _pageController,
                   physics: const NeverScrollableScrollPhysics(),
-                  onPageChanged: (i) =>
-                      setState(() => _currentPage = i),
+                  onPageChanged: (i) => setState(() => _currentPage = i),
                   children: pages,
                 ),
               ),

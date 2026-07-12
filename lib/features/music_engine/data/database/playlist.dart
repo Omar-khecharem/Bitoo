@@ -28,30 +28,30 @@ class PlaylistEntry {
   Duration get totalDuration => Duration(milliseconds: totalDurationMs);
 
   Map<String, dynamic> toMap() => {
-    'id': id,
-    'name': name,
-    'description': description,
-    'artworkUri': artworkUri,
-    'songPaths': songPaths,
-    'songCount': songCount,
-    'totalDurationMs': totalDurationMs,
-    'isSmartPlaylist': isSmartPlaylist,
-    'dateCreated': dateCreated.toIso8601String(),
-    'dateModified': dateModified.toIso8601String(),
-    'searchIndex': searchIndex,
-  };
+        'id': id,
+        'name': name,
+        'description': description,
+        'artworkUri': artworkUri,
+        'songPaths': songPaths,
+        'songCount': songCount,
+        'totalDurationMs': totalDurationMs,
+        'isSmartPlaylist': isSmartPlaylist,
+        'dateCreated': dateCreated.toIso8601String(),
+        'dateModified': dateModified.toIso8601String(),
+        'searchIndex': searchIndex,
+      };
 
   factory PlaylistEntry.fromMap(Map<String, dynamic> map) => PlaylistEntry(
-    id: map['id'] as int? ?? 0,
-    name: map['name'] as String? ?? '',
-    description: map['description'] as String?,
-    artworkUri: map['artworkUri'] as String?,
-    songPaths: (map['songPaths'] as List<dynamic>?)?.cast<String>() ?? [],
-    songCount: map['songCount'] as int? ?? 0,
-    totalDurationMs: map['totalDurationMs'] as int? ?? 0,
-    isSmartPlaylist: map['isSmartPlaylist'] as bool? ?? false,
-    dateCreated: DateTime.parse(map['dateCreated'] as String),
-    dateModified: DateTime.parse(map['dateModified'] as String),
-    searchIndex: map['searchIndex'] as String?,
-  );
+        id: map['id'] as int? ?? 0,
+        name: map['name'] as String? ?? '',
+        description: map['description'] as String?,
+        artworkUri: map['artworkUri'] as String?,
+        songPaths: (map['songPaths'] as List<dynamic>?)?.cast<String>() ?? [],
+        songCount: map['songCount'] as int? ?? 0,
+        totalDurationMs: map['totalDurationMs'] as int? ?? 0,
+        isSmartPlaylist: map['isSmartPlaylist'] as bool? ?? false,
+        dateCreated: DateTime.parse(map['dateCreated'] as String),
+        dateModified: DateTime.parse(map['dateModified'] as String),
+        searchIndex: map['searchIndex'] as String?,
+      );
 }

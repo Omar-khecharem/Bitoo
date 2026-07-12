@@ -52,7 +52,8 @@ class _PremiumCategoryBarState extends State<PremiumCategoryBar> {
 
   void _scrollToSelected() {
     if (widget.selectedId == null) return;
-    final selectedIndex = widget.categories.indexWhere((c) => c.id == widget.selectedId);
+    final selectedIndex =
+        widget.categories.indexWhere((c) => c.id == widget.selectedId);
     if (selectedIndex < 0) return;
     final offset = selectedIndex * 90.0 - 20;
     if (_scrollController.hasClients) {
@@ -94,7 +95,10 @@ class _PremiumCategoryBarState extends State<PremiumCategoryBar> {
               decoration: BoxDecoration(
                 gradient: isSelected
                     ? LinearGradient(
-                        colors: [cat.color.withValues(alpha: 0.25), cat.color.withValues(alpha: 0.1)],
+                        colors: [
+                          cat.color.withValues(alpha: 0.25),
+                          cat.color.withValues(alpha: 0.1)
+                        ],
                         begin: Alignment.topLeft,
                         end: Alignment.bottomRight,
                       )
@@ -122,7 +126,12 @@ class _PremiumCategoryBarState extends State<PremiumCategoryBar> {
                     child: Icon(
                       cat.icon,
                       size: 16,
-                      color: isSelected ? cat.color : Theme.of(context).colorScheme.onSurface.withValues(alpha: 0.4),
+                      color: isSelected
+                          ? cat.color
+                          : Theme.of(context)
+                              .colorScheme
+                              .onSurface
+                              .withValues(alpha: 0.4),
                     ),
                   ),
                   SizedBox(width: 6),
@@ -130,8 +139,14 @@ class _PremiumCategoryBarState extends State<PremiumCategoryBar> {
                     cat.label,
                     style: TextStyle(
                       fontSize: 13,
-                      fontWeight: isSelected ? FontWeight.w600 : FontWeight.w500,
-                      color: isSelected ? cat.color : Theme.of(context).colorScheme.onSurface.withValues(alpha: 0.55),
+                      fontWeight:
+                          isSelected ? FontWeight.w600 : FontWeight.w500,
+                      color: isSelected
+                          ? cat.color
+                          : Theme.of(context)
+                              .colorScheme
+                              .onSurface
+                              .withValues(alpha: 0.55),
                     ),
                   ),
                 ],

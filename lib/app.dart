@@ -144,7 +144,8 @@ class MainShell extends ConsumerStatefulWidget {
   ConsumerState<MainShell> createState() => _MainShellState();
 }
 
-class _MainShellState extends ConsumerState<MainShell> with WidgetsBindingObserver {
+class _MainShellState extends ConsumerState<MainShell>
+    with WidgetsBindingObserver {
   StreamSubscription? _playbackSub;
   StreamSubscription? _itemSub;
   String _trackPath = '';
@@ -255,7 +256,11 @@ class _MainShellState extends ConsumerState<MainShell> with WidgetsBindingObserv
               progress: _progress,
               onPlayPause: () {
                 final handler = ref.read(audioHandlerProvider);
-                if (_isPlaying) { handler.pause(); } else { handler.play(); }
+                if (_isPlaying) {
+                  handler.pause();
+                } else {
+                  handler.play();
+                }
               },
               onNext: () => ref.read(audioHandlerProvider).skipToNext(),
               onPrevious: () => ref.read(audioHandlerProvider).skipToPrevious(),
@@ -344,7 +349,7 @@ class _PremiumMiniPlayerBarState extends State<_PremiumMiniPlayerBar>
             mainAxisSize: MainAxisSize.min,
             children: [
               // iOS-style progress bar at top edge
-              Container(
+              SizedBox(
                 height: 2,
                 child: Row(
                   children: [
@@ -376,10 +381,15 @@ class _PremiumMiniPlayerBarState extends State<_PremiumMiniPlayerBar>
                           decoration: BoxDecoration(
                             borderRadius: BorderRadius.circular(12),
                             gradient: LinearGradient(
-                              colors: [cs.primary.withValues(alpha: 0.7), cs.secondary.withValues(alpha: 0.5)],
+                              colors: [
+                                cs.primary.withValues(alpha: 0.7),
+                                cs.secondary.withValues(alpha: 0.5)
+                              ],
                             ),
                           ),
-                          child: Icon(Icons.music_note_rounded, size: 22, color: cs.onPrimary.withValues(alpha: 0.7)),
+                          child: Icon(Icons.music_note_rounded,
+                              size: 22,
+                              color: cs.onPrimary.withValues(alpha: 0.7)),
                         ),
                       ),
                       const SizedBox(width: 12),
@@ -390,7 +400,9 @@ class _PremiumMiniPlayerBarState extends State<_PremiumMiniPlayerBar>
                           mainAxisAlignment: MainAxisAlignment.center,
                           children: [
                             Text(
-                              widget.title.isNotEmpty ? widget.title : 'No track',
+                              widget.title.isNotEmpty
+                                  ? widget.title
+                                  : 'No track',
                               style: TextStyle(
                                 fontWeight: FontWeight.w600,
                                 fontSize: 15,
@@ -401,7 +413,9 @@ class _PremiumMiniPlayerBarState extends State<_PremiumMiniPlayerBar>
                             ),
                             const SizedBox(height: 1),
                             Text(
-                              widget.artist.isNotEmpty ? widget.artist : 'Feel the sound',
+                              widget.artist.isNotEmpty
+                                  ? widget.artist
+                                  : 'Feel the sound',
                               style: TextStyle(
                                 fontSize: 12,
                                 color: cs.onSurface.withValues(alpha: 0.5),
@@ -430,7 +444,8 @@ class _PremiumMiniPlayerBarState extends State<_PremiumMiniPlayerBar>
                               child: Container(
                                 width: 44,
                                 height: 44,
-                                margin: const EdgeInsets.symmetric(horizontal: 4),
+                                margin:
+                                    const EdgeInsets.symmetric(horizontal: 4),
                                 decoration: BoxDecoration(
                                   gradient: LinearGradient(
                                     colors: [cs.primary, cs.secondary],
@@ -447,7 +462,9 @@ class _PremiumMiniPlayerBarState extends State<_PremiumMiniPlayerBar>
                                   ],
                                 ),
                                 child: Icon(
-                                  widget.isPlaying ? Icons.pause_rounded : Icons.play_arrow_rounded,
+                                  widget.isPlaying
+                                      ? Icons.pause_rounded
+                                      : Icons.play_arrow_rounded,
                                   size: 22,
                                   color: cs.onPrimary,
                                 ),
@@ -538,7 +555,8 @@ class _SquishyIconButtonState extends State<_SquishyIconButton>
 }
 
 class _PlayerOverlayTransition extends StatefulWidget {
-  final Widget Function(double expandProgress, AnimationController controller) builder;
+  final Widget Function(double expandProgress, AnimationController controller)
+      builder;
   final VoidCallback onDismissed;
 
   const _PlayerOverlayTransition({
@@ -548,7 +566,8 @@ class _PlayerOverlayTransition extends StatefulWidget {
   });
 
   @override
-  State<_PlayerOverlayTransition> createState() => _PlayerOverlayTransitionState();
+  State<_PlayerOverlayTransition> createState() =>
+      _PlayerOverlayTransitionState();
 }
 
 class _PlayerOverlayTransitionState extends State<_PlayerOverlayTransition>

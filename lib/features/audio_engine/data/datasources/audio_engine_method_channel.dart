@@ -13,11 +13,13 @@ class AudioEngineMethodChannel {
   }
 
   Future<bool> isEffectAvailable(String effect) async {
-    final result = await _channel.invokeMethod<bool>('isEffectAvailable', {'effect': effect});
+    final result = await _channel
+        .invokeMethod<bool>('isEffectAvailable', {'effect': effect});
     return result ?? false;
   }
 
-  Future<bool> isHiResSupported(String mimeType, int sampleRate, int bitDepth) async {
+  Future<bool> isHiResSupported(
+      String mimeType, int sampleRate, int bitDepth) async {
     final result = await _channel.invokeMethod<bool>('isHiResSupported', {
       'mimeType': mimeType,
       'sampleRate': sampleRate,
@@ -47,7 +49,8 @@ class AudioEngineMethodChannel {
   }
 
   Future<void> setVolumeNormalizationEnabled(bool enabled) async {
-    await _channel.invokeMethod('setVolumeNormalizationEnabled', {'enabled': enabled});
+    await _channel
+        .invokeMethod('setVolumeNormalizationEnabled', {'enabled': enabled});
   }
 
   Future<void> setBandLevel(int bandIndex, int millibels) async {
@@ -66,11 +69,13 @@ class AudioEngineMethodChannel {
   }
 
   Future<void> setVirtualizerStrength(int strength) async {
-    await _channel.invokeMethod('setVirtualizerStrength', {'strength': strength});
+    await _channel
+        .invokeMethod('setVirtualizerStrength', {'strength': strength});
   }
 
   Future<void> setLoudnessGain(int gainMillibels) async {
-    await _channel.invokeMethod('setLoudnessGain', {'gainMillibels': gainMillibels});
+    await _channel
+        .invokeMethod('setLoudnessGain', {'gainMillibels': gainMillibels});
   }
 
   Future<void> resetToFlat() async {
@@ -96,7 +101,8 @@ class AudioEngineMethodChannel {
     });
   }
 
-  Future<void> setReplayGain(double trackGain, double albumGain, String mode) async {
+  Future<void> setReplayGain(
+      double trackGain, double albumGain, String mode) async {
     await _channel.invokeMethod('setReplayGain', {
       'trackGain': trackGain,
       'albumGain': albumGain,

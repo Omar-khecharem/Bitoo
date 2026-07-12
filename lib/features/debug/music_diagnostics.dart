@@ -25,7 +25,8 @@ class MusicDiagnosticsPage extends ConsumerStatefulWidget {
   const MusicDiagnosticsPage({super.key});
 
   @override
-  ConsumerState<MusicDiagnosticsPage> createState() => _MusicDiagnosticsPageState();
+  ConsumerState<MusicDiagnosticsPage> createState() =>
+      _MusicDiagnosticsPageState();
 }
 
 class _MusicDiagnosticsPageState extends ConsumerState<MusicDiagnosticsPage> {
@@ -68,7 +69,9 @@ class _MusicDiagnosticsPageState extends ConsumerState<MusicDiagnosticsPage> {
 
       _results.add(DiagnosticResult(
         filePath: song.filePath,
-        title: song.title.isNotEmpty ? song.title : AudioExtensions.titleFromPath(song.filePath),
+        title: song.title.isNotEmpty
+            ? song.title
+            : AudioExtensions.titleFromPath(song.filePath),
         fileExists: exists,
         fileSize: size,
         error: error,
@@ -80,9 +83,11 @@ class _MusicDiagnosticsPageState extends ConsumerState<MusicDiagnosticsPage> {
     setState(() => _running = false);
   }
 
-  int get _okCount => _results.where((r) => r.fileExists && r.error == null).length;
+  int get _okCount =>
+      _results.where((r) => r.fileExists && r.error == null).length;
   int get _missingCount => _results.where((r) => !r.fileExists).length;
-  int get _errorCount => _results.where((r) => r.fileExists && r.error != null).length;
+  int get _errorCount =>
+      _results.where((r) => r.fileExists && r.error != null).length;
 
   @override
   Widget build(BuildContext context) {
@@ -90,7 +95,8 @@ class _MusicDiagnosticsPageState extends ConsumerState<MusicDiagnosticsPage> {
       backgroundColor: const Color(0xFF1A1A1A),
       appBar: AppBar(
         backgroundColor: const Color(0xFF1E1E2E),
-        title: const Text('Diagnostic Audio', style: TextStyle(color: Colors.white, fontSize: 16)),
+        title: const Text('Diagnostic Audio',
+            style: TextStyle(color: Colors.white, fontSize: 16)),
         actions: [
           if (!_running)
             IconButton(
@@ -107,12 +113,15 @@ class _MusicDiagnosticsPageState extends ConsumerState<MusicDiagnosticsPage> {
                   const CircularProgressIndicator(color: Color(0xFF7C5CFF)),
                   const SizedBox(height: 16),
                   Text('${_results.length} fichiers analysés...',
-                      style: const TextStyle(color: Colors.white54, fontSize: 14)),
+                      style:
+                          const TextStyle(color: Colors.white54, fontSize: 14)),
                 ],
               ),
             )
           : _results.isEmpty
-              ? const Center(child: Text('Aucune chanson trouvée', style: TextStyle(color: Colors.white54)))
+              ? const Center(
+                  child: Text('Aucune chanson trouvée',
+                      style: TextStyle(color: Colors.white54)))
               : Column(
                   children: [
                     Container(
@@ -121,10 +130,12 @@ class _MusicDiagnosticsPageState extends ConsumerState<MusicDiagnosticsPage> {
                       child: Row(
                         mainAxisAlignment: MainAxisAlignment.spaceEvenly,
                         children: [
-                      _statBadge('OK', _okCount, const Color(0xFF00E0FF)),
-                      _statBadge('Manquant', _missingCount, const Color(0xFFFF4D6D)),
-                      _statBadge('Erreur', _errorCount, Colors.orangeAccent),
-                      _statBadge('Total', _results.length, Colors.white54),
+                          _statBadge('OK', _okCount, const Color(0xFF00E0FF)),
+                          _statBadge('Manquant', _missingCount,
+                              const Color(0xFFFF4D6D)),
+                          _statBadge(
+                              'Erreur', _errorCount, Colors.orangeAccent),
+                          _statBadge('Total', _results.length, Colors.white54),
                         ],
                       ),
                     ),
@@ -140,8 +151,12 @@ class _MusicDiagnosticsPageState extends ConsumerState<MusicDiagnosticsPage> {
     return Column(
       mainAxisSize: MainAxisSize.min,
       children: [
-        Text('$count', style: TextStyle(color: color, fontSize: 22, fontWeight: FontWeight.bold)),
-        Text(label, style: TextStyle(color: color.withValues(alpha: 0.7), fontSize: 11)),
+        Text('$count',
+            style: TextStyle(
+                color: color, fontSize: 22, fontWeight: FontWeight.bold)),
+        Text(label,
+            style:
+                TextStyle(color: color.withValues(alpha: 0.7), fontSize: 11)),
       ],
     );
   }
@@ -174,14 +189,16 @@ class _MusicDiagnosticsPageState extends ConsumerState<MusicDiagnosticsPage> {
           ),
           subtitle: Text(
             r.filePath,
-            style: TextStyle(color: Colors.white.withValues(alpha: 0.35), fontSize: 10),
+            style: TextStyle(
+                color: Colors.white.withValues(alpha: 0.35), fontSize: 10),
             maxLines: 1,
             overflow: TextOverflow.ellipsis,
           ),
           trailing: ok
               ? Text(formatFileSize(r.fileSize ?? 0),
                   style: const TextStyle(color: Colors.white38, fontSize: 10))
-              : Icon(Icons.arrow_forward_ios, color: Colors.white.withValues(alpha: 0.3), size: 12),
+              : Icon(Icons.arrow_forward_ios,
+                  color: Colors.white.withValues(alpha: 0.3), size: 12),
           onTap: ok ? null : () => setState(() => _selected = r),
         );
       },
@@ -204,14 +221,18 @@ class _MusicDiagnosticsPageState extends ConsumerState<MusicDiagnosticsPage> {
               const SizedBox(width: 8),
               Expanded(
                 child: Text(r.title,
-                    style: const TextStyle(color: Colors.white, fontSize: 16, fontWeight: FontWeight.w600)),
+                    style: const TextStyle(
+                        color: Colors.white,
+                        fontSize: 16,
+                        fontWeight: FontWeight.w600)),
               ),
             ],
           ),
           const SizedBox(height: 16),
           _DetailRow('Chemin', r.filePath),
           _DetailRow('Existe', r.fileExists ? 'Oui' : 'Non'),
-          if (r.fileSize != null) _DetailRow('Taille', formatFileSize(r.fileSize!)),
+          if (r.fileSize != null)
+            _DetailRow('Taille', formatFileSize(r.fileSize!)),
           if (r.error != null) _DetailRow('Erreur', r.error!, isError: true),
           const SizedBox(height: 24),
           SizedBox(
@@ -230,7 +251,8 @@ class _MusicDiagnosticsPageState extends ConsumerState<MusicDiagnosticsPage> {
                 backgroundColor: const Color(0xFF7C5CFF),
                 foregroundColor: Colors.white,
                 padding: const EdgeInsets.symmetric(vertical: 12),
-                shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(12)),
+                shape: RoundedRectangleBorder(
+                    borderRadius: BorderRadius.circular(12)),
               ),
             ),
           ),
@@ -263,7 +285,8 @@ class _DetailRow extends StatelessWidget {
           SizedBox(
             width: 80,
             child: Text(label,
-                style: TextStyle(color: Colors.white.withValues(alpha: 0.5), fontSize: 12)),
+                style: TextStyle(
+                    color: Colors.white.withValues(alpha: 0.5), fontSize: 12)),
           ),
           Expanded(
             child: Text(value,

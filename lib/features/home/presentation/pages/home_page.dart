@@ -41,14 +41,46 @@ class _HomePageState extends ConsumerState<HomePage> {
   String? _selectedCategory;
 
   static const _categories = [
-    CategoryItem(icon: Icons.music_note_rounded, label: 'Songs', color: Color(0xFFFFB300), id: 'songs'),
-    CategoryItem(icon: Icons.favorite_rounded, label: 'Favorites', color: Color(0xFFFF6B6B), id: 'favorites'),
-    CategoryItem(icon: Icons.album_rounded, label: 'Albums', color: Color(0xFFE040FB), id: 'albums'),
-    CategoryItem(icon: Icons.person_rounded, label: 'Artists', color: Color(0xFF00C9A7), id: 'artists'),
-    CategoryItem(icon: Icons.category_rounded, label: 'Genres', color: Color(0xFFFF8C00), id: 'genres'),
-    CategoryItem(icon: Icons.queue_music_rounded, label: 'Playlists', color: Color(0xFFFFD700), id: 'playlists'),
-    CategoryItem(icon: Icons.history_rounded, label: 'Recent', color: Color(0xFFFF4081), id: 'recent'),
-    CategoryItem(icon: Icons.trending_up_rounded, label: 'Most Played', color: Color(0xFFFF6D00), id: 'mostplayed'),
+    CategoryItem(
+        icon: Icons.music_note_rounded,
+        label: 'Songs',
+        color: Color(0xFFFFB300),
+        id: 'songs'),
+    CategoryItem(
+        icon: Icons.favorite_rounded,
+        label: 'Favorites',
+        color: Color(0xFFFF6B6B),
+        id: 'favorites'),
+    CategoryItem(
+        icon: Icons.album_rounded,
+        label: 'Albums',
+        color: Color(0xFFE040FB),
+        id: 'albums'),
+    CategoryItem(
+        icon: Icons.person_rounded,
+        label: 'Artists',
+        color: Color(0xFF00C9A7),
+        id: 'artists'),
+    CategoryItem(
+        icon: Icons.category_rounded,
+        label: 'Genres',
+        color: Color(0xFFFF8C00),
+        id: 'genres'),
+    CategoryItem(
+        icon: Icons.queue_music_rounded,
+        label: 'Playlists',
+        color: Color(0xFFFFD700),
+        id: 'playlists'),
+    CategoryItem(
+        icon: Icons.history_rounded,
+        label: 'Recent',
+        color: Color(0xFFFF4081),
+        id: 'recent'),
+    CategoryItem(
+        icon: Icons.trending_up_rounded,
+        label: 'Most Played',
+        color: Color(0xFFFF6D00),
+        id: 'mostplayed'),
   ];
 
   @override
@@ -75,12 +107,13 @@ class _HomePageState extends ConsumerState<HomePage> {
   List<Song> _filterSongs(List<Song> songs) {
     var result = songs;
     if (_searchQuery.isNotEmpty) {
-      result = songs.where((s) =>
-        s.title.toLowerCase().contains(_searchQuery) ||
-        s.artist.toLowerCase().contains(_searchQuery) ||
-        s.albumTitle.toLowerCase().contains(_searchQuery) ||
-        (s.genre?.toLowerCase().contains(_searchQuery) ?? false)
-      ).toList();
+      result = songs
+          .where((s) =>
+              s.title.toLowerCase().contains(_searchQuery) ||
+              s.artist.toLowerCase().contains(_searchQuery) ||
+              s.albumTitle.toLowerCase().contains(_searchQuery) ||
+              (s.genre?.toLowerCase().contains(_searchQuery) ?? false))
+          .toList();
     }
     return _sortSongs(result);
   }
@@ -114,20 +147,28 @@ class _HomePageState extends ConsumerState<HomePage> {
             padding: const EdgeInsets.fromLTRB(20, 16, 20, 8),
             child: Row(
               children: [
-                Icon(Icons.sort_rounded, size: 18, color: Theme.of(context).colorScheme.primary),
+                Icon(Icons.sort_rounded,
+                    size: 18, color: Theme.of(context).colorScheme.primary),
                 SizedBox(width: 8),
                 Text(
                   'Sort by',
                   style: TextStyle(
                     fontSize: 15,
                     fontWeight: FontWeight.w600,
-                    color: Theme.of(context).colorScheme.onSurface.withValues(alpha: 0.8),
+                    color: Theme.of(context)
+                        .colorScheme
+                        .onSurface
+                        .withValues(alpha: 0.8),
                   ),
                 ),
               ],
             ),
           ),
-          Divider(color: Theme.of(context).brightness == Brightness.dark ? Colors.white.withValues(alpha: 0.06) : Colors.black.withValues(alpha: 0.06), height: 1),
+          Divider(
+              color: Theme.of(context).brightness == Brightness.dark
+                  ? Colors.white.withValues(alpha: 0.06)
+                  : Colors.black.withValues(alpha: 0.06),
+              height: 1),
           ..._SortOption.values.map((option) => _buildSortOption(option)),
           SizedBox(height: 8),
         ],
@@ -163,12 +204,21 @@ class _HomePageState extends ConsumerState<HomePage> {
         padding: const EdgeInsets.symmetric(horizontal: 20, vertical: 14),
         margin: const EdgeInsets.symmetric(horizontal: 8),
         decoration: BoxDecoration(
-          color: isSelected ? AppColors.neonIndigo.withValues(alpha: 0.12) : Colors.transparent,
+          color: isSelected
+              ? AppColors.neonIndigo.withValues(alpha: 0.12)
+              : Colors.transparent,
           borderRadius: BorderRadius.circular(12),
         ),
         child: Row(
           children: [
-            Icon(icon, size: 20, color: isSelected ? AppColors.neonIndigo : Theme.of(context).colorScheme.onSurface.withValues(alpha: 0.4)),
+            Icon(icon,
+                size: 20,
+                color: isSelected
+                    ? AppColors.neonIndigo
+                    : Theme.of(context)
+                        .colorScheme
+                        .onSurface
+                        .withValues(alpha: 0.4)),
             SizedBox(width: 12),
             Expanded(
               child: Text(
@@ -176,7 +226,12 @@ class _HomePageState extends ConsumerState<HomePage> {
                 style: TextStyle(
                   fontSize: 15,
                   fontWeight: isSelected ? FontWeight.w600 : FontWeight.w400,
-                  color: isSelected ? AppColors.neonIndigo : Theme.of(context).colorScheme.onSurface.withValues(alpha: 0.7),
+                  color: isSelected
+                      ? AppColors.neonIndigo
+                      : Theme.of(context)
+                          .colorScheme
+                          .onSurface
+                          .withValues(alpha: 0.7),
                 ),
               ),
             ),
@@ -265,24 +320,31 @@ class _HomePageState extends ConsumerState<HomePage> {
   Widget _buildSearchResults(AsyncValue<List<Song>> allSongsAsync) {
     return allSongsAsync.when(
       loading: () => SliverFillRemaining(
-        child: Center(child: CircularProgressIndicator(strokeWidth: 2, color: Theme.of(context).colorScheme.primary)),
+        child: Center(
+            child: CircularProgressIndicator(
+                strokeWidth: 2, color: Theme.of(context).colorScheme.primary)),
       ),
       error: (e, _) => SliverFillRemaining(
         child: Center(
           child: Padding(
             padding: EdgeInsets.all(24),
-            child: Text('$e', style: TextStyle(color: Theme.of(context).colorScheme.secondary, fontSize: 14), textAlign: TextAlign.center),
+            child: Text('$e',
+                style: TextStyle(
+                    color: Theme.of(context).colorScheme.secondary,
+                    fontSize: 14),
+                textAlign: TextAlign.center),
           ),
         ),
       ),
       data: (songs) {
         final valid = songs.where((s) => s.filePath.isNotEmpty).toList();
-        final filtered = valid.where((s) =>
-          s.title.toLowerCase().contains(_searchQuery) ||
-          s.artist.toLowerCase().contains(_searchQuery) ||
-          s.albumTitle.toLowerCase().contains(_searchQuery) ||
-          (s.genre?.toLowerCase().contains(_searchQuery) ?? false)
-        ).toList();
+        final filtered = valid
+            .where((s) =>
+                s.title.toLowerCase().contains(_searchQuery) ||
+                s.artist.toLowerCase().contains(_searchQuery) ||
+                s.albumTitle.toLowerCase().contains(_searchQuery) ||
+                (s.genre?.toLowerCase().contains(_searchQuery) ?? false))
+            .toList();
         final sorted = _sortSongs(filtered);
 
         if (sorted.isEmpty) {
@@ -291,11 +353,21 @@ class _HomePageState extends ConsumerState<HomePage> {
               child: Column(
                 mainAxisSize: MainAxisSize.min,
                 children: [
-                  Icon(Icons.search_off_rounded, size: 48, color: Theme.of(context).colorScheme.onSurface.withValues(alpha: 0.15)),
+                  Icon(Icons.search_off_rounded,
+                      size: 48,
+                      color: Theme.of(context)
+                          .colorScheme
+                          .onSurface
+                          .withValues(alpha: 0.15)),
                   SizedBox(height: 16),
                   Text(
                     'No results for "$_searchQuery"',
-                    style: TextStyle(color: Theme.of(context).colorScheme.onSurface.withValues(alpha: 0.4), fontSize: 15),
+                    style: TextStyle(
+                        color: Theme.of(context)
+                            .colorScheme
+                            .onSurface
+                            .withValues(alpha: 0.4),
+                        fontSize: 15),
                   ),
                 ],
               ),
@@ -329,10 +401,16 @@ class _HomePageState extends ConsumerState<HomePage> {
     switch (category) {
       case 'albums':
         return allAlbumsAsync.when(
-          loading: () => SliverFillRemaining(child: Center(child: CircularProgressIndicator(strokeWidth: 2))),
-          error: (e, _) => SliverFillRemaining(child: Center(child: Text('$e', style: TextStyle(color: AppColors.neonRose)))),
+          loading: () => SliverFillRemaining(
+              child: Center(child: CircularProgressIndicator(strokeWidth: 2))),
+          error: (e, _) => SliverFillRemaining(
+              child: Center(
+                  child:
+                      Text('$e', style: TextStyle(color: AppColors.neonRose)))),
           data: (albums) {
-            if (albums.isEmpty) return _emptyState('No albums found', Icons.album_rounded);
+            if (albums.isEmpty) {
+              return _emptyState('No albums found', Icons.album_rounded);
+            }
             return SliverPadding(
               padding: const EdgeInsets.fromLTRB(16, 16, 16, 100),
               sliver: SliverGrid(
@@ -352,10 +430,15 @@ class _HomePageState extends ConsumerState<HomePage> {
         );
       case 'favorites':
         return favoritesAsync.when(
-          loading: () => SliverFillRemaining(child: Center(child: CircularProgressIndicator(strokeWidth: 2))),
-          error: (_, __) => _emptyState('Could not load favorites', Icons.favorite_rounded),
+          loading: () => SliverFillRemaining(
+              child: Center(child: CircularProgressIndicator(strokeWidth: 2))),
+          error: (_, __) =>
+              _emptyState('Could not load favorites', Icons.favorite_rounded),
           data: (songs) {
-            if (songs.isEmpty) return _emptyState('No favorite songs yet', Icons.favorite_rounded);
+            if (songs.isEmpty) {
+              return _emptyState(
+                  'No favorite songs yet', Icons.favorite_rounded);
+            }
             return SliverPadding(
               padding: const EdgeInsets.only(left: 12, right: 12, bottom: 100),
               sliver: SliverList(
@@ -369,10 +452,14 @@ class _HomePageState extends ConsumerState<HomePage> {
         );
       case 'artists':
         return allArtistsAsync.when(
-          loading: () => SliverFillRemaining(child: Center(child: CircularProgressIndicator(strokeWidth: 2))),
-          error: (_, __) => _emptyState('Could not load artists', Icons.person_rounded),
+          loading: () => SliverFillRemaining(
+              child: Center(child: CircularProgressIndicator(strokeWidth: 2))),
+          error: (_, __) =>
+              _emptyState('Could not load artists', Icons.person_rounded),
           data: (artists) {
-            if (artists.isEmpty) return _emptyState('No artists found', Icons.person_rounded);
+            if (artists.isEmpty) {
+              return _emptyState('No artists found', Icons.person_rounded);
+            }
             return SliverPadding(
               padding: const EdgeInsets.fromLTRB(16, 16, 16, 100),
               sliver: SliverGrid(
@@ -392,10 +479,14 @@ class _HomePageState extends ConsumerState<HomePage> {
         );
       case 'genres':
         return allGenresAsync.when(
-          loading: () => SliverFillRemaining(child: Center(child: CircularProgressIndicator(strokeWidth: 2))),
-          error: (_, __) => _emptyState('Could not load genres', Icons.category_rounded),
+          loading: () => SliverFillRemaining(
+              child: Center(child: CircularProgressIndicator(strokeWidth: 2))),
+          error: (_, __) =>
+              _emptyState('Could not load genres', Icons.category_rounded),
           data: (genres) {
-            if (genres.isEmpty) return _emptyState('No genres found', Icons.category_rounded);
+            if (genres.isEmpty) {
+              return _emptyState('No genres found', Icons.category_rounded);
+            }
             return SliverPadding(
               padding: const EdgeInsets.fromLTRB(16, 16, 16, 100),
               sliver: SliverGrid(
@@ -415,29 +506,36 @@ class _HomePageState extends ConsumerState<HomePage> {
         );
       case 'playlists':
         return allPlaylistsAsync.when(
-          loading: () => SliverFillRemaining(child: Center(child: CircularProgressIndicator(strokeWidth: 2))),
-          error: (_, __) => _emptyState('Could not load playlists', Icons.queue_music_rounded),
+          loading: () => SliverFillRemaining(
+              child: Center(child: CircularProgressIndicator(strokeWidth: 2))),
+          error: (_, __) => _emptyState(
+              'Could not load playlists', Icons.queue_music_rounded),
           data: (playlists) {
-        return SliverPadding(
-          padding: const EdgeInsets.fromLTRB(16, 16, 16, 100),
-          sliver: SliverList(
-            delegate: SliverChildBuilderDelegate(
-              (context, i) {
-                if (i == 0) return _CreatePlaylistTile();
-                return _PlaylistTile(playlist: playlists[i - 1]);
-              },
-              childCount: playlists.length + 1,
-            ),
-          ),
-        );
+            return SliverPadding(
+              padding: const EdgeInsets.fromLTRB(16, 16, 16, 100),
+              sliver: SliverList(
+                delegate: SliverChildBuilderDelegate(
+                  (context, i) {
+                    if (i == 0) return _CreatePlaylistTile();
+                    return _PlaylistTile(playlist: playlists[i - 1]);
+                  },
+                  childCount: playlists.length + 1,
+                ),
+              ),
+            );
           },
         );
       case 'recent':
         return recentlyPlayedAsync.when(
-          loading: () => SliverFillRemaining(child: Center(child: CircularProgressIndicator(strokeWidth: 2))),
-          error: (_, __) => _emptyState('Could not load recent tracks', Icons.history_rounded),
+          loading: () => SliverFillRemaining(
+              child: Center(child: CircularProgressIndicator(strokeWidth: 2))),
+          error: (_, __) => _emptyState(
+              'Could not load recent tracks', Icons.history_rounded),
           data: (songs) {
-            if (songs.isEmpty) return _emptyState('No recently played tracks', Icons.history_rounded);
+            if (songs.isEmpty) {
+              return _emptyState(
+                  'No recently played tracks', Icons.history_rounded);
+            }
             return SliverPadding(
               padding: const EdgeInsets.only(left: 12, right: 12, bottom: 100),
               sliver: SliverList(
@@ -451,12 +549,17 @@ class _HomePageState extends ConsumerState<HomePage> {
         );
       case 'mostplayed':
         return allSongsAsync.when(
-          loading: () => SliverFillRemaining(child: Center(child: CircularProgressIndicator(strokeWidth: 2))),
-          error: (_, __) => _emptyState('Could not load', Icons.trending_up_rounded),
+          loading: () => SliverFillRemaining(
+              child: Center(child: CircularProgressIndicator(strokeWidth: 2))),
+          error: (_, __) =>
+              _emptyState('Could not load', Icons.trending_up_rounded),
           data: (songs) {
             final mostPlayed = songs.where((s) => s.playCount > 0).toList()
               ..sort((a, b) => b.playCount.compareTo(a.playCount));
-            if (mostPlayed.isEmpty) return _emptyState('No played tracks yet', Icons.trending_up_rounded);
+            if (mostPlayed.isEmpty) {
+              return _emptyState(
+                  'No played tracks yet', Icons.trending_up_rounded);
+            }
             return SliverPadding(
               padding: const EdgeInsets.only(left: 12, right: 12, bottom: 100),
               sliver: SliverList(
@@ -479,11 +582,20 @@ class _HomePageState extends ConsumerState<HomePage> {
         child: Column(
           mainAxisSize: MainAxisSize.min,
           children: [
-            Icon(icon, size: 56, color: Theme.of(context).brightness == Brightness.dark ? Colors.white.withValues(alpha: 0.1) : Colors.black.withValues(alpha: 0.1)),
+            Icon(icon,
+                size: 56,
+                color: Theme.of(context).brightness == Brightness.dark
+                    ? Colors.white.withValues(alpha: 0.1)
+                    : Colors.black.withValues(alpha: 0.1)),
             SizedBox(height: 16),
             Text(
               message,
-              style: TextStyle(color: Theme.of(context).colorScheme.onSurface.withValues(alpha: 0.3), fontSize: 15),
+              style: TextStyle(
+                  color: Theme.of(context)
+                      .colorScheme
+                      .onSurface
+                      .withValues(alpha: 0.3),
+                  fontSize: 15),
             ),
           ],
         ),
@@ -500,7 +612,9 @@ class _HomePageState extends ConsumerState<HomePage> {
         child: Center(
           child: Padding(
             padding: EdgeInsets.all(24),
-            child: Text('$e', style: TextStyle(color: AppColors.neonRose, fontSize: 14), textAlign: TextAlign.center),
+            child: Text('$e',
+                style: TextStyle(color: AppColors.neonRose, fontSize: 14),
+                textAlign: TextAlign.center),
           ),
         ),
       ),
@@ -515,7 +629,13 @@ class _HomePageState extends ConsumerState<HomePage> {
                 children: [
                   CircularProgressIndicator(strokeWidth: 2),
                   SizedBox(height: 16),
-                  Text('Scanning your music...', style: TextStyle(color: Theme.of(context).colorScheme.onSurface.withValues(alpha: 0.54), fontSize: 15)),
+                  Text('Scanning your music...',
+                      style: TextStyle(
+                          color: Theme.of(context)
+                              .colorScheme
+                              .onSurface
+                              .withValues(alpha: 0.54),
+                          fontSize: 15)),
                 ],
               ),
             ),
@@ -528,11 +648,21 @@ class _HomePageState extends ConsumerState<HomePage> {
               child: Column(
                 mainAxisSize: MainAxisSize.min,
                 children: [
-                  Icon(Icons.search_off_rounded, size: 48, color: Theme.of(context).colorScheme.onSurface.withValues(alpha: 0.15)),
+                  Icon(Icons.search_off_rounded,
+                      size: 48,
+                      color: Theme.of(context)
+                          .colorScheme
+                          .onSurface
+                          .withValues(alpha: 0.15)),
                   SizedBox(height: 16),
                   Text(
                     'No results for "$_searchQuery"',
-                    style: TextStyle(color: Theme.of(context).colorScheme.onSurface.withValues(alpha: 0.4), fontSize: 15),
+                    style: TextStyle(
+                        color: Theme.of(context)
+                            .colorScheme
+                            .onSurface
+                            .withValues(alpha: 0.4),
+                        fontSize: 15),
                   ),
                 ],
               ),
@@ -671,8 +801,13 @@ class _SongTileState extends ConsumerState<_SongTile> {
                   : null,
             ),
             child: Icon(
-              _isCurrentTrack ? Icons.play_arrow_rounded : Icons.music_note_rounded,
-              color: Theme.of(context).colorScheme.onSurface.withValues(alpha: _isCurrentTrack ? 0.9 : 0.4),
+              _isCurrentTrack
+                  ? Icons.play_arrow_rounded
+                  : Icons.music_note_rounded,
+              color: Theme.of(context)
+                  .colorScheme
+                  .onSurface
+                  .withValues(alpha: _isCurrentTrack ? 0.9 : 0.4),
               size: 22,
             ),
           ),
@@ -688,7 +823,8 @@ class _SongTileState extends ConsumerState<_SongTile> {
           overflow: TextOverflow.ellipsis,
         ),
         subtitle: Text(
-          widget.song.artist.isNotEmpty && widget.song.artist != 'Unknown Artist'
+          widget.song.artist.isNotEmpty &&
+                  widget.song.artist != 'Unknown Artist'
               ? widget.song.artist
               : 'Unknown Artist',
           style: TextStyle(
@@ -717,9 +853,16 @@ class _SongTileState extends ConsumerState<_SongTile> {
                   scale: 1.0,
                   duration: const Duration(milliseconds: 200),
                   child: Icon(
-                    _isFavorite ? Icons.favorite_rounded : Icons.favorite_outline_rounded,
+                    _isFavorite
+                        ? Icons.favorite_rounded
+                        : Icons.favorite_outline_rounded,
                     size: 18,
-                    color: _isFavorite ? AppColors.neonRose : Theme.of(context).colorScheme.onSurface.withValues(alpha: 0.25),
+                    color: _isFavorite
+                        ? AppColors.neonRose
+                        : Theme.of(context)
+                            .colorScheme
+                            .onSurface
+                            .withValues(alpha: 0.25),
                   ),
                 ),
               ),
@@ -732,7 +875,10 @@ class _SongTileState extends ConsumerState<_SongTile> {
                 child: Icon(
                   Icons.more_horiz_rounded,
                   size: 18,
-                  color: Theme.of(context).colorScheme.onSurface.withValues(alpha: 0.3),
+                  color: Theme.of(context)
+                      .colorScheme
+                      .onSurface
+                      .withValues(alpha: 0.3),
                 ),
               ),
             ),
@@ -753,7 +899,7 @@ class _SongTileState extends ConsumerState<_SongTile> {
       ref.invalidate(allSongsProvider);
       ref.invalidate(isFavoriteProvider(widget.song.filePath));
     } catch (e) {
-      if (mounted) {
+      if (context.mounted) {
         ScaffoldMessenger.of(context).showSnackBar(
           SnackBar(
             content: Text('Error: $e'),
@@ -771,18 +917,23 @@ class _SongTileState extends ConsumerState<_SongTile> {
     final idx = allSongs.indexWhere((s) => s.filePath == widget.song.filePath);
     if (idx >= 0) {
       handler.setQueue(
-        allSongs.map((s) => QueueItem(
-          path: s.filePath,
-          title: AudioExtensions.titleFromPath(s.filePath),
-          artist: s.artist.isNotEmpty && s.artist != 'Unknown Artist' ? s.artist : '',
-        )).toList(),
+        allSongs
+            .map((s) => QueueItem(
+                  path: s.filePath,
+                  title: AudioExtensions.titleFromPath(s.filePath),
+                  artist: s.artist.isNotEmpty && s.artist != 'Unknown Artist'
+                      ? s.artist
+                      : '',
+                ))
+            .toList(),
         startIndex: idx,
       );
     }
     final title = AudioExtensions.titleFromPath(widget.song.filePath);
-    final artist = widget.song.artist.isNotEmpty && widget.song.artist != 'Unknown Artist'
-        ? widget.song.artist
-        : '';
+    final artist =
+        widget.song.artist.isNotEmpty && widget.song.artist != 'Unknown Artist'
+            ? widget.song.artist
+            : '';
     handler.setFilePath(widget.song.filePath, title: title, artist: artist);
     Navigator.of(context).push(
       MaterialPageRoute(
@@ -806,26 +957,45 @@ class _SongTileState extends ConsumerState<_SongTile> {
             child: Row(
               children: [
                 Container(
-                  width: 40, height: 40,
+                  width: 40,
+                  height: 40,
                   decoration: BoxDecoration(
                     gradient: AppGradients.blueToIndigo,
                     borderRadius: BorderRadius.circular(10),
                   ),
-                  child: Icon(Icons.music_note_rounded, size: 20, color: Theme.of(context).colorScheme.onSurface.withValues(alpha: 0.6)),
+                  child: Icon(Icons.music_note_rounded,
+                      size: 20,
+                      color: Theme.of(context)
+                          .colorScheme
+                          .onSurface
+                          .withValues(alpha: 0.6)),
                 ),
                 SizedBox(width: 12),
                 Expanded(
                   child: Column(
                     crossAxisAlignment: CrossAxisAlignment.start,
                     children: [
-                      Text(AudioExtensions.titleFromPath(widget.song.filePath),
-                        maxLines: 1, overflow: TextOverflow.ellipsis,
-                        style: TextStyle(color: Theme.of(context).colorScheme.onSurface, fontSize: 15, fontWeight: FontWeight.w500),
+                      Text(
+                        AudioExtensions.titleFromPath(widget.song.filePath),
+                        maxLines: 1,
+                        overflow: TextOverflow.ellipsis,
+                        style: TextStyle(
+                            color: Theme.of(context).colorScheme.onSurface,
+                            fontSize: 15,
+                            fontWeight: FontWeight.w500),
                       ),
-                      if (widget.song.artist.isNotEmpty && widget.song.artist != 'Unknown Artist')
-                        Text(widget.song.artist,
-                          maxLines: 1, overflow: TextOverflow.ellipsis,
-                          style: TextStyle(color: Theme.of(context).colorScheme.onSurface.withValues(alpha: 0.5), fontSize: 12),
+                      if (widget.song.artist.isNotEmpty &&
+                          widget.song.artist != 'Unknown Artist')
+                        Text(
+                          widget.song.artist,
+                          maxLines: 1,
+                          overflow: TextOverflow.ellipsis,
+                          style: TextStyle(
+                              color: Theme.of(context)
+                                  .colorScheme
+                                  .onSurface
+                                  .withValues(alpha: 0.5),
+                              fontSize: 12),
                         ),
                     ],
                   ),
@@ -833,9 +1003,15 @@ class _SongTileState extends ConsumerState<_SongTile> {
               ],
             ),
           ),
-          Divider(color: Theme.of(context).brightness == Brightness.dark ? Colors.white.withValues(alpha: 0.06) : Colors.black.withValues(alpha: 0.06), height: 1),
+          Divider(
+              color: Theme.of(context).brightness == Brightness.dark
+                  ? Colors.white.withValues(alpha: 0.06)
+                  : Colors.black.withValues(alpha: 0.06),
+              height: 1),
           PremiumActionSheetTile(
-            icon: _isFavorite ? Icons.favorite_rounded : Icons.favorite_outline_rounded,
+            icon: _isFavorite
+                ? Icons.favorite_rounded
+                : Icons.favorite_outline_rounded,
             label: _isFavorite ? 'Remove from Favorites' : 'Add to Favorites',
             color: AppColors.neonRose,
             onTap: () {
@@ -887,7 +1063,7 @@ class _SongTileState extends ConsumerState<_SongTile> {
 
   Future<void> _showAddToPlaylistSheet(BuildContext context) async {
     final playlists = await ref.read(allPlaylistsProvider.future);
-    if (!mounted) return;
+    if (!context.mounted) return;
 
     PremiumBottomSheet.show(
       context,
@@ -901,11 +1077,18 @@ class _SongTileState extends ConsumerState<_SongTile> {
               children: [
                 Row(
                   children: [
-                    Icon(Icons.playlist_add_rounded, size: 18, color: AppColors.neonIndigo),
+                    Icon(Icons.playlist_add_rounded,
+                        size: 18, color: AppColors.neonIndigo),
                     SizedBox(width: 8),
                     Text(
                       'Add to Playlist',
-                      style: TextStyle(fontSize: 16, fontWeight: FontWeight.w600, color: Theme.of(context).colorScheme.onSurface.withValues(alpha: 0.85)),
+                      style: TextStyle(
+                          fontSize: 16,
+                          fontWeight: FontWeight.w600,
+                          color: Theme.of(context)
+                              .colorScheme
+                              .onSurface
+                              .withValues(alpha: 0.85)),
                     ),
                   ],
                 ),
@@ -919,81 +1102,108 @@ class _SongTileState extends ConsumerState<_SongTile> {
                       confirmLabel: 'Create',
                     );
                     if (name != null && name.isNotEmpty) {
-                      final repo = await ref.read(musicRepositoryProvider.future);
+                      final repo =
+                          await ref.read(musicRepositoryProvider.future);
                       final id = await repo.createPlaylist(name);
                       await repo.addSongToPlaylist(id, widget.song.filePath);
                       ref.invalidate(allPlaylistsProvider);
                     }
                   },
                   child: Container(
-                    padding: const EdgeInsets.symmetric(horizontal: 12, vertical: 6),
+                    padding:
+                        const EdgeInsets.symmetric(horizontal: 12, vertical: 6),
                     decoration: BoxDecoration(
                       color: AppColors.neonIndigo.withValues(alpha: 0.15),
                       borderRadius: BorderRadius.circular(8),
                     ),
                     child: Text(
                       'New',
-                      style: TextStyle(fontSize: 13, fontWeight: FontWeight.w600, color: Theme.of(context).colorScheme.primary),
+                      style: TextStyle(
+                          fontSize: 13,
+                          fontWeight: FontWeight.w600,
+                          color: Theme.of(context).colorScheme.primary),
                     ),
                   ),
                 ),
               ],
             ),
           ),
-          Divider(color: Theme.of(context).brightness == Brightness.dark ? Colors.white.withValues(alpha: 0.06) : Colors.black.withValues(alpha: 0.06), height: 1),
+          Divider(
+              color: Theme.of(context).brightness == Brightness.dark
+                  ? Colors.white.withValues(alpha: 0.06)
+                  : Colors.black.withValues(alpha: 0.06),
+              height: 1),
           if (playlists.isEmpty)
             Padding(
               padding: const EdgeInsets.all(24),
               child: Text(
                 'No playlists yet',
-                style: TextStyle(color: Theme.of(context).colorScheme.onSurface.withValues(alpha: 0.3)),
+                style: TextStyle(
+                    color: Theme.of(context)
+                        .colorScheme
+                        .onSurface
+                        .withValues(alpha: 0.3)),
               ),
             )
           else
             ...playlists.map((p) => GestureDetector(
-              onTap: () async {
-                final repo = await ref.read(musicRepositoryProvider.future);
-                await repo.addSongToPlaylist(p.id, widget.song.filePath);
-                ref.invalidate(allPlaylistsProvider);
-                if (mounted) Navigator.of(context).pop();
-                if (mounted) {
-                  ScaffoldMessenger.of(context).showSnackBar(
-                    SnackBar(
-                      content: Text('Added to "${p.name}"'),
-                      backgroundColor: AppColors.success,
-                      behavior: SnackBarBehavior.floating,
-                      shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(12)),
+                  onTap: () async {
+                    final repo = await ref.read(musicRepositoryProvider.future);
+                    await repo.addSongToPlaylist(p.id, widget.song.filePath);
+                    ref.invalidate(allPlaylistsProvider);
+                    if (context.mounted) Navigator.of(context).pop();
+                    if (context.mounted) {
+                      ScaffoldMessenger.of(context).showSnackBar(
+                        SnackBar(
+                          content: Text('Added to "${p.name}"'),
+                          backgroundColor: AppColors.success,
+                          behavior: SnackBarBehavior.floating,
+                          shape: RoundedRectangleBorder(
+                              borderRadius: BorderRadius.circular(12)),
+                        ),
+                      );
+                    }
+                  },
+                  child: Container(
+                    padding: const EdgeInsets.symmetric(
+                        horizontal: 20, vertical: 14),
+                    margin: const EdgeInsets.symmetric(horizontal: 8),
+                    child: Row(
+                      children: [
+                        Container(
+                          width: 36,
+                          height: 36,
+                          decoration: BoxDecoration(
+                            color: AppColors.neonIndigo.withValues(alpha: 0.12),
+                            borderRadius: BorderRadius.circular(10),
+                          ),
+                          child: Icon(Icons.queue_music_rounded,
+                              size: 18, color: AppColors.neonIndigo),
+                        ),
+                        SizedBox(width: 12),
+                        Text(
+                          p.name,
+                          style: TextStyle(
+                              fontSize: 15,
+                              color: Theme.of(context)
+                                  .colorScheme
+                                  .onSurface
+                                  .withValues(alpha: 0.85)),
+                        ),
+                        Spacer(),
+                        Text(
+                          '${p.songCount}',
+                          style: TextStyle(
+                              fontSize: 13,
+                              color: Theme.of(context)
+                                  .colorScheme
+                                  .onSurface
+                                  .withValues(alpha: 0.3)),
+                        ),
+                      ],
                     ),
-                  );
-                }
-              },
-              child: Container(
-                padding: const EdgeInsets.symmetric(horizontal: 20, vertical: 14),
-                margin: const EdgeInsets.symmetric(horizontal: 8),
-                child: Row(
-                  children: [
-                    Container(
-                      width: 36, height: 36,
-                      decoration: BoxDecoration(
-                        color: AppColors.neonIndigo.withValues(alpha: 0.12),
-                        borderRadius: BorderRadius.circular(10),
-                      ),
-                      child: Icon(Icons.queue_music_rounded, size: 18, color: AppColors.neonIndigo),
-                    ),
-                    SizedBox(width: 12),
-                    Text(
-                      p.name,
-                      style: TextStyle(fontSize: 15, color: Theme.of(context).colorScheme.onSurface.withValues(alpha: 0.85)),
-                    ),
-                    Spacer(),
-                    Text(
-                      '${p.songCount}',
-                      style: TextStyle(fontSize: 13, color: Theme.of(context).colorScheme.onSurface.withValues(alpha: 0.3)),
-                    ),
-                  ],
-                ),
-              ),
-            )),
+                  ),
+                )),
           SizedBox(height: 8),
         ],
       ),
@@ -1020,7 +1230,8 @@ class _SongTileState extends ConsumerState<_SongTile> {
     final confirm = await PremiumConfirmDialog.show(
       context,
       title: 'Delete Song',
-      message: 'Are you sure you want to delete "${AudioExtensions.titleFromPath(widget.song.filePath)}"?',
+      message:
+          'Are you sure you want to delete "${AudioExtensions.titleFromPath(widget.song.filePath)}"?',
       confirmLabel: 'Delete',
       icon: Icons.delete_rounded,
       confirmColor: AppColors.neonRose,
@@ -1043,14 +1254,18 @@ class _SongTileState extends ConsumerState<_SongTile> {
   }
 
   Future<void> _showEditDialog(BuildContext context) async {
-    final titleCtrl = TextEditingController(text: AudioExtensions.titleFromPath(widget.song.filePath));
-    final artistCtrl = TextEditingController(text: widget.song.artist != 'Unknown Artist' ? widget.song.artist : '');
+    final titleCtrl = TextEditingController(
+        text: AudioExtensions.titleFromPath(widget.song.filePath));
+    final artistCtrl = TextEditingController(
+        text: widget.song.artist != 'Unknown Artist' ? widget.song.artist : '');
     final result = await showDialog<bool>(
       context: context,
       builder: (ctx) => AlertDialog(
         backgroundColor: Theme.of(ctx).colorScheme.surface,
         shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(20)),
-        title: Text('Edit', style: TextStyle(color: Theme.of(ctx).colorScheme.onSurface, fontSize: 18)),
+        title: Text('Edit',
+            style: TextStyle(
+                color: Theme.of(ctx).colorScheme.onSurface, fontSize: 18)),
         content: Column(
           mainAxisSize: MainAxisSize.min,
           children: [
@@ -1059,9 +1274,21 @@ class _SongTileState extends ConsumerState<_SongTile> {
               style: TextStyle(color: Theme.of(ctx).colorScheme.onSurface),
               decoration: InputDecoration(
                 labelText: 'Title',
-                labelStyle: TextStyle(color: Theme.of(ctx).colorScheme.onSurface.withValues(alpha: 0.54)),
-                enabledBorder: OutlineInputBorder(borderRadius: BorderRadius.circular(12), borderSide: BorderSide(color: Theme.of(ctx).brightness == Brightness.dark ? Colors.white.withValues(alpha: 0.1) : Colors.black.withValues(alpha: 0.1))),
-                focusedBorder: OutlineInputBorder(borderRadius: BorderRadius.circular(12), borderSide: BorderSide(color: Theme.of(ctx).colorScheme.primary)),
+                labelStyle: TextStyle(
+                    color: Theme.of(ctx)
+                        .colorScheme
+                        .onSurface
+                        .withValues(alpha: 0.54)),
+                enabledBorder: OutlineInputBorder(
+                    borderRadius: BorderRadius.circular(12),
+                    borderSide: BorderSide(
+                        color: Theme.of(ctx).brightness == Brightness.dark
+                            ? Colors.white.withValues(alpha: 0.1)
+                            : Colors.black.withValues(alpha: 0.1))),
+                focusedBorder: OutlineInputBorder(
+                    borderRadius: BorderRadius.circular(12),
+                    borderSide:
+                        BorderSide(color: Theme.of(ctx).colorScheme.primary)),
               ),
             ),
             SizedBox(height: 12),
@@ -1070,18 +1297,38 @@ class _SongTileState extends ConsumerState<_SongTile> {
               style: TextStyle(color: Theme.of(ctx).colorScheme.onSurface),
               decoration: InputDecoration(
                 labelText: 'Artist',
-                labelStyle: TextStyle(color: Theme.of(ctx).colorScheme.onSurface.withValues(alpha: 0.54)),
-                enabledBorder: OutlineInputBorder(borderRadius: BorderRadius.circular(12), borderSide: BorderSide(color: Theme.of(ctx).brightness == Brightness.dark ? Colors.white.withValues(alpha: 0.1) : Colors.black.withValues(alpha: 0.1))),
-                focusedBorder: OutlineInputBorder(borderRadius: BorderRadius.circular(12), borderSide: BorderSide(color: Theme.of(ctx).colorScheme.primary)),
+                labelStyle: TextStyle(
+                    color: Theme.of(ctx)
+                        .colorScheme
+                        .onSurface
+                        .withValues(alpha: 0.54)),
+                enabledBorder: OutlineInputBorder(
+                    borderRadius: BorderRadius.circular(12),
+                    borderSide: BorderSide(
+                        color: Theme.of(ctx).brightness == Brightness.dark
+                            ? Colors.white.withValues(alpha: 0.1)
+                            : Colors.black.withValues(alpha: 0.1))),
+                focusedBorder: OutlineInputBorder(
+                    borderRadius: BorderRadius.circular(12),
+                    borderSide:
+                        BorderSide(color: Theme.of(ctx).colorScheme.primary)),
               ),
             ),
           ],
         ),
         actions: [
-          TextButton(onPressed: () => Navigator.of(ctx).pop(false), child: Text('Cancel', style: TextStyle(color: Theme.of(ctx).colorScheme.onSurface.withValues(alpha: 0.54)))),
+          TextButton(
+              onPressed: () => Navigator.of(ctx).pop(false),
+              child: Text('Cancel',
+                  style: TextStyle(
+                      color: Theme.of(ctx)
+                          .colorScheme
+                          .onSurface
+                          .withValues(alpha: 0.54)))),
           TextButton(
             onPressed: () => Navigator.of(ctx).pop(true),
-            child: Text('Save', style: TextStyle(color: Theme.of(ctx).colorScheme.primary)),
+            child: Text('Save',
+                style: TextStyle(color: Theme.of(ctx).colorScheme.primary)),
           ),
         ],
       ),
@@ -1092,7 +1339,8 @@ class _SongTileState extends ConsumerState<_SongTile> {
       await repo.updateSongMetadata(
         widget.song.id,
         title: titleCtrl.text.trim().isNotEmpty ? titleCtrl.text.trim() : null,
-        artist: artistCtrl.text.trim().isNotEmpty ? artistCtrl.text.trim() : null,
+        artist:
+            artistCtrl.text.trim().isNotEmpty ? artistCtrl.text.trim() : null,
       );
       ref.invalidate(allSongsProvider);
     } catch (e) {
@@ -1149,7 +1397,10 @@ class _AlbumCard extends ConsumerWidget {
                   Container(
                     decoration: BoxDecoration(
                       gradient: LinearGradient(
-                        colors: [accent.primary.withValues(alpha: 0.6), accent.secondary.withValues(alpha: 0.3)],
+                        colors: [
+                          accent.primary.withValues(alpha: 0.6),
+                          accent.secondary.withValues(alpha: 0.3)
+                        ],
                         begin: Alignment.topLeft,
                         end: Alignment.bottomRight,
                       ),
@@ -1158,7 +1409,10 @@ class _AlbumCard extends ConsumerWidget {
                       child: Icon(
                         Icons.album_rounded,
                         size: 48,
-                        color: Theme.of(context).colorScheme.onSurface.withValues(alpha: 0.3),
+                        color: Theme.of(context)
+                            .colorScheme
+                            .onSurface
+                            .withValues(alpha: 0.3),
                       ),
                     ),
                   ),
@@ -1176,7 +1430,8 @@ class _AlbumCard extends ConsumerWidget {
                         ),
                         shape: BoxShape.circle,
                       ),
-                      child: Icon(Icons.play_arrow_rounded, color: Colors.white, size: 18),
+                      child: Icon(Icons.play_arrow_rounded,
+                          color: Colors.white, size: 18),
                     ),
                   ),
                 ],
@@ -1213,7 +1468,8 @@ class _AlbumCard extends ConsumerWidget {
     );
   }
 
-  static void _showAlbumDetail(BuildContext context, WidgetRef ref, Album album) {
+  static void _showAlbumDetail(
+      BuildContext context, WidgetRef ref, Album album) {
     PremiumBottomSheet.show(
       context,
       maxHeight: MediaQuery.of(context).size.height * 0.8,
@@ -1242,23 +1498,42 @@ class AlbumDetailSheet extends ConsumerWidget {
                 height: 56,
                 decoration: BoxDecoration(
                   gradient: LinearGradient(
-                    colors: [AppColors.neonIndigo.withValues(alpha: 0.5), AppColors.neonRose.withValues(alpha: 0.3)],
+                    colors: [
+                      AppColors.neonIndigo.withValues(alpha: 0.5),
+                      AppColors.neonRose.withValues(alpha: 0.3)
+                    ],
                   ),
                   borderRadius: BorderRadius.circular(14),
                 ),
-                child: Icon(Icons.album_rounded, size: 28, color: Theme.of(context).colorScheme.onSurface.withValues(alpha: 0.5)),
+                child: Icon(Icons.album_rounded,
+                    size: 28,
+                    color: Theme.of(context)
+                        .colorScheme
+                        .onSurface
+                        .withValues(alpha: 0.5)),
               ),
               SizedBox(width: 12),
               Expanded(
                 child: Column(
                   crossAxisAlignment: CrossAxisAlignment.start,
                   children: [
-                    Text(album.title,
-                      style: TextStyle(color: Theme.of(context).colorScheme.onSurface, fontSize: 17, fontWeight: FontWeight.w600),
-                      maxLines: 1, overflow: TextOverflow.ellipsis,
+                    Text(
+                      album.title,
+                      style: TextStyle(
+                          color: Theme.of(context).colorScheme.onSurface,
+                          fontSize: 17,
+                          fontWeight: FontWeight.w600),
+                      maxLines: 1,
+                      overflow: TextOverflow.ellipsis,
                     ),
-                    Text('${album.artist} • ${album.songCount} songs',
-                      style: TextStyle(color: Theme.of(context).colorScheme.onSurface.withValues(alpha: 0.5), fontSize: 13),
+                    Text(
+                      '${album.artist} • ${album.songCount} songs',
+                      style: TextStyle(
+                          color: Theme.of(context)
+                              .colorScheme
+                              .onSurface
+                              .withValues(alpha: 0.5),
+                          fontSize: 13),
                     ),
                   ],
                 ),
@@ -1266,11 +1541,17 @@ class AlbumDetailSheet extends ConsumerWidget {
             ],
           ),
         ),
-        Divider(color: Theme.of(context).brightness == Brightness.dark ? Colors.white.withValues(alpha: 0.06) : Colors.black.withValues(alpha: 0.06), height: 1),
+        Divider(
+            color: Theme.of(context).brightness == Brightness.dark
+                ? Colors.white.withValues(alpha: 0.06)
+                : Colors.black.withValues(alpha: 0.06),
+            height: 1),
         Flexible(
           child: songsAsync.when(
-            loading: () => const Center(child: CircularProgressIndicator(strokeWidth: 2)),
-            error: (e, _) => Center(child: Text('$e', style: TextStyle(color: AppColors.neonRose))),
+            loading: () =>
+                const Center(child: CircularProgressIndicator(strokeWidth: 2)),
+            error: (e, _) => Center(
+                child: Text('$e', style: TextStyle(color: AppColors.neonRose))),
             data: (songs) => ListView.builder(
               shrinkWrap: true,
               physics: const NeverScrollableScrollPhysics(),
@@ -1279,18 +1560,35 @@ class AlbumDetailSheet extends ConsumerWidget {
                 final song = songs[i];
                 return ListTile(
                   leading: Container(
-                    width: 28, height: 28,
+                    width: 28,
+                    height: 28,
                     alignment: Alignment.center,
-                    child: Text('${song.trackNumber ?? i + 1}',
-                      style: TextStyle(fontSize: 13, color: Theme.of(context).colorScheme.onSurface.withValues(alpha: 0.4)),
+                    child: Text(
+                      '${song.trackNumber ?? i + 1}',
+                      style: TextStyle(
+                          fontSize: 13,
+                          color: Theme.of(context)
+                              .colorScheme
+                              .onSurface
+                              .withValues(alpha: 0.4)),
                     ),
                   ),
-                  title: Text(song.title,
-                    style: TextStyle(color: Theme.of(context).colorScheme.onSurface, fontSize: 14),
-                    maxLines: 1, overflow: TextOverflow.ellipsis,
+                  title: Text(
+                    song.title,
+                    style: TextStyle(
+                        color: Theme.of(context).colorScheme.onSurface,
+                        fontSize: 14),
+                    maxLines: 1,
+                    overflow: TextOverflow.ellipsis,
                   ),
-                  subtitle: Text(_formatDuration(song.durationMs),
-                    style: TextStyle(color: Theme.of(context).colorScheme.onSurface.withValues(alpha: 0.4), fontSize: 11),
+                  subtitle: Text(
+                    _formatDuration(song.durationMs),
+                    style: TextStyle(
+                        color: Theme.of(context)
+                            .colorScheme
+                            .onSurface
+                            .withValues(alpha: 0.4),
+                        fontSize: 11),
                   ),
                   dense: true,
                 );
@@ -1334,7 +1632,8 @@ class _ArtistCard extends StatelessWidget {
           mainAxisAlignment: MainAxisAlignment.center,
           children: [
             Container(
-              width: 56, height: 56,
+              width: 56,
+              height: 56,
               decoration: BoxDecoration(
                 shape: BoxShape.circle,
                 gradient: const LinearGradient(
@@ -1343,7 +1642,12 @@ class _ArtistCard extends StatelessWidget {
                   end: Alignment.bottomRight,
                 ),
               ),
-              child: Icon(Icons.person_rounded, size: 28, color: Theme.of(context).colorScheme.onSurface.withValues(alpha: 0.6)),
+              child: Icon(Icons.person_rounded,
+                  size: 28,
+                  color: Theme.of(context)
+                      .colorScheme
+                      .onSurface
+                      .withValues(alpha: 0.6)),
             ),
             SizedBox(height: 8),
             Padding(
@@ -1362,7 +1666,9 @@ class _ArtistCard extends StatelessWidget {
             ),
             Text(
               '${artist.songCount} songs',
-              style: TextStyle(fontSize: 11, color: Theme.of(context).colorScheme.onSurfaceVariant),
+              style: TextStyle(
+                  fontSize: 11,
+                  color: Theme.of(context).colorScheme.onSurfaceVariant),
             ),
           ],
         ),
@@ -1387,25 +1693,41 @@ class ArtistDetailSheet extends ConsumerWidget {
           child: Row(
             children: [
               Container(
-                width: 56, height: 56,
+                width: 56,
+                height: 56,
                 decoration: const BoxDecoration(
                   shape: BoxShape.circle,
                   gradient: LinearGradient(
                     colors: [Color(0xFF66BB6A), Color(0xFF43A047)],
                   ),
                 ),
-                child: Icon(Icons.person_rounded, size: 28, color: Theme.of(context).colorScheme.onSurface.withValues(alpha: 0.6)),
+                child: Icon(Icons.person_rounded,
+                    size: 28,
+                    color: Theme.of(context)
+                        .colorScheme
+                        .onSurface
+                        .withValues(alpha: 0.6)),
               ),
               SizedBox(width: 12),
               Expanded(
                 child: Column(
                   crossAxisAlignment: CrossAxisAlignment.start,
                   children: [
-                    Text(artist.name,
-                      style: TextStyle(color: Theme.of(context).colorScheme.onSurface, fontSize: 17, fontWeight: FontWeight.w600),
+                    Text(
+                      artist.name,
+                      style: TextStyle(
+                          color: Theme.of(context).colorScheme.onSurface,
+                          fontSize: 17,
+                          fontWeight: FontWeight.w600),
                     ),
-                    Text('${artist.songCount} songs • ${artist.albumCount} albums',
-                      style: TextStyle(color: Theme.of(context).colorScheme.onSurface.withValues(alpha: 0.5), fontSize: 13),
+                    Text(
+                      '${artist.songCount} songs • ${artist.albumCount} albums',
+                      style: TextStyle(
+                          color: Theme.of(context)
+                              .colorScheme
+                              .onSurface
+                              .withValues(alpha: 0.5),
+                          fontSize: 13),
                     ),
                   ],
                 ),
@@ -1413,23 +1735,44 @@ class ArtistDetailSheet extends ConsumerWidget {
             ],
           ),
         ),
-        Divider(color: Theme.of(context).brightness == Brightness.dark ? Colors.white.withValues(alpha: 0.06) : Colors.black.withValues(alpha: 0.06), height: 1),
+        Divider(
+            color: Theme.of(context).brightness == Brightness.dark
+                ? Colors.white.withValues(alpha: 0.06)
+                : Colors.black.withValues(alpha: 0.06),
+            height: 1),
         Flexible(
           child: songsAsync.when(
-            loading: () => const Center(child: CircularProgressIndicator(strokeWidth: 2)),
-            error: (e, _) => Center(child: Text('$e', style: TextStyle(color: AppColors.neonRose))),
+            loading: () =>
+                const Center(child: CircularProgressIndicator(strokeWidth: 2)),
+            error: (e, _) => Center(
+                child: Text('$e', style: TextStyle(color: AppColors.neonRose))),
             data: (songs) => ListView.builder(
               shrinkWrap: true,
               physics: const NeverScrollableScrollPhysics(),
               itemCount: songs.length,
               itemBuilder: (context, i) => ListTile(
-                leading: Icon(Icons.music_note_rounded, size: 20, color: Theme.of(context).colorScheme.onSurface.withValues(alpha: 0.3)),
-                title: Text(songs[i].title,
-                  style: TextStyle(color: Theme.of(context).colorScheme.onSurface, fontSize: 14),
-                  maxLines: 1, overflow: TextOverflow.ellipsis,
+                leading: Icon(Icons.music_note_rounded,
+                    size: 20,
+                    color: Theme.of(context)
+                        .colorScheme
+                        .onSurface
+                        .withValues(alpha: 0.3)),
+                title: Text(
+                  songs[i].title,
+                  style: TextStyle(
+                      color: Theme.of(context).colorScheme.onSurface,
+                      fontSize: 14),
+                  maxLines: 1,
+                  overflow: TextOverflow.ellipsis,
                 ),
-                subtitle: Text(songs[i].albumTitle,
-                  style: TextStyle(color: Theme.of(context).colorScheme.onSurface.withValues(alpha: 0.4), fontSize: 11),
+                subtitle: Text(
+                  songs[i].albumTitle,
+                  style: TextStyle(
+                      color: Theme.of(context)
+                          .colorScheme
+                          .onSurface
+                          .withValues(alpha: 0.4),
+                      fontSize: 11),
                 ),
                 dense: true,
               ),
@@ -1466,14 +1809,20 @@ class _GenreCard extends StatelessWidget {
           child: Row(
             children: [
               Container(
-                width: 40, height: 40,
+                width: 40,
+                height: 40,
                 decoration: BoxDecoration(
                   borderRadius: BorderRadius.circular(10),
                   gradient: const LinearGradient(
                     colors: [Color(0xFFF59E0B), Color(0xFFD97706)],
                   ),
                 ),
-                child: Icon(Icons.category_rounded, size: 20, color: Theme.of(context).colorScheme.onSurface.withValues(alpha: 0.7)),
+                child: Icon(Icons.category_rounded,
+                    size: 20,
+                    color: Theme.of(context)
+                        .colorScheme
+                        .onSurface
+                        .withValues(alpha: 0.7)),
               ),
               SizedBox(width: 12),
               Expanded(
@@ -1482,7 +1831,10 @@ class _GenreCard extends StatelessWidget {
                   mainAxisAlignment: MainAxisAlignment.center,
                   children: [
                     Text(
-                      genre.name.isNotEmpty ? genre.name[0].toUpperCase() + genre.name.substring(1) : 'Unknown',
+                      genre.name.isNotEmpty
+                          ? genre.name[0].toUpperCase() +
+                              genre.name.substring(1)
+                          : 'Unknown',
                       style: TextStyle(
                         fontSize: 14,
                         fontWeight: FontWeight.w600,
@@ -1493,12 +1845,20 @@ class _GenreCard extends StatelessWidget {
                     ),
                     Text(
                       '${genre.songCount} songs',
-                      style: TextStyle(fontSize: 11, color: Theme.of(context).colorScheme.onSurfaceVariant),
+                      style: TextStyle(
+                          fontSize: 11,
+                          color:
+                              Theme.of(context).colorScheme.onSurfaceVariant),
                     ),
                   ],
                 ),
               ),
-              Icon(Icons.chevron_right_rounded, size: 20, color: Theme.of(context).colorScheme.onSurface.withValues(alpha: 0.2)),
+              Icon(Icons.chevron_right_rounded,
+                  size: 20,
+                  color: Theme.of(context)
+                      .colorScheme
+                      .onSurface
+                      .withValues(alpha: 0.2)),
             ],
           ),
         ),
@@ -1523,25 +1883,44 @@ class GenreDetailSheet extends ConsumerWidget {
           child: Row(
             children: [
               Container(
-                width: 56, height: 56,
+                width: 56,
+                height: 56,
                 decoration: BoxDecoration(
                   borderRadius: BorderRadius.circular(14),
                   gradient: const LinearGradient(
                     colors: [Color(0xFFF59E0B), Color(0xFFD97706)],
                   ),
                 ),
-                child: Icon(Icons.category_rounded, size: 28, color: Theme.of(context).colorScheme.onSurface.withValues(alpha: 0.6)),
+                child: Icon(Icons.category_rounded,
+                    size: 28,
+                    color: Theme.of(context)
+                        .colorScheme
+                        .onSurface
+                        .withValues(alpha: 0.6)),
               ),
               SizedBox(width: 12),
               Expanded(
                 child: Column(
                   crossAxisAlignment: CrossAxisAlignment.start,
                   children: [
-                    Text(genre.name.isNotEmpty ? genre.name[0].toUpperCase() + genre.name.substring(1) : 'Unknown',
-                      style: TextStyle(color: Theme.of(context).colorScheme.onSurface, fontSize: 17, fontWeight: FontWeight.w600),
+                    Text(
+                      genre.name.isNotEmpty
+                          ? genre.name[0].toUpperCase() +
+                              genre.name.substring(1)
+                          : 'Unknown',
+                      style: TextStyle(
+                          color: Theme.of(context).colorScheme.onSurface,
+                          fontSize: 17,
+                          fontWeight: FontWeight.w600),
                     ),
-                    Text('${genre.songCount} songs',
-                      style: TextStyle(color: Theme.of(context).colorScheme.onSurface.withValues(alpha: 0.5), fontSize: 13),
+                    Text(
+                      '${genre.songCount} songs',
+                      style: TextStyle(
+                          color: Theme.of(context)
+                              .colorScheme
+                              .onSurface
+                              .withValues(alpha: 0.5),
+                          fontSize: 13),
                     ),
                   ],
                 ),
@@ -1549,23 +1928,44 @@ class GenreDetailSheet extends ConsumerWidget {
             ],
           ),
         ),
-        Divider(color: Theme.of(context).brightness == Brightness.dark ? Colors.white.withValues(alpha: 0.06) : Colors.black.withValues(alpha: 0.06), height: 1),
+        Divider(
+            color: Theme.of(context).brightness == Brightness.dark
+                ? Colors.white.withValues(alpha: 0.06)
+                : Colors.black.withValues(alpha: 0.06),
+            height: 1),
         Flexible(
           child: songsAsync.when(
-            loading: () => const Center(child: CircularProgressIndicator(strokeWidth: 2)),
-            error: (e, _) => Center(child: Text('$e', style: TextStyle(color: AppColors.neonRose))),
+            loading: () =>
+                const Center(child: CircularProgressIndicator(strokeWidth: 2)),
+            error: (e, _) => Center(
+                child: Text('$e', style: TextStyle(color: AppColors.neonRose))),
             data: (songs) => ListView.builder(
               shrinkWrap: true,
               physics: const NeverScrollableScrollPhysics(),
               itemCount: songs.length,
               itemBuilder: (context, i) => ListTile(
-                leading: Icon(Icons.music_note_rounded, size: 20, color: Theme.of(context).colorScheme.onSurface.withValues(alpha: 0.3)),
-                title: Text(songs[i].title,
-                  style: TextStyle(color: Theme.of(context).colorScheme.onSurface, fontSize: 14),
-                  maxLines: 1, overflow: TextOverflow.ellipsis,
+                leading: Icon(Icons.music_note_rounded,
+                    size: 20,
+                    color: Theme.of(context)
+                        .colorScheme
+                        .onSurface
+                        .withValues(alpha: 0.3)),
+                title: Text(
+                  songs[i].title,
+                  style: TextStyle(
+                      color: Theme.of(context).colorScheme.onSurface,
+                      fontSize: 14),
+                  maxLines: 1,
+                  overflow: TextOverflow.ellipsis,
                 ),
-                subtitle: Text(songs[i].artist,
-                  style: TextStyle(color: Theme.of(context).colorScheme.onSurface.withValues(alpha: 0.4), fontSize: 11),
+                subtitle: Text(
+                  songs[i].artist,
+                  style: TextStyle(
+                      color: Theme.of(context)
+                          .colorScheme
+                          .onSurface
+                          .withValues(alpha: 0.4),
+                      fontSize: 11),
                 ),
                 dense: true,
               ),
@@ -1599,7 +1999,8 @@ class _CreatePlaylistTile extends ConsumerWidget {
                   content: Text('Playlist "$name" created'),
                   backgroundColor: AppColors.success,
                   behavior: SnackBarBehavior.floating,
-                  shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(12)),
+                  shape: RoundedRectangleBorder(
+                      borderRadius: BorderRadius.circular(12)),
                 ),
               );
             }
@@ -1627,21 +2028,24 @@ class _CreatePlaylistTile extends ConsumerWidget {
           ),
         ),
         child: ListTile(
-          contentPadding: const EdgeInsets.symmetric(horizontal: 12, vertical: 6),
+          contentPadding:
+              const EdgeInsets.symmetric(horizontal: 12, vertical: 6),
           leading: Container(
-            width: 48, height: 48,
+            width: 48,
+            height: 48,
             decoration: BoxDecoration(
               borderRadius: BorderRadius.circular(14),
               color: AppColors.neonIndigo.withValues(alpha: 0.1),
             ),
-            child: Icon(Icons.add_rounded, size: 22, color: AppColors.neonIndigo),
+            child:
+                Icon(Icons.add_rounded, size: 22, color: AppColors.neonIndigo),
           ),
           title: Text(
             'Create Playlist',
             style: TextStyle(
               fontSize: 15,
               fontWeight: FontWeight.w500,
-        color: Theme.of(context).colorScheme.primary,
+              color: Theme.of(context).colorScheme.primary,
             ),
           ),
           subtitle: Text(
@@ -1651,7 +2055,8 @@ class _CreatePlaylistTile extends ConsumerWidget {
               color: AppColors.neonIndigo.withValues(alpha: 0.5),
             ),
           ),
-          trailing: Icon(Icons.chevron_right_rounded, size: 20, color: AppColors.neonIndigo.withValues(alpha: 0.3)),
+          trailing: Icon(Icons.chevron_right_rounded,
+              size: 20, color: AppColors.neonIndigo.withValues(alpha: 0.3)),
         ),
       ),
     );
@@ -1675,16 +2080,26 @@ class _PlaylistTile extends ConsumerWidget {
           borderRadius: BorderRadius.circular(16),
         ),
         child: ListTile(
-          contentPadding: const EdgeInsets.symmetric(horizontal: 12, vertical: 6),
+          contentPadding:
+              const EdgeInsets.symmetric(horizontal: 12, vertical: 6),
           leading: Container(
-            width: 48, height: 48,
+            width: 48,
+            height: 48,
             decoration: BoxDecoration(
               borderRadius: BorderRadius.circular(14),
               gradient: LinearGradient(
-                colors: [AppColors.neonIndigo.withValues(alpha: 0.5), AppColors.neonBlue.withValues(alpha: 0.3)],
+                colors: [
+                  AppColors.neonIndigo.withValues(alpha: 0.5),
+                  AppColors.neonBlue.withValues(alpha: 0.3)
+                ],
               ),
             ),
-            child: Icon(Icons.queue_music_rounded, size: 22, color: Theme.of(context).colorScheme.onSurface.withValues(alpha: 0.6)),
+            child: Icon(Icons.queue_music_rounded,
+                size: 22,
+                color: Theme.of(context)
+                    .colorScheme
+                    .onSurface
+                    .withValues(alpha: 0.6)),
           ),
           title: Text(
             playlist.name,
@@ -1698,15 +2113,23 @@ class _PlaylistTile extends ConsumerWidget {
           ),
           subtitle: Text(
             '${playlist.songCount} songs',
-            style: TextStyle(fontSize: 12, color: Theme.of(context).colorScheme.onSurfaceVariant),
+            style: TextStyle(
+                fontSize: 12,
+                color: Theme.of(context).colorScheme.onSurfaceVariant),
           ),
-          trailing: Icon(Icons.chevron_right_rounded, size: 20, color: Theme.of(context).colorScheme.onSurface.withValues(alpha: 0.3)),
+          trailing: Icon(Icons.chevron_right_rounded,
+              size: 20,
+              color: Theme.of(context)
+                  .colorScheme
+                  .onSurface
+                  .withValues(alpha: 0.3)),
         ),
       ),
     );
   }
 
-  static void _showPlaylistDetail(BuildContext context, WidgetRef ref, PlaylistEntry playlist) {
+  static void _showPlaylistDetail(
+      BuildContext context, WidgetRef ref, PlaylistEntry playlist) {
     PremiumBottomSheet.show(
       context,
       maxHeight: MediaQuery.of(context).size.height * 0.8,
@@ -1714,7 +2137,8 @@ class _PlaylistTile extends ConsumerWidget {
     );
   }
 
-  static void _showPlaylistMenu(BuildContext context, WidgetRef ref, PlaylistEntry playlist) {
+  static void _showPlaylistMenu(
+      BuildContext context, WidgetRef ref, PlaylistEntry playlist) {
     PremiumBottomSheet.show(
       context,
       builder: Column(
@@ -1725,26 +2149,46 @@ class _PlaylistTile extends ConsumerWidget {
             child: Row(
               children: [
                 Container(
-                  width: 40, height: 40,
+                  width: 40,
+                  height: 40,
                   decoration: BoxDecoration(
                     borderRadius: BorderRadius.circular(10),
                     gradient: LinearGradient(
-                      colors: [AppColors.neonIndigo.withValues(alpha: 0.5), AppColors.neonBlue.withValues(alpha: 0.3)],
+                      colors: [
+                        AppColors.neonIndigo.withValues(alpha: 0.5),
+                        AppColors.neonBlue.withValues(alpha: 0.3)
+                      ],
                     ),
                   ),
-                  child: Icon(Icons.queue_music_rounded, size: 20, color: Theme.of(context).colorScheme.onSurface.withValues(alpha: 0.6)),
+                  child: Icon(Icons.queue_music_rounded,
+                      size: 20,
+                      color: Theme.of(context)
+                          .colorScheme
+                          .onSurface
+                          .withValues(alpha: 0.6)),
                 ),
                 SizedBox(width: 12),
                 Expanded(
                   child: Column(
                     crossAxisAlignment: CrossAxisAlignment.start,
                     children: [
-                      Text(playlist.name,
-                        style: TextStyle(color: Theme.of(context).colorScheme.onSurface, fontSize: 15, fontWeight: FontWeight.w500),
-                        maxLines: 1, overflow: TextOverflow.ellipsis,
+                      Text(
+                        playlist.name,
+                        style: TextStyle(
+                            color: Theme.of(context).colorScheme.onSurface,
+                            fontSize: 15,
+                            fontWeight: FontWeight.w500),
+                        maxLines: 1,
+                        overflow: TextOverflow.ellipsis,
                       ),
-                      Text('${playlist.songCount} songs',
-                        style: TextStyle(color: Theme.of(context).colorScheme.onSurface.withValues(alpha: 0.5), fontSize: 12),
+                      Text(
+                        '${playlist.songCount} songs',
+                        style: TextStyle(
+                            color: Theme.of(context)
+                                .colorScheme
+                                .onSurface
+                                .withValues(alpha: 0.5),
+                            fontSize: 12),
                       ),
                     ],
                   ),
@@ -1752,7 +2196,11 @@ class _PlaylistTile extends ConsumerWidget {
               ],
             ),
           ),
-          Divider(color: Theme.of(context).brightness == Brightness.dark ? Colors.white.withValues(alpha: 0.06) : Colors.black.withValues(alpha: 0.06), height: 1),
+          Divider(
+              color: Theme.of(context).brightness == Brightness.dark
+                  ? Colors.white.withValues(alpha: 0.06)
+                  : Colors.black.withValues(alpha: 0.06),
+              height: 1),
           PremiumActionSheetTile(
             icon: Icons.edit_rounded,
             label: 'Rename',
@@ -1817,26 +2265,46 @@ class PlaylistDetailSheet extends ConsumerWidget {
           child: Row(
             children: [
               Container(
-                width: 56, height: 56,
+                width: 56,
+                height: 56,
                 decoration: BoxDecoration(
                   borderRadius: BorderRadius.circular(14),
                   gradient: LinearGradient(
-                    colors: [AppColors.neonIndigo.withValues(alpha: 0.5), AppColors.neonBlue.withValues(alpha: 0.3)],
+                    colors: [
+                      AppColors.neonIndigo.withValues(alpha: 0.5),
+                      AppColors.neonBlue.withValues(alpha: 0.3)
+                    ],
                   ),
                 ),
-                child: Icon(Icons.queue_music_rounded, size: 28, color: Theme.of(context).colorScheme.onSurface.withValues(alpha: 0.6)),
+                child: Icon(Icons.queue_music_rounded,
+                    size: 28,
+                    color: Theme.of(context)
+                        .colorScheme
+                        .onSurface
+                        .withValues(alpha: 0.6)),
               ),
               SizedBox(width: 12),
               Expanded(
                 child: Column(
                   crossAxisAlignment: CrossAxisAlignment.start,
                   children: [
-                    Text(playlist.name,
-                      style: TextStyle(color: Theme.of(context).colorScheme.onSurface, fontSize: 17, fontWeight: FontWeight.w600),
-                      maxLines: 1, overflow: TextOverflow.ellipsis,
+                    Text(
+                      playlist.name,
+                      style: TextStyle(
+                          color: Theme.of(context).colorScheme.onSurface,
+                          fontSize: 17,
+                          fontWeight: FontWeight.w600),
+                      maxLines: 1,
+                      overflow: TextOverflow.ellipsis,
                     ),
-                    Text('${playlist.songCount} songs',
-                      style: TextStyle(color: Theme.of(context).colorScheme.onSurface.withValues(alpha: 0.5), fontSize: 13),
+                    Text(
+                      '${playlist.songCount} songs',
+                      style: TextStyle(
+                          color: Theme.of(context)
+                              .colorScheme
+                              .onSurface
+                              .withValues(alpha: 0.5),
+                          fontSize: 13),
                     ),
                   ],
                 ),
@@ -1844,18 +2312,31 @@ class PlaylistDetailSheet extends ConsumerWidget {
             ],
           ),
         ),
-        Divider(color: Theme.of(context).brightness == Brightness.dark ? Colors.white.withValues(alpha: 0.06) : Colors.black.withValues(alpha: 0.06), height: 1),
+        Divider(
+            color: Theme.of(context).brightness == Brightness.dark
+                ? Colors.white.withValues(alpha: 0.06)
+                : Colors.black.withValues(alpha: 0.06),
+            height: 1),
         Flexible(
           child: allSongsAsync.when(
-            loading: () => const Center(child: CircularProgressIndicator(strokeWidth: 2)),
-            error: (e, _) => Center(child: Text('$e', style: TextStyle(color: AppColors.neonRose))),
+            loading: () =>
+                const Center(child: CircularProgressIndicator(strokeWidth: 2)),
+            error: (e, _) => Center(
+                child: Text('$e', style: TextStyle(color: AppColors.neonRose))),
             data: (allSongs) {
               final songPaths = playlist.songPaths;
-              final songs = allSongs.where((s) => songPaths.contains(s.filePath)).toList();
+              final songs = allSongs
+                  .where((s) => songPaths.contains(s.filePath))
+                  .toList();
               if (songs.isEmpty) {
                 return Center(
-                  child: Text('No songs in this playlist',
-                    style: TextStyle(color: Theme.of(context).colorScheme.onSurface.withValues(alpha: 0.3)),
+                  child: Text(
+                    'No songs in this playlist',
+                    style: TextStyle(
+                        color: Theme.of(context)
+                            .colorScheme
+                            .onSurface
+                            .withValues(alpha: 0.3)),
                   ),
                 );
               }
@@ -1866,21 +2347,40 @@ class PlaylistDetailSheet extends ConsumerWidget {
                 itemBuilder: (context, i) {
                   final song = songs[i];
                   return ListTile(
-                    leading: Icon(Icons.music_note_rounded, size: 20, color: Theme.of(context).colorScheme.onSurface.withValues(alpha: 0.3)),
-                    title: Text(song.title,
-                      style: TextStyle(color: Theme.of(context).colorScheme.onSurface, fontSize: 14),
-                      maxLines: 1, overflow: TextOverflow.ellipsis,
+                    leading: Icon(Icons.music_note_rounded,
+                        size: 20,
+                        color: Theme.of(context)
+                            .colorScheme
+                            .onSurface
+                            .withValues(alpha: 0.3)),
+                    title: Text(
+                      song.title,
+                      style: TextStyle(
+                          color: Theme.of(context).colorScheme.onSurface,
+                          fontSize: 14),
+                      maxLines: 1,
+                      overflow: TextOverflow.ellipsis,
                     ),
-                    subtitle: Text(song.artist,
-                      style: TextStyle(color: Theme.of(context).colorScheme.onSurface.withValues(alpha: 0.4), fontSize: 11),
+                    subtitle: Text(
+                      song.artist,
+                      style: TextStyle(
+                          color: Theme.of(context)
+                              .colorScheme
+                              .onSurface
+                              .withValues(alpha: 0.4),
+                          fontSize: 11),
                     ),
                     trailing: GestureDetector(
                       onTap: () async {
-                        final repo = await ref.read(musicRepositoryProvider.future);
-                        await repo.removeSongFromPlaylist(playlist.id, song.filePath);
+                        final repo =
+                            await ref.read(musicRepositoryProvider.future);
+                        await repo.removeSongFromPlaylist(
+                            playlist.id, song.filePath);
                         ref.invalidate(allPlaylistsProvider);
                       },
-                      child: Icon(Icons.remove_circle_outline_rounded, size: 20, color: AppColors.neonRose.withValues(alpha: 0.5)),
+                      child: Icon(Icons.remove_circle_outline_rounded,
+                          size: 20,
+                          color: AppColors.neonRose.withValues(alpha: 0.5)),
                     ),
                     dense: true,
                   );

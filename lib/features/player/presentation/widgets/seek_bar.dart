@@ -144,7 +144,9 @@ class _SeekBarState extends State<SeekBar> with SingleTickerProviderStateMixin {
                     ),
                     // Thumb — always visible like Apple Music
                     Positioned(
-                      left: (progress * (MediaQuery.of(context).size.width - 72)).clamp(-10, MediaQuery.of(context).size.width - 86),
+                      left: (progress *
+                              (MediaQuery.of(context).size.width - 72))
+                          .clamp(-10, MediaQuery.of(context).size.width - 86),
                       child: AnimatedContainer(
                         duration: const Duration(milliseconds: 100),
                         width: _isDragging || _isHovering ? 18 : 8,
@@ -251,8 +253,14 @@ class _VolumeSliderState extends State<VolumeSlider> {
             Expanded(
               child: SliderTheme(
                 data: SliderTheme.of(context).copyWith(
-                  activeTrackColor: Theme.of(context).colorScheme.onSurface.withValues(alpha: 0.54),
-                  inactiveTrackColor: Theme.of(context).brightness == Brightness.dark ? Colors.white12 : Colors.black12,
+                  activeTrackColor: Theme.of(context)
+                      .colorScheme
+                      .onSurface
+                      .withValues(alpha: 0.54),
+                  inactiveTrackColor:
+                      Theme.of(context).brightness == Brightness.dark
+                          ? Colors.white12
+                          : Colors.black12,
                   trackHeight: 2,
                   thumbColor: Theme.of(context).colorScheme.primary,
                   overlayColor: Colors.transparent,

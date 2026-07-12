@@ -14,18 +14,18 @@ class Genre {
   });
 
   Map<String, dynamic> toMap() => {
-    'id': id,
-    'name': name,
-    'songCount': songCount,
-    'albumCount': albumCount,
-    'dateAdded': dateAdded.toIso8601String(),
-  };
+        'id': id,
+        'name': name,
+        'songCount': songCount,
+        'albumCount': albumCount,
+        'dateAdded': dateAdded.toIso8601String(),
+      };
 
   factory Genre.fromMap(Map<String, dynamic> map) => Genre(
-    id: map['id'] as int? ?? 0,
-    name: map['name'] as String? ?? '',
-    songCount: map['songCount'] as int? ?? 0,
-    albumCount: map['albumCount'] as int? ?? 0,
-    dateAdded: DateTime.parse(map['dateAdded'] as String),
-  );
+        id: map['id'] as int? ?? 0,
+        name: map['name'] as String? ?? '',
+        songCount: map['songCount'] as int? ?? 0,
+        albumCount: map['albumCount'] as int? ?? 0,
+        dateAdded: DateTime.parse(map['dateAdded'] as String),
+      );
 }

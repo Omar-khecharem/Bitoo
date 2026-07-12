@@ -61,10 +61,12 @@ class _AnimatedAlbumCardState extends State<AnimatedAlbumCard>
     final deltaX = (localPos.dx - centerX) / centerX;
     final deltaY = (localPos.dy - centerY) / centerY;
     _tiltX = Tween<double>(begin: deltaX * -5, end: deltaX * -5).animate(
-      CurvedAnimation(parent: _tiltController, curve: AnimationCurves.premiumEase),
+      CurvedAnimation(
+          parent: _tiltController, curve: AnimationCurves.premiumEase),
     );
     _tiltY = Tween<double>(begin: deltaY * 5, end: deltaY * 5).animate(
-      CurvedAnimation(parent: _tiltController, curve: AnimationCurves.premiumEase),
+      CurvedAnimation(
+          parent: _tiltController, curve: AnimationCurves.premiumEase),
     );
     if (!_tiltController.isAnimating) {
       _tiltController.value = 1.0;
@@ -116,7 +118,8 @@ class _AnimatedAlbumCardState extends State<AnimatedAlbumCard>
                       fit: StackFit.expand,
                       children: [
                         ClipRRect(
-                          borderRadius: BorderRadius.vertical(top: Radius.circular(16)),
+                          borderRadius:
+                              BorderRadius.vertical(top: Radius.circular(16)),
                           child: _buildImage(),
                         ),
                         Positioned(
@@ -132,7 +135,8 @@ class _AnimatedAlbumCardState extends State<AnimatedAlbumCard>
                                 shape: BoxShape.circle,
                                 boxShadow: [
                                   BoxShadow(
-                                    color: const Color(0xFF8B5CF6).withValues(alpha: 0.4),
+                                    color: const Color(0xFF8B5CF6)
+                                        .withValues(alpha: 0.4),
                                     blurRadius: 8,
                                   ),
                                 ],
@@ -449,8 +453,11 @@ class _AnimatedTrackTileState extends State<AnimatedTrackTile>
                       ),
                       child: Center(
                         child: widget.isPlaying
-                            ? Icon(Icons.equalizer_rounded, size: 20, color: const Color(0xFF8B5CF6))
-                            : Icon(Icons.music_note_rounded, size: 20, color: Colors.white.withValues(alpha: 0.4)),
+                            ? Icon(Icons.equalizer_rounded,
+                                size: 20, color: const Color(0xFF8B5CF6))
+                            : Icon(Icons.music_note_rounded,
+                                size: 20,
+                                color: Colors.white.withValues(alpha: 0.4)),
                       ),
                     ),
                   ),
@@ -466,7 +473,9 @@ class _AnimatedTrackTileState extends State<AnimatedTrackTile>
                                 ? const Color(0xFF8B5CF6)
                                 : Colors.white,
                             fontSize: 14,
-                            fontWeight: widget.isPlaying ? FontWeight.w600 : FontWeight.w400,
+                            fontWeight: widget.isPlaying
+                                ? FontWeight.w600
+                                : FontWeight.w400,
                           ),
                           maxLines: 1,
                           overflow: TextOverflow.ellipsis,

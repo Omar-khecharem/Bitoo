@@ -48,10 +48,14 @@ class AppColors {
   static const Color lightTextTertiary = Color(0xFFA69588);
 
   // ─── Glass ───
-  static Color glassDark(double opacity) => const Color(0xFF1A1210).withValues(alpha: opacity);
-  static Color glassLight(double opacity) => const Color(0xFFFFFBF5).withValues(alpha: opacity * 0.8);
-  static Color glassBorderDark(double opacity) => Colors.white.withValues(alpha: opacity);
-  static Color glassBorderLight(double opacity) => Colors.black.withValues(alpha: opacity * 0.15);
+  static Color glassDark(double opacity) =>
+      const Color(0xFF1A1210).withValues(alpha: opacity);
+  static Color glassLight(double opacity) =>
+      const Color(0xFFFFFBF5).withValues(alpha: opacity * 0.8);
+  static Color glassBorderDark(double opacity) =>
+      Colors.white.withValues(alpha: opacity);
+  static Color glassBorderLight(double opacity) =>
+      Colors.black.withValues(alpha: opacity * 0.15);
 
   static const double glassOpacitySubtle = 0.05;
   static const double glassOpacityMedium = 0.10;
@@ -114,7 +118,11 @@ class AppGradients {
   );
 
   static LinearGradient premium = LinearGradient(
-    colors: [AppColors.vibrantAmber, AppColors.vibrantCoral, AppColors.vibrantMagenta],
+    colors: [
+      AppColors.vibrantAmber,
+      AppColors.vibrantCoral,
+      AppColors.vibrantMagenta
+    ],
     begin: Alignment.topLeft,
     end: Alignment.bottomRight,
     stops: [0.0, 0.5, 1.0],
@@ -130,5 +138,3 @@ class AppGradients {
   static LinearGradient get blueToIndigo => warmSunset;
   static LinearGradient get indigoToRose => sunsetToMagenta;
 }
-
-

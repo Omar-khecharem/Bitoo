@@ -17,8 +17,9 @@ class StaggeredList extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Column(
-      children: List.generate(itemCount, (index) =>
-        _StaggeredItem(
+      children: List.generate(
+        itemCount,
+        (index) => _StaggeredItem(
           index: index,
           baseDelay: baseDelay,
           child: itemBuilder(context, index),
@@ -128,7 +129,8 @@ class _AnimatedListInsertState extends State<AnimatedListInsert>
       CurvedAnimation(parent: _controller, curve: AnimationCurves.premiumEase),
     );
     _fade = Tween<double>(begin: 0.0, end: 1.0).animate(
-      CurvedAnimation(parent: _controller, curve: AnimationCurves.premiumEaseOut),
+      CurvedAnimation(
+          parent: _controller, curve: AnimationCurves.premiumEaseOut),
     );
     if (widget.isVisible) _controller.forward();
   }
@@ -310,8 +312,7 @@ class AnimatedCollapsibleSection extends StatefulWidget {
       _AnimatedCollapsibleSectionState();
 }
 
-class _AnimatedCollapsibleSectionState
-    extends State<AnimatedCollapsibleSection>
+class _AnimatedCollapsibleSectionState extends State<AnimatedCollapsibleSection>
     with SingleTickerProviderStateMixin {
   late AnimationController _controller;
   late Animation<double> _height;

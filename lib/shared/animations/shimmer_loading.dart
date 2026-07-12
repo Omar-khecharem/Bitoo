@@ -138,7 +138,10 @@ class SkeletonCard extends StatelessWidget {
                     child: Column(
                       crossAxisAlignment: CrossAxisAlignment.start,
                       children: [
-                        ShimmerWidget(width: double.infinity, height: 14, borderRadius: 4),
+                        ShimmerWidget(
+                            width: double.infinity,
+                            height: 14,
+                            borderRadius: 4),
                         SizedBox(height: 8),
                         ShimmerWidget(width: 0.6, height: 12, borderRadius: 4),
                         SizedBox(height: 6),
@@ -149,7 +152,8 @@ class SkeletonCard extends StatelessWidget {
                 ],
               ),
               SizedBox(height: 12),
-              ShimmerWidget(width: double.infinity, height: 10, borderRadius: 4),
+              ShimmerWidget(
+                  width: double.infinity, height: 10, borderRadius: 4),
               SizedBox(height: 6),
               ShimmerWidget(width: 0.8, height: 10, borderRadius: 4),
             ],
@@ -225,27 +229,33 @@ class SkeletonList extends StatelessWidget {
   Widget build(BuildContext context) {
     return RepaintBoundary(
       child: Column(
-        children: List.generate(itemCount, (index) => Padding(
-          padding: EdgeInsets.symmetric(horizontal: 16, vertical: 6),
-          child: Row(
-            children: [
-              ShimmerWidget(width: 48, height: 48, borderRadius: 8),
-              SizedBox(width: 12),
-              Expanded(
-                child: Column(
-                  crossAxisAlignment: CrossAxisAlignment.start,
-                  children: [
-                    ShimmerWidget(width: double.infinity, height: 14, borderRadius: 4),
-                    SizedBox(height: 6),
-                    ShimmerWidget(width: 0.5, height: 11, borderRadius: 4),
-                  ],
-                ),
-              ),
-              SizedBox(width: 12),
-              ShimmerWidget(width: 32, height: 12, borderRadius: 4),
-            ],
-          ),
-        )),
+        children: List.generate(
+            itemCount,
+            (index) => Padding(
+                  padding: EdgeInsets.symmetric(horizontal: 16, vertical: 6),
+                  child: Row(
+                    children: [
+                      ShimmerWidget(width: 48, height: 48, borderRadius: 8),
+                      SizedBox(width: 12),
+                      Expanded(
+                        child: Column(
+                          crossAxisAlignment: CrossAxisAlignment.start,
+                          children: [
+                            ShimmerWidget(
+                                width: double.infinity,
+                                height: 14,
+                                borderRadius: 4),
+                            SizedBox(height: 6),
+                            ShimmerWidget(
+                                width: 0.5, height: 11, borderRadius: 4),
+                          ],
+                        ),
+                      ),
+                      SizedBox(width: 12),
+                      ShimmerWidget(width: 32, height: 12, borderRadius: 4),
+                    ],
+                  ),
+                )),
       ),
     );
   }

@@ -77,7 +77,9 @@ class PlayerControls extends StatelessWidget {
             mainAxisAlignment: MainAxisAlignment.spaceBetween,
             children: [
               _SecondaryButton(
-                icon: isFavorite ? Icons.favorite_rounded : Icons.favorite_outline_rounded,
+                icon: isFavorite
+                    ? Icons.favorite_rounded
+                    : Icons.favorite_outline_rounded,
                 isActive: isFavorite,
                 activeColor: Theme.of(context).colorScheme.tertiary,
                 onTap: onFavoriteToggle,
@@ -187,9 +189,7 @@ class _PlayPauseButtonState extends State<_PlayPauseButton>
               return ScaleTransition(scale: animation, child: child);
             },
             child: Icon(
-              widget.isPlaying
-                  ? Icons.pause_rounded
-                  : Icons.play_arrow_rounded,
+              widget.isPlaying ? Icons.pause_rounded : Icons.play_arrow_rounded,
               key: ValueKey(widget.isPlaying),
               size: 36,
               color: Theme.of(context).colorScheme.onSurface,
@@ -251,7 +251,8 @@ class _SkipButtonState extends State<_SkipButton>
             child: child,
           );
         },
-        child: Icon(widget.icon, size: 28, color: Theme.of(context).colorScheme.onSurface),
+        child: Icon(widget.icon,
+            size: 28, color: Theme.of(context).colorScheme.onSurface),
       ),
     );
   }
@@ -280,7 +281,9 @@ class _ShuffleButton extends StatelessWidget {
         child: Icon(
           Icons.shuffle_rounded,
           size: 22,
-          color: isActive ? Theme.of(context).colorScheme.primary : Theme.of(context).colorScheme.onSurface.withValues(alpha: 0.38),
+          color: isActive
+              ? Theme.of(context).colorScheme.primary
+              : Theme.of(context).colorScheme.onSurface.withValues(alpha: 0.38),
         ),
       ),
     );
@@ -323,7 +326,12 @@ class _RepeatButton extends StatelessWidget {
             Icon(
               _icon,
               size: 22,
-              color: _isActive ? Theme.of(context).colorScheme.primary : Theme.of(context).colorScheme.onSurface.withValues(alpha: 0.38),
+              color: _isActive
+                  ? Theme.of(context).colorScheme.primary
+                  : Theme.of(context)
+                      .colorScheme
+                      .onSurface
+                      .withValues(alpha: 0.38),
             ),
             if (mode == RepeatMode.one) ...[
               SizedBox(width: 2),
@@ -381,7 +389,8 @@ class _SecondaryButtonState extends State<_SecondaryButton>
   @override
   void didUpdateWidget(_SecondaryButton oldWidget) {
     super.didUpdateWidget(oldWidget);
-    if (widget.icon == Icons.favorite_rounded && oldWidget.icon != Icons.favorite_rounded) {
+    if (widget.icon == Icons.favorite_rounded &&
+        oldWidget.icon != Icons.favorite_rounded) {
       _pulseController.forward().then((_) => _pulseController.reverse());
     }
   }
@@ -424,8 +433,12 @@ class _SecondaryButtonState extends State<_SecondaryButton>
                 widget.icon,
                 size: widget.size * 0.55,
                 color: widget.isActive
-                    ? (widget.activeColor ?? Theme.of(context).colorScheme.primary)
-                    : Theme.of(context).colorScheme.onSurface.withValues(alpha: 0.38),
+                    ? (widget.activeColor ??
+                        Theme.of(context).colorScheme.primary)
+                    : Theme.of(context)
+                        .colorScheme
+                        .onSurface
+                        .withValues(alpha: 0.38),
               ),
             ),
           );

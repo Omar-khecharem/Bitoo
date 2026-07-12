@@ -41,7 +41,9 @@ class HeroHeader extends StatelessWidget {
       child: Stack(
         children: [
           Positioned(
-            left: 0, right: 0, bottom: 0,
+            left: 0,
+            right: 0,
+            bottom: 0,
             height: 60,
             child: Container(
               decoration: BoxDecoration(
@@ -57,7 +59,6 @@ class HeroHeader extends StatelessWidget {
               ),
             ),
           ),
-
           SafeArea(
             bottom: false,
             child: Padding(
@@ -109,7 +110,8 @@ class HeroHeader extends StatelessWidget {
                 ),
                 borderRadius: BorderRadius.circular(12),
               ),
-              child: Icon(Icons.music_note_rounded, color: cs.onPrimary, size: isCollapsed ? 18 : 26),
+              child: Icon(Icons.music_note_rounded,
+                  color: cs.onPrimary, size: isCollapsed ? 18 : 26),
             ),
           ),
         ),
@@ -129,18 +131,20 @@ class HeroHeader extends StatelessWidget {
                 width: 1.0,
               ),
             ),
-            child: Icon(Icons.filter_list_rounded, size: 20, color: cs.onSurface.withValues(alpha: 0.6)),
+            child: Icon(Icons.filter_list_rounded,
+                size: 20, color: cs.onSurface.withValues(alpha: 0.6)),
           ),
         ),
         SizedBox(width: 8),
         GestureDetector(
-          onTap: onSettingsTap ?? () {
-            Navigator.of(context).push(
-              MaterialPageRoute(
-                builder: (_) => const SettingsPage(),
-              ),
-            );
-          },
+          onTap: onSettingsTap ??
+              () {
+                Navigator.of(context).push(
+                  MaterialPageRoute(
+                    builder: (_) => const SettingsPage(),
+                  ),
+                );
+              },
           child: Container(
             width: 44,
             height: 44,
@@ -154,7 +158,8 @@ class HeroHeader extends StatelessWidget {
                 width: 1.0,
               ),
             ),
-            child: Icon(Icons.tune_rounded, size: 20, color: cs.onSurface.withValues(alpha: 0.6)),
+            child: Icon(Icons.tune_rounded,
+                size: 20, color: cs.onSurface.withValues(alpha: 0.6)),
           ),
         ),
       ],

@@ -37,7 +37,7 @@ void main() async {
   runApp(
     ProviderScope(
       overrides: [
-        audioHandlerProvider.overrideWithValue(handler as AudioPlayerHandler),
+        audioHandlerProvider.overrideWithValue(handler),
       ],
       child: const BitooApp(),
     ),

@@ -51,8 +51,7 @@ class _SlideUpPageTransition extends StatefulWidget {
   });
 
   @override
-  State<_SlideUpPageTransition> createState() =>
-      _SlideUpPageTransitionState();
+  State<_SlideUpPageTransition> createState() => _SlideUpPageTransitionState();
 }
 
 class _SlideUpPageTransitionState extends State<_SlideUpPageTransition>
@@ -142,9 +141,8 @@ class PremiumSharedAxisTransition extends StatelessWidget {
         animation: Listenable.merge([animation, secondaryAnimation]),
         builder: (context, child) {
           final isPush = animation.status == AnimationStatus.forward;
-          final value = isPush
-              ? animation.value
-              : 1.0 - secondaryAnimation.value;
+          final value =
+              isPush ? animation.value : 1.0 - secondaryAnimation.value;
 
           return Transform(
             alignment: Alignment.center,
@@ -264,30 +262,27 @@ class PageTransitionConfig {
   const PageTransitionConfig({required this.builder});
 
   static final slideUp = PageTransitionConfig(
-    builder: (animation, secondary, child) =>
-        PremiumSharedAxisTransition(
-          animation: animation,
-          secondaryAnimation: secondary,
-          child: child,
-        ),
+    builder: (animation, secondary, child) => PremiumSharedAxisTransition(
+      animation: animation,
+      secondaryAnimation: secondary,
+      child: child,
+    ),
   );
 
   static final zoom = PageTransitionConfig(
-    builder: (animation, secondary, child) =>
-        PremiumZoomTransition(
-          animation: animation,
-          secondaryAnimation: secondary,
-          child: child,
-        ),
+    builder: (animation, secondary, child) => PremiumZoomTransition(
+      animation: animation,
+      secondaryAnimation: secondary,
+      child: child,
+    ),
   );
 
   static final fadeThrough = PageTransitionConfig(
-    builder: (animation, secondary, child) =>
-        PremiumFadeThroughTransition(
-          animation: animation,
-          secondaryAnimation: secondary,
-          child: child,
-        ),
+    builder: (animation, secondary, child) => PremiumFadeThroughTransition(
+      animation: animation,
+      secondaryAnimation: secondary,
+      child: child,
+    ),
   );
 
   CustomTransitionPage buildPage({

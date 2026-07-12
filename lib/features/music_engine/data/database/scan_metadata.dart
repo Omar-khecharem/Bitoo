@@ -24,28 +24,29 @@ class ScanMetadata {
   });
 
   Map<String, dynamic> toMap() => {
-    'id': id,
-    'lastScanTimestamp': lastScanTimestamp.toIso8601String(),
-    'totalSongs': totalSongs,
-    'totalAlbums': totalAlbums,
-    'totalArtists': totalArtists,
-    'totalGenres': totalGenres,
-    'scanDurationSeconds': scanDurationSeconds,
-    'corruptedFiles': corruptedFiles,
-    'skippedFiles': skippedFiles,
-    'lastScanError': lastScanError,
-  };
+        'id': id,
+        'lastScanTimestamp': lastScanTimestamp.toIso8601String(),
+        'totalSongs': totalSongs,
+        'totalAlbums': totalAlbums,
+        'totalArtists': totalArtists,
+        'totalGenres': totalGenres,
+        'scanDurationSeconds': scanDurationSeconds,
+        'corruptedFiles': corruptedFiles,
+        'skippedFiles': skippedFiles,
+        'lastScanError': lastScanError,
+      };
 
   factory ScanMetadata.fromMap(Map<String, dynamic> map) => ScanMetadata(
-    id: map['id'] as int? ?? 0,
-    lastScanTimestamp: DateTime.parse(map['lastScanTimestamp'] as String),
-    totalSongs: map['totalSongs'] as int? ?? 0,
-    totalAlbums: map['totalAlbums'] as int? ?? 0,
-    totalArtists: map['totalArtists'] as int? ?? 0,
-    totalGenres: map['totalGenres'] as int? ?? 0,
-    scanDurationSeconds: (map['scanDurationSeconds'] as num?)?.toDouble() ?? 0.0,
-    corruptedFiles: map['corruptedFiles'] as int? ?? 0,
-    skippedFiles: map['skippedFiles'] as int? ?? 0,
-    lastScanError: map['lastScanError'] as String?,
-  );
+        id: map['id'] as int? ?? 0,
+        lastScanTimestamp: DateTime.parse(map['lastScanTimestamp'] as String),
+        totalSongs: map['totalSongs'] as int? ?? 0,
+        totalAlbums: map['totalAlbums'] as int? ?? 0,
+        totalArtists: map['totalArtists'] as int? ?? 0,
+        totalGenres: map['totalGenres'] as int? ?? 0,
+        scanDurationSeconds:
+            (map['scanDurationSeconds'] as num?)?.toDouble() ?? 0.0,
+        corruptedFiles: map['corruptedFiles'] as int? ?? 0,
+        skippedFiles: map['skippedFiles'] as int? ?? 0,
+        lastScanError: map['lastScanError'] as String?,
+      );
 }

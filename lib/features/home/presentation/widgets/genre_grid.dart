@@ -51,7 +51,8 @@ class GenreGrid extends StatelessWidget {
                   width: 36,
                   height: 36,
                   decoration: BoxDecoration(
-                    color: Colors.white.withValues(alpha: AppColors.glassOpacityMedium),
+                    color: Colors.white
+                        .withValues(alpha: AppColors.glassOpacityMedium),
                     borderRadius: BorderRadius.circular(10),
                   ),
                   child: Icon(

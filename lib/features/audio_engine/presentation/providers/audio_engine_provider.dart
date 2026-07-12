@@ -5,7 +5,8 @@ import '../../domain/entities/audio_engine_state.dart';
 import '../../domain/entities/preset_config.dart';
 import '../../domain/services/audio_engine_service.dart';
 
-final audioEngineMethodChannelProvider = Provider<AudioEngineMethodChannel>((ref) {
+final audioEngineMethodChannelProvider =
+    Provider<AudioEngineMethodChannel>((ref) {
   return AudioEngineMethodChannel();
 });
 
@@ -15,7 +16,8 @@ final audioEngineServiceProvider = Provider<AudioEngineService>((ref) {
 });
 
 final audioEngineStateProvider = StreamProvider<AudioEngineState>((ref) {
-  final service = ref.watch(audioEngineServiceProvider) as AudioEngineServiceImpl;
+  final service =
+      ref.watch(audioEngineServiceProvider) as AudioEngineServiceImpl;
   return service.observeState();
 });
 
@@ -26,7 +28,8 @@ final audioEngineReadyProvider = Provider<AudioEngineReady?>((ref) {
       : null;
 });
 
-final audioEngineNotifierProvider = StateNotifierProvider<AudioEngineNotifier, AudioEngineState>((ref) {
+final audioEngineNotifierProvider =
+    StateNotifierProvider<AudioEngineNotifier, AudioEngineState>((ref) {
   final service = ref.watch(audioEngineServiceProvider);
   return AudioEngineNotifier(service);
 });
@@ -72,7 +75,8 @@ class AudioEngineNotifier extends StateNotifier<AudioEngineState> {
   Future<void> toggleVolumeNormalization() async {
     if (state is! AudioEngineReady) return;
     final ready = state as AudioEngineReady;
-    await _service.setVolumeNormalizationEnabled(!ready.volumeNormalizationEnabled);
+    await _service
+        .setVolumeNormalizationEnabled(!ready.volumeNormalizationEnabled);
   }
 
   Future<void> toggleGapless() async {

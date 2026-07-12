@@ -61,7 +61,10 @@ class HiveDatabase {
   // ── Songs ──
 
   List<Map<String, dynamic>> get allSongMaps {
-    return songs.values.map((v) => _decode(v)).whereType<Map<String, dynamic>>().toList();
+    return songs.values
+        .map((v) => _decode(v))
+        .whereType<Map<String, dynamic>>()
+        .toList();
   }
 
   Map<String, dynamic>? getSongMap(String key) => _decode(songs.get(key));
@@ -79,7 +82,10 @@ class HiveDatabase {
   // ── Albums ──
 
   List<Map<String, dynamic>> get allAlbumMaps {
-    return albums.values.map((v) => _decode(v)).whereType<Map<String, dynamic>>().toList();
+    return albums.values
+        .map((v) => _decode(v))
+        .whereType<Map<String, dynamic>>()
+        .toList();
   }
 
   Map<String, dynamic>? getAlbumMap(String key) => _decode(albums.get(key));
@@ -101,7 +107,10 @@ class HiveDatabase {
   // ── Artists ──
 
   List<Map<String, dynamic>> get allArtistMaps {
-    return artists.values.map((v) => _decode(v)).whereType<Map<String, dynamic>>().toList();
+    return artists.values
+        .map((v) => _decode(v))
+        .whereType<Map<String, dynamic>>()
+        .toList();
   }
 
   Map<String, dynamic>? getArtistMap(String key) => _decode(artists.get(key));
@@ -123,7 +132,10 @@ class HiveDatabase {
   // ── Genres ──
 
   List<Map<String, dynamic>> get allGenreMaps {
-    return genres.values.map((v) => _decode(v)).whereType<Map<String, dynamic>>().toList();
+    return genres.values
+        .map((v) => _decode(v))
+        .whereType<Map<String, dynamic>>()
+        .toList();
   }
 
   Future<void> putGenre(String key, Map<String, dynamic> map) async {
@@ -139,7 +151,10 @@ class HiveDatabase {
   // ── Playlists ──
 
   List<Map<String, dynamic>> get allPlaylistMaps {
-    return playlists.values.map((v) => _decode(v)).whereType<Map<String, dynamic>>().toList();
+    return playlists.values
+        .map((v) => _decode(v))
+        .whereType<Map<String, dynamic>>()
+        .toList();
   }
 
   Map<String, dynamic>? getPlaylistMap(String key) =>

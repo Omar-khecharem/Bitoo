@@ -31,7 +31,8 @@ abstract class AudioEngineService {
   Future<void> setGaplessEnabled(bool enabled);
   Future<void> setHiResMode(HiResMode mode);
   Future<void> setOutputFormat(AudioOutputFormat format);
-  Future<void> setReplayGain(double trackGain, double albumGain, ReplayGainMode mode);
+  Future<void> setReplayGain(
+      double trackGain, double albumGain, ReplayGainMode mode);
   Future<void> setSampleRate(int sampleRate);
   Future<void> setBufferSize(int frames);
 

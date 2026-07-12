@@ -51,10 +51,12 @@ class ShimmerLoading extends StatefulWidget {
     return _ThemedShimmer(
       key: key,
       child: Column(
-        children: List.generate(count, (_) => Padding(
-          padding: EdgeInsets.only(bottom: 12),
-          child: _ListTileSkeleton(),
-        )),
+        children: List.generate(
+            count,
+            (_) => Padding(
+                  padding: EdgeInsets.only(bottom: 12),
+                  child: _ListTileSkeleton(),
+                )),
       ),
     );
   }

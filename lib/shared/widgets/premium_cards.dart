@@ -63,7 +63,8 @@ class AlbumCard extends StatelessWidget {
                             errorBuilder: (_, __, ___) => Container(
                               decoration: BoxDecoration(
                                 gradient: AppGradients.primary,
-                                borderRadius: BorderRadius.circular(AppRadius.md),
+                                borderRadius:
+                                    BorderRadius.circular(AppRadius.md),
                               ),
                               child: Icon(
                                 Icons.music_note_rounded,
@@ -87,7 +88,8 @@ class AlbumCard extends StatelessWidget {
                               shape: BoxShape.circle,
                               boxShadow: [
                                 BoxShadow(
-                                  color: AppColors.neonIndigo.withValues(alpha: 0.4),
+                                  color: AppColors.neonIndigo
+                                      .withValues(alpha: 0.4),
                                   blurRadius: 12,
                                   offset: const Offset(0, 2),
                                 ),
@@ -162,7 +164,8 @@ class ArtistCard extends StatelessWidget {
             decoration: BoxDecoration(
               shape: BoxShape.circle,
               border: Border.all(
-                color: Colors.white.withValues(alpha: AppColors.glassOpacityMedium),
+                color: Colors.white
+                    .withValues(alpha: AppColors.glassOpacityMedium),
                 width: 2,
               ),
               boxShadow: AppShadows.shadowSM,
@@ -265,7 +268,10 @@ class PlaylistCard extends StatelessWidget {
               Container(
                 decoration: BoxDecoration(
                   gradient: LinearGradient(
-                    colors: [Colors.transparent, Colors.black.withValues(alpha: 0.6)],
+                    colors: [
+                      Colors.transparent,
+                      Colors.black.withValues(alpha: 0.6)
+                    ],
                     begin: Alignment.topCenter,
                     end: Alignment.bottomCenter,
                   ),
@@ -309,10 +315,12 @@ class PlaylistCard extends StatelessWidget {
                       width: 32,
                       height: 32,
                       decoration: BoxDecoration(
-                        color: Colors.white.withValues(alpha: AppColors.glassOpacityStrong),
+                        color: Colors.white
+                            .withValues(alpha: AppColors.glassOpacityStrong),
                         shape: BoxShape.circle,
                         border: Border.all(
-                          color: Colors.white.withValues(alpha: AppColors.glassOpacityMedium),
+                          color: Colors.white
+                              .withValues(alpha: AppColors.glassOpacityMedium),
                           width: 0.5,
                         ),
                       ),

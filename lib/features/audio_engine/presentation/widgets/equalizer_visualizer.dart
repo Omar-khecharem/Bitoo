@@ -61,7 +61,8 @@ class _EqualizerVisualizerState extends State<EqualizerVisualizer>
               children: List.generate(widget.bands.length, (i) {
                 return Expanded(
                   child: Padding(
-                    padding: EdgeInsets.only(right: i < widget.bands.length - 1 ? 2 : 0),
+                    padding: EdgeInsets.only(
+                        right: i < widget.bands.length - 1 ? 2 : 0),
                     child: _EQSliderBar(
                       value: widget.bands[i] * _animController.value,
                       isEnabled: widget.isEnabled,
@@ -136,7 +137,8 @@ class _EQGridPainter extends CustomPainter {
       ..color = Colors.white.withValues(alpha: isEnabled ? 0.08 : 0.04)
       ..strokeWidth = 1;
 
-    canvas.drawLine(Offset(0, size.height / 2), Offset(size.width, size.height / 2), centerPaint);
+    canvas.drawLine(Offset(0, size.height / 2),
+        Offset(size.width, size.height / 2), centerPaint);
     for (var i = 1; i <= 3; i++) {
       final y = size.height * i / 4;
       canvas.drawLine(Offset(0, y), Offset(size.width, y), gridPaint);
@@ -166,8 +168,10 @@ class _EQBarPainter extends CustomPainter {
 
     final alpha = isEnabled ? 1.0 : 0.3;
     final color = isPositive
-        ? Color.lerp(const Color(0xFF8B5CF6), const Color(0xFF6366F1), absValue)!
-        : Color.lerp(const Color(0xFFF43F5E), const Color(0xFFFB7185), absValue)!;
+        ? Color.lerp(
+            const Color(0xFF8B5CF6), const Color(0xFF6366F1), absValue)!
+        : Color.lerp(
+            const Color(0xFFF43F5E), const Color(0xFFFB7185), absValue)!;
 
     final rect = RRect.fromRectAndRadius(
       Rect.fromLTWH(x, y, barWidth, barHeight),
@@ -204,22 +208,36 @@ class EQFrequencyLabels extends StatelessWidget {
 
   const EQFrequencyLabels({super.key, this.isEnabled = true});
 
-  static const _frequencies = ['31', '62', '125', '250', '500', '1k', '2k', '4k', '8k', '16k'];
+  static const _frequencies = [
+    '31',
+    '62',
+    '125',
+    '250',
+    '500',
+    '1k',
+    '2k',
+    '4k',
+    '8k',
+    '16k'
+  ];
 
   @override
   Widget build(BuildContext context) {
     return Row(
-      children: _frequencies.map((f) => Expanded(
-        child: Text(
-          f,
-          textAlign: TextAlign.center,
-          style: TextStyle(
-            fontSize: 10,
-            color: Colors.white.withValues(alpha: isEnabled ? 0.4 : 0.2),
-            fontWeight: FontWeight.w500,
-          ),
-        ),
-      )).toList(),
+      children: _frequencies
+          .map((f) => Expanded(
+                child: Text(
+                  f,
+                  textAlign: TextAlign.center,
+                  style: TextStyle(
+                    fontSize: 10,
+                    color:
+                        Colors.white.withValues(alpha: isEnabled ? 0.4 : 0.2),
+                    fontWeight: FontWeight.w500,
+                  ),
+                ),
+              ))
+          .toList(),
     );
   }
 }

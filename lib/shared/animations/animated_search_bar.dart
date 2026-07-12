@@ -42,13 +42,16 @@ class _AnimatedSearchBarState extends State<AnimatedSearchBar>
       duration: AppDurations.normal,
     );
     _widthFactor = Tween<double>(begin: 0.0, end: 1.0).animate(
-      CurvedAnimation(parent: _expandController, curve: AnimationCurves.premiumEase),
+      CurvedAnimation(
+          parent: _expandController, curve: AnimationCurves.premiumEase),
     );
     _iconOpacity = Tween<double>(begin: 1.0, end: 0.0).animate(
-      CurvedAnimation(parent: _expandController, curve: AnimationCurves.premiumEase),
+      CurvedAnimation(
+          parent: _expandController, curve: AnimationCurves.premiumEase),
     );
     _backOpacity = Tween<double>(begin: 0.0, end: 1.0).animate(
-      CurvedAnimation(parent: _expandController, curve: AnimationCurves.premiumEaseOut),
+      CurvedAnimation(
+          parent: _expandController, curve: AnimationCurves.premiumEaseOut),
     );
   }
 
@@ -322,7 +325,8 @@ class _AnimatedChipState extends State<_AnimatedChip>
                     ? const Color(0xFF8B5CF6)
                     : Colors.white.withValues(alpha: 0.6),
                 fontSize: 12,
-                fontWeight: widget.isSelected ? FontWeight.w600 : FontWeight.w400,
+                fontWeight:
+                    widget.isSelected ? FontWeight.w600 : FontWeight.w400,
               ),
             ),
           ),
@@ -384,7 +388,8 @@ class _SearchResultItemState extends State<_SearchResultItem>
       duration: AppDurations.normal,
     );
     _fade = Tween<double>(begin: 0.0, end: 1.0).animate(
-      CurvedAnimation(parent: _controller, curve: AnimationCurves.premiumEaseOut),
+      CurvedAnimation(
+          parent: _controller, curve: AnimationCurves.premiumEaseOut),
     );
     _slide = Tween<Offset>(
       begin: Offset(0.1, 0),

@@ -26,9 +26,8 @@ class PermissionServiceImpl implements PermissionService {
       media: media,
       notifications: notifications,
       bluetooth: bluetooth,
-      batteryOptimization: battery
-          ? const AppPermissionGranted()
-          : const AppPermissionDenied(),
+      batteryOptimization:
+          battery ? const AppPermissionGranted() : const AppPermissionDenied(),
     );
   }
 

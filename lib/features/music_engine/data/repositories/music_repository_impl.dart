@@ -1,6 +1,5 @@
 import 'dart:io';
 import 'dart:async';
-import 'dart:typed_data';
 import 'package:flutter/foundation.dart';
 import 'package:collection/collection.dart';
 import '../../core/file_filters.dart';
@@ -65,8 +64,11 @@ class MusicRepositoryImpl implements MusicRepository {
     final hasPerm = await _permission.requestAudioPermission();
     if (!hasPerm) {
       yield const ScanProgress(
-        filesScanned: 0, totalFiles: 0, currentPath: '',
-        isComplete: true, corruptedFiles: 0,
+        filesScanned: 0,
+        totalFiles: 0,
+        currentPath: '',
+        isComplete: true,
+        corruptedFiles: 0,
         diagnostic: 'Permission denied for audio access',
       );
       return;
@@ -82,7 +84,8 @@ class MusicRepositoryImpl implements MusicRepository {
         !await _permission.hasFullFileAccess();
     if (needsFullAccess) {
       yield const ScanProgress(
-        filesScanned: 0, totalFiles: 0,
+        filesScanned: 0,
+        totalFiles: 0,
         currentPath: 'Requesting full file access...',
       );
       try {
@@ -120,8 +123,11 @@ class MusicRepositoryImpl implements MusicRepository {
     diagnostic += ' | $totalFiles audio files found';
 
     debugPrint('Total audio files found: $totalFiles');
-    yield ScanProgress(filesScanned: 0, totalFiles: totalFiles,
-        currentPath: 'Scanning...', diagnostic: diagnostic);
+    yield ScanProgress(
+        filesScanned: 0,
+        totalFiles: totalFiles,
+        currentPath: 'Scanning...',
+        diagnostic: diagnostic);
 
     // Phase 2: Process each file
     final sha256Index = <String, Song>{};
@@ -161,7 +167,8 @@ class MusicRepositoryImpl implements MusicRepository {
         // Save artwork to cache
         String? artworkPath;
         if (metadata.artworkBytes != null) {
-          artworkPath = await _artworkCache.saveArtwork(metadata.sha256, Uint8List.fromList(metadata.artworkBytes!));
+          artworkPath = await _artworkCache.saveArtwork(
+              metadata.sha256, Uint8List.fromList(metadata.artworkBytes!));
         }
 
         final id = _nextSongId();
@@ -204,7 +211,9 @@ class MusicRepositoryImpl implements MusicRepository {
       final map = _db.getSongMap(key);
       if (map != null) {
         final path = map['filePath'] as String?;
-        if (path == null || !foundPaths.contains(path) || corruptedPaths.contains(path)) {
+        if (path == null ||
+            !foundPaths.contains(path) ||
+            corruptedPaths.contains(path)) {
           _db.deleteSong(key);
           removedCount++;
         }
@@ -220,9 +229,8 @@ class MusicRepositoryImpl implements MusicRepository {
     await _rebuildGenreIndex();
 
     // Phase 6: Clean orphaned data
-    final currentSha256s = _db.allSongMaps
-        .map((m) => m['sha256'] as String)
-        .toSet();
+    final currentSha256s =
+        _db.allSongMaps.map((m) => m['sha256'] as String).toSet();
     await _artworkCache.cleanOrphaned(currentSha256s);
     _cleanOrphanedAlbums();
     _cleanOrphanedArtists();
@@ -246,7 +254,8 @@ class MusicRepositoryImpl implements MusicRepository {
     await _db.clearScanMeta();
     await _db.putScanMeta(scanMeta.toMap());
 
-    debugPrint('Scan complete: $newSongsCount new songs, $corruptedCount corrupted, ${totalFiles - newSongsCount - corruptedCount} skipped');
+    debugPrint(
+        'Scan complete: $newSongsCount new songs, $corruptedCount corrupted, ${totalFiles - newSongsCount - corruptedCount} skipped');
 
     yield ScanProgress(
       filesScanned: scanned,
@@ -255,7 +264,8 @@ class MusicRepositoryImpl implements MusicRepository {
       isComplete: true,
       newSongs: newSongsCount,
       corruptedFiles: corruptedCount,
-      diagnostic: '$diagnostic | $newSongsCount new songs, $corruptedCount corrupted',
+      diagnostic:
+          '$diagnostic | $newSongsCount new songs, $corruptedCount corrupted',
     );
   }
 
@@ -278,7 +288,8 @@ class MusicRepositoryImpl implements MusicRepository {
     }
   }
 
-  Future<void> _updateSongInMemory(Song existing, AudioMetadata metadata) async {
+  Future<void> _updateSongInMemory(
+      Song existing, AudioMetadata metadata) async {
     final updated = existing.copyWith(
       title: metadata.title,
       artist: metadata.artist,
@@ -294,7 +305,8 @@ class MusicRepositoryImpl implements MusicRepository {
       fileExtension: metadata.fileExtension,
       fileSize: metadata.fileSize,
       dateModified: metadata.dateModified,
-      searchIndex: '${metadata.title} ${metadata.artist} ${metadata.albumTitle}'.toLowerCase(),
+      searchIndex: '${metadata.title} ${metadata.artist} ${metadata.albumTitle}'
+          .toLowerCase(),
     );
     await _db.putSong(existing.id.toString(), updated.toMap());
   }
@@ -325,8 +337,11 @@ class MusicRepositoryImpl implements MusicRepository {
         year: firstSong.year,
         genre: firstSong.genre,
         songCount: entry.value.length,
-        totalDurationMs: entry.value.fold<int>(0, (sum, s) => sum + s.durationMs),
-        artworkPath: entry.value.firstWhereOrNull((s) => s.hasArtwork == true)?.artworkPath,
+        totalDurationMs:
+            entry.value.fold<int>(0, (sum, s) => sum + s.durationMs),
+        artworkPath: entry.value
+            .firstWhereOrNull((s) => s.hasArtwork == true)
+            ?.artworkPath,
         dateAdded: DateTime.now(),
       );
       await _db.putAlbum(album.title.toLowerCase(), album.toMap());
@@ -345,8 +360,11 @@ class MusicRepositoryImpl implements MusicRepository {
         name: firstSong.artist,
         albumCount: albums.length,
         songCount: entry.value.length,
-        totalDurationMs: entry.value.fold<int>(0, (sum, s) => sum + s.durationMs),
-        artworkPath: entry.value.firstWhereOrNull((s) => s.hasArtwork == true)?.artworkPath,
+        totalDurationMs:
+            entry.value.fold<int>(0, (sum, s) => sum + s.durationMs),
+        artworkPath: entry.value
+            .firstWhereOrNull((s) => s.hasArtwork == true)
+            ?.artworkPath,
         dateAdded: DateTime.now(),
       );
       await _db.putArtist(artist.name.toLowerCase(), artist.toMap());
@@ -355,7 +373,8 @@ class MusicRepositoryImpl implements MusicRepository {
 
   Future<void> _rebuildGenreIndex() async {
     final allSongs = _db.allSongMaps.map(Song.fromMap).toList();
-    final grouped = groupBy(allSongs, (Song s) => s.genre?.toLowerCase() ?? 'unknown');
+    final grouped =
+        groupBy(allSongs, (Song s) => s.genre?.toLowerCase() ?? 'unknown');
 
     await _db.clearGenres();
     for (final entry in grouped.entries) {
@@ -395,18 +414,30 @@ class MusicRepositoryImpl implements MusicRepository {
   // ── Songs ──
 
   @override
-  Future<List<Song>> getAllSongs({String? sortBy, bool ascending = true}) async {
+  Future<List<Song>> getAllSongs(
+      {String? sortBy, bool ascending = true}) async {
     var list = _db.allSongMaps.map(Song.fromMap).toList();
     if (sortBy != null) {
       list.sort((a, b) {
         int cmp;
         switch (sortBy) {
-          case 'title': cmp = a.title.compareTo(b.title); break;
-          case 'artist': cmp = a.artist.compareTo(b.artist); break;
-          case 'album': cmp = a.albumTitle.compareTo(b.albumTitle); break;
-          case 'dateAdded': cmp = a.dateAdded.compareTo(b.dateAdded); break;
-          case 'playCount': cmp = a.playCount.compareTo(b.playCount); break;
-          default: cmp = a.title.compareTo(b.title);
+          case 'title':
+            cmp = a.title.compareTo(b.title);
+            break;
+          case 'artist':
+            cmp = a.artist.compareTo(b.artist);
+            break;
+          case 'album':
+            cmp = a.albumTitle.compareTo(b.albumTitle);
+            break;
+          case 'dateAdded':
+            cmp = a.dateAdded.compareTo(b.dateAdded);
+            break;
+          case 'playCount':
+            cmp = a.playCount.compareTo(b.playCount);
+            break;
+          default:
+            cmp = a.title.compareTo(b.title);
         }
         return ascending ? cmp : -cmp;
       });
@@ -456,7 +487,8 @@ class MusicRepositoryImpl implements MusicRepository {
   // ── Albums ──
 
   @override
-  Future<List<Album>> getAllAlbums({String? sortBy, bool ascending = true}) async {
+  Future<List<Album>> getAllAlbums(
+      {String? sortBy, bool ascending = true}) async {
     var list = _db.allAlbumMaps.map(Album.fromMap).toList();
     list.sort((a, b) => a.title.compareTo(b.title));
     return list;
@@ -472,7 +504,8 @@ class MusicRepositoryImpl implements MusicRepository {
   // ── Artists ──
 
   @override
-  Future<List<Artist>> getAllArtists({String? sortBy, bool ascending = true}) async {
+  Future<List<Artist>> getAllArtists(
+      {String? sortBy, bool ascending = true}) async {
     var list = _db.allArtistMaps.map(Artist.fromMap).toList();
     list.sort((a, b) => a.name.compareTo(b.name));
     return list;
@@ -501,9 +534,7 @@ class MusicRepositoryImpl implements MusicRepository {
     final q = query.toLowerCase();
     final terms = q.split(RegExp(r'\s+'));
 
-    final allSongs = _db.allSongMaps
-        .map(Song.fromMap)
-        .toList();
+    final allSongs = _db.allSongMaps.map(Song.fromMap).toList();
     final seen = <int>{};
     final ranked = <_RankedSong>[];
 
@@ -516,7 +547,8 @@ class MusicRepositoryImpl implements MusicRepository {
     }
 
     // FTS on searchIndex
-    add(allSongs.where((s) => terms.every((t) => s.searchIndex.contains(t))), 50);
+    add(allSongs.where((s) => terms.every((t) => s.searchIndex.contains(t))),
+        50);
     // Title prefix match
     add(allSongs.where((s) => s.title.toLowerCase().startsWith(q)), 80);
     // Artist prefix match
@@ -660,7 +692,8 @@ class MusicRepositoryImpl implements MusicRepository {
     paths.add(songPath);
     pMap['songPaths'] = paths;
     pMap['songCount'] = paths.length;
-    pMap['totalDurationMs'] = ((pMap['totalDurationMs'] as int?) ?? 0) + song.durationMs;
+    pMap['totalDurationMs'] =
+        ((pMap['totalDurationMs'] as int?) ?? 0) + song.durationMs;
     pMap['dateModified'] = DateTime.now().toIso8601String();
     await _db.putPlaylist(playlistId.toString(), pMap);
   }
@@ -675,14 +708,18 @@ class MusicRepositoryImpl implements MusicRepository {
     paths.remove(songPath);
     pMap['songPaths'] = paths;
     pMap['songCount'] = paths.length;
-    pMap['totalDurationMs'] = ((pMap['totalDurationMs'] as int?) ?? 0) - song.durationMs;
-    if (((pMap['totalDurationMs'] as int?) ?? 0) < 0) pMap['totalDurationMs'] = 0;
+    pMap['totalDurationMs'] =
+        ((pMap['totalDurationMs'] as int?) ?? 0) - song.durationMs;
+    if (((pMap['totalDurationMs'] as int?) ?? 0) < 0) {
+      pMap['totalDurationMs'] = 0;
+    }
     pMap['dateModified'] = DateTime.now().toIso8601String();
     await _db.putPlaylist(playlistId.toString(), pMap);
   }
 
   @override
-  Future<void> reorderPlaylist(int playlistId, int oldIndex, int newIndex) async {
+  Future<void> reorderPlaylist(
+      int playlistId, int oldIndex, int newIndex) async {
     final pMap = _db.getPlaylistMap(playlistId.toString());
     if (pMap == null) return;
 
@@ -706,7 +743,8 @@ class MusicRepositoryImpl implements MusicRepository {
   }
 
   @override
-  Future<void> updateSongMetadata(int songId, {String? title, String? artist}) async {
+  Future<void> updateSongMetadata(int songId,
+      {String? title, String? artist}) async {
     final map = _db.getSongMap(songId.toString());
     if (map == null) return;
     if (title != null) map['title'] = title;

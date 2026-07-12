@@ -5,7 +5,12 @@ final audioHandlerProvider = Provider<AudioPlayerHandler>((ref) {
   return AudioPlayerHandler();
 });
 
-final currentSongProvider = Provider<({String path, String title, String artist})>((ref) {
+final currentSongProvider =
+    Provider<({String path, String title, String artist})>((ref) {
   final handler = ref.watch(audioHandlerProvider);
-  return (path: handler.currentPath, title: handler.currentTitle, artist: handler.currentArtist);
+  return (
+    path: handler.currentPath,
+    title: handler.currentTitle,
+    artist: handler.currentArtist
+  );
 });

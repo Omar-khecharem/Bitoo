@@ -26,28 +26,28 @@ class Album {
   Duration get totalDuration => Duration(milliseconds: totalDurationMs);
 
   Map<String, dynamic> toMap() => {
-    'id': id,
-    'title': title,
-    'artist': artist,
-    'year': year,
-    'genre': genre,
-    'songCount': songCount,
-    'totalDurationMs': totalDurationMs,
-    'artworkPath': artworkPath,
-    'dateAdded': dateAdded.toIso8601String(),
-    'searchIndex': searchIndex,
-  };
+        'id': id,
+        'title': title,
+        'artist': artist,
+        'year': year,
+        'genre': genre,
+        'songCount': songCount,
+        'totalDurationMs': totalDurationMs,
+        'artworkPath': artworkPath,
+        'dateAdded': dateAdded.toIso8601String(),
+        'searchIndex': searchIndex,
+      };
 
   factory Album.fromMap(Map<String, dynamic> map) => Album(
-    id: map['id'] as int? ?? 0,
-    title: map['title'] as String? ?? '',
-    artist: map['artist'] as String? ?? '',
-    year: map['year'] as int?,
-    genre: map['genre'] as String?,
-    songCount: map['songCount'] as int? ?? 0,
-    totalDurationMs: map['totalDurationMs'] as int? ?? 0,
-    artworkPath: map['artworkPath'] as String?,
-    dateAdded: DateTime.parse(map['dateAdded'] as String),
-    searchIndex: map['searchIndex'] as String?,
-  );
+        id: map['id'] as int? ?? 0,
+        title: map['title'] as String? ?? '',
+        artist: map['artist'] as String? ?? '',
+        year: map['year'] as int?,
+        genre: map['genre'] as String?,
+        songCount: map['songCount'] as int? ?? 0,
+        totalDurationMs: map['totalDurationMs'] as int? ?? 0,
+        artworkPath: map['artworkPath'] as String?,
+        dateAdded: DateTime.parse(map['dateAdded'] as String),
+        searchIndex: map['searchIndex'] as String?,
+      );
 }

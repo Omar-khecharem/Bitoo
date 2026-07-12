@@ -53,7 +53,8 @@ class HomeFeedNotifier extends StateNotifier<HomeFeedState> {
     try {
       _repo ??= await _ref.read(musicRepositoryProvider.future);
       if (_repo == null) {
-        state = state.copyWith(isLoading: false, error: 'Repository not available');
+        state =
+            state.copyWith(isLoading: false, error: 'Repository not available');
         return;
       }
 
@@ -64,7 +65,9 @@ class HomeFeedNotifier extends StateNotifier<HomeFeedState> {
           debugPrint('loadFeed: ${s.length} songs in DB');
           return s.take(10).toList();
         }),
-        _repo!.getAllSongs().then((s) => s.where((s) => s.playCount > 0).take(10).toList()),
+        _repo!
+            .getAllSongs()
+            .then((s) => s.where((s) => s.playCount > 0).take(10).toList()),
         _repo!.getFavorites(),
         _repo!.getAllArtists(),
         _repo!.getAllAlbums(),
@@ -73,24 +76,34 @@ class HomeFeedNotifier extends StateNotifier<HomeFeedState> {
 
       state = HomeFeedState(
         sections: [
-          HomeSectionData(title: 'Continue Listening', id: 'continue', items: results[1].take(3).toList()),
-          HomeSectionData(title: 'Recently Played', id: 'recent', items: results[0]),
-          HomeSectionData(title: 'Most Played', id: 'popular', items: results[2]),
-          HomeSectionData(title: 'Favorite Songs', id: 'favorites', items: results[3]),
-          HomeSectionData(title: 'Your Artists', id: 'artists', items: results[4]),
-          HomeSectionData(title: 'Your Albums', id: 'albums', items: results[5]),
+          HomeSectionData(
+              title: 'Continue Listening',
+              id: 'continue',
+              items: results[1].take(3).toList()),
+          HomeSectionData(
+              title: 'Recently Played', id: 'recent', items: results[0]),
+          HomeSectionData(
+              title: 'Most Played', id: 'popular', items: results[2]),
+          HomeSectionData(
+              title: 'Favorite Songs', id: 'favorites', items: results[3]),
+          HomeSectionData(
+              title: 'Your Artists', id: 'artists', items: results[4]),
+          HomeSectionData(
+              title: 'Your Albums', id: 'albums', items: results[5]),
           HomeSectionData(title: 'Genres', id: 'genres', items: results[6]),
         ],
         isLoading: false,
       );
-      debugPrint('loadFeed state set: continue=${results[1].take(3).length} artists=${results[4].length} albums=${results[5].length} genres=${results[6].length}');
+      debugPrint(
+          'loadFeed state set: continue=${results[1].take(3).length} artists=${results[4].length} albums=${results[5].length} genres=${results[6].length}');
     } catch (e) {
       state = state.copyWith(isLoading: false, error: e.toString());
     }
   }
 }
 
-final homeFeedProvider = StateNotifierProvider<HomeFeedNotifier, HomeFeedState>((ref) {
+final homeFeedProvider =
+    StateNotifierProvider<HomeFeedNotifier, HomeFeedState>((ref) {
   final notifier = HomeFeedNotifier(ref);
   notifier.loadFeed();
   return notifier;

@@ -11,7 +11,8 @@ final permissionServiceProvider = Provider<PermissionService>((ref) {
   return PermissionServiceImpl(ref.read(permissionDataSourceProvider));
 });
 
-final permissionStateProvider = StateNotifierProvider<PermissionStateNotifier, AllPermissionsState>(
+final permissionStateProvider =
+    StateNotifierProvider<PermissionStateNotifier, AllPermissionsState>(
   (ref) {
     final service = ref.read(permissionServiceProvider);
     return PermissionStateNotifier(service);

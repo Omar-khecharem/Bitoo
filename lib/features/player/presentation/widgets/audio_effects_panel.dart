@@ -23,7 +23,18 @@ class EqualizerWidget extends StatefulWidget {
 }
 
 class _EqualizerWidgetState extends State<EqualizerWidget> {
-  static const _frequencies = ['31', '63', '125', '250', '500', '1k', '2k', '4k', '8k', '16k'];
+  static const _frequencies = [
+    '31',
+    '63',
+    '125',
+    '250',
+    '500',
+    '1k',
+    '2k',
+    '4k',
+    '8k',
+    '16k'
+  ];
 
   @override
   Widget build(BuildContext context) {
@@ -38,7 +49,14 @@ class _EqualizerWidgetState extends State<EqualizerWidget> {
             child: ListView(
               scrollDirection: Axis.horizontal,
               children: [
-                'Custom', 'Pop', 'Rock', 'Jazz', 'Classical', 'Dance', 'Acoustic', 'Bass',
+                'Custom',
+                'Pop',
+                'Rock',
+                'Jazz',
+                'Classical',
+                'Dance',
+                'Acoustic',
+                'Bass',
               ].map((preset) {
                 final isActive = preset == (widget.activePreset ?? 'Custom');
                 return Padding(
@@ -54,19 +72,24 @@ class _EqualizerWidgetState extends State<EqualizerWidget> {
                       decoration: BoxDecoration(
                         color: isActive
                             ? AppColors.primary500.withValues(alpha: 0.15)
-                            : Colors.white.withValues(alpha: AppColors.glassOpacityMedium),
+                            : Colors.white.withValues(
+                                alpha: AppColors.glassOpacityMedium),
                         border: Border.all(
                           color: isActive
                               ? AppColors.primary500.withValues(alpha: 0.3)
-                              : Colors.white.withValues(alpha: AppColors.glassOpacityMedium),
+                              : Colors.white.withValues(
+                                  alpha: AppColors.glassOpacityMedium),
                         ),
                         borderRadius: BorderRadius.circular(AppRadius.full),
                       ),
                       child: Text(
                         preset,
                         style: AppTypography.labelSmall.copyWith(
-                          color: isActive ? AppColors.primary500 : AppColors.darkTextSecondary,
-                          fontWeight: isActive ? FontWeight.w600 : FontWeight.w400,
+                          color: isActive
+                              ? AppColors.primary500
+                              : AppColors.darkTextSecondary,
+                          fontWeight:
+                              isActive ? FontWeight.w600 : FontWeight.w400,
                         ),
                       ),
                     ),
@@ -88,7 +111,8 @@ class _EqualizerWidgetState extends State<EqualizerWidget> {
                 children: List.generate(widget.bands.length, (i) {
                   return Expanded(
                     child: Padding(
-                      padding: EdgeInsets.only(right: i < widget.bands.length - 1 ? 2 : 0),
+                      padding: EdgeInsets.only(
+                          right: i < widget.bands.length - 1 ? 2 : 0),
                       child: _EQSlider(
                         value: widget.bands[i],
                         label: _frequencies[i],
@@ -106,15 +130,17 @@ class _EqualizerWidgetState extends State<EqualizerWidget> {
 
           // Frequency labels
           Row(
-            children: _frequencies.map((f) => Expanded(
-              child: Text(
-                f,
-                textAlign: TextAlign.center,
-                style: AppTypography.labelSmall.copyWith(
-                  color: AppColors.darkTextTertiary,
-                ),
-              ),
-            )).toList(),
+            children: _frequencies
+                .map((f) => Expanded(
+                      child: Text(
+                        f,
+                        textAlign: TextAlign.center,
+                        style: AppTypography.labelSmall.copyWith(
+                          color: AppColors.darkTextTertiary,
+                        ),
+                      ),
+                    ))
+                .toList(),
           ),
         ],
       ),
@@ -207,9 +233,7 @@ class _EQBarPainter extends CustomPainter {
     final y = isPositive ? centerY - barHeight : centerY;
 
     final color = isEnabled
-        ? (isPositive
-            ? AppColors.primary500
-            : AppColors.tertiary500)
+        ? (isPositive ? AppColors.primary500 : AppColors.tertiary500)
         : AppColors.darkTextTertiary;
 
     final rect = RRect.fromRectAndRadius(
@@ -277,7 +301,8 @@ class _AudioEffectsPanelState extends State<AudioEffectsPanel> {
           Padding(
             padding: EdgeInsets.only(top: Spacing.md),
             child: Container(
-              width: 40, height: 4,
+              width: 40,
+              height: 4,
               decoration: BoxDecoration(
                 color: AppColors.darkTextTertiary.withValues(alpha: 0.3),
                 borderRadius: BorderRadius.circular(2),
@@ -287,22 +312,27 @@ class _AudioEffectsPanelState extends State<AudioEffectsPanel> {
 
           // Header
           Padding(
-            padding: EdgeInsets.fromLTRB(Spacing.xl, Spacing.lg, Spacing.md, Spacing.sm),
+            padding: EdgeInsets.fromLTRB(
+                Spacing.xl, Spacing.lg, Spacing.md, Spacing.sm),
             child: Row(
               children: [
-                Icon(Icons.tune_rounded, size: AppIconSizes.small, color: AppColors.darkTextPrimary),
+                Icon(Icons.tune_rounded,
+                    size: AppIconSizes.small, color: AppColors.darkTextPrimary),
                 SizedBox(width: Spacing.sm),
                 Text('Audio Effects', style: AppTypography.titleLarge),
                 Spacer(),
                 GestureDetector(
                   onTap: widget.onClose,
                   child: Container(
-                    width: 36, height: 36,
+                    width: 36,
+                    height: 36,
                     decoration: BoxDecoration(
-                      color: Colors.white.withValues(alpha: AppColors.glassOpacityMedium),
+                      color: Colors.white
+                          .withValues(alpha: AppColors.glassOpacityMedium),
                       shape: BoxShape.circle,
                     ),
-                    child: Icon(Icons.close_rounded, size: 18, color: AppColors.darkTextSecondary),
+                    child: Icon(Icons.close_rounded,
+                        size: 18, color: AppColors.darkTextSecondary),
                   ),
                 ),
               ],
@@ -447,13 +477,15 @@ class _EffectSlider extends StatelessWidget {
       children: [
         Row(
           children: [
-            Icon(icon, size: AppIconSizes.small, color: AppColors.darkTextSecondary),
+            Icon(icon,
+                size: AppIconSizes.small, color: AppColors.darkTextSecondary),
             SizedBox(width: Spacing.sm),
             Text(label, style: AppTypography.titleSmall),
             Spacer(),
             Text(
               '${formatValue?.call(value) ?? value.toStringAsFixed(1)}$suffix',
-              style: AppTypography.bodyMedium.copyWith(color: AppColors.darkTextSecondary),
+              style: AppTypography.bodyMedium
+                  .copyWith(color: AppColors.darkTextSecondary),
             ),
           ],
         ),
@@ -461,7 +493,8 @@ class _EffectSlider extends StatelessWidget {
         SliderTheme(
           data: SliderTheme.of(context).copyWith(
             activeTrackColor: AppColors.primary500,
-            inactiveTrackColor: AppColors.darkTextTertiary.withValues(alpha: 0.15),
+            inactiveTrackColor:
+                AppColors.darkTextTertiary.withValues(alpha: 0.15),
             trackHeight: 3,
             thumbColor: AppColors.primary500,
             thumbShape: RoundSliderThumbShape(enabledThumbRadius: 6),
@@ -519,7 +552,8 @@ class _ToggleTile extends StatelessWidget {
             Text(
               label,
               style: AppTypography.labelMedium.copyWith(
-                color: value ? AppColors.primary500 : AppColors.darkTextSecondary,
+                color:
+                    value ? AppColors.primary500 : AppColors.darkTextSecondary,
               ),
             ),
           ],

@@ -103,7 +103,9 @@ class PermissionDataSource {
 
   AppPermissionStatus _mapStatus(ph.PermissionStatus status) {
     if (status.isGranted) return const AppPermissionGranted();
-    if (status.isPermanentlyDenied) return const AppPermissionPermanentlyDenied();
+    if (status.isPermanentlyDenied) {
+      return const AppPermissionPermanentlyDenied();
+    }
     return const AppPermissionDenied();
   }
 }

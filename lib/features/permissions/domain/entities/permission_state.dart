@@ -32,8 +32,7 @@ class AllPermissionsState {
   });
 
   bool get isComplete =>
-      media is AppPermissionGranted &&
-      notifications is AppPermissionGranted;
+      media is AppPermissionGranted && notifications is AppPermissionGranted;
 
   bool get mediaGranted => media is AppPermissionGranted;
 
