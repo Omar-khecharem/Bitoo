@@ -17,6 +17,7 @@ class ScanProgress {
     this.diagnostic,
   });
 
-  double get percentage =>
-      totalFiles > 0 ? filesScanned / totalFiles : 0.0;
+  double get percentage => totalFiles > 0
+      ? (filesScanned / totalFiles).clamp(0.0, 1.0)
+      : 0.0;
 }

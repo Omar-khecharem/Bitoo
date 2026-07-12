@@ -1,4 +1,3 @@
-import 'dart:ui';
 import 'package:flutter/material.dart';
 import '../../core/theme/color_schemes.dart';
 
@@ -25,6 +24,7 @@ class PremiumBottomSheet extends StatelessWidget {
       elevation: 0,
       barrierColor: Colors.black.withValues(alpha: 0.5),
       isScrollControlled: true,
+      useSafeArea: true,
       builder: (_) => PremiumBottomSheet(
         maxHeight: maxHeight,
         showDragHandle: showDragHandle,
@@ -35,45 +35,46 @@ class PremiumBottomSheet extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    final bottom = MediaQuery.of(context).padding.bottom;
+    final cs = Theme.of(context).colorScheme;
     final isDark = Theme.of(context).brightness == Brightness.dark;
+    final bottom = MediaQuery.of(context).padding.bottom;
+
     return Container(
-      margin: EdgeInsets.fromLTRB(12, 0, 12, bottom + 12),
+      margin: EdgeInsets.fromLTRB(8, 0, 8, bottom + 8),
       constraints: maxHeight != null ? BoxConstraints(maxHeight: maxHeight!) : null,
       decoration: BoxDecoration(
-        color: isDark ? const Color(0xFF1E1E2E) : const Color(0xFFF5EDE4),
-        borderRadius: BorderRadius.circular(24),
-        border: Border.all(color: Colors.white.withValues(alpha: 0.06)),
+        color: isDark ? cs.surface : cs.surface,
+        borderRadius: BorderRadius.circular(20),
+        border: Border.all(
+          color: (isDark ? Colors.white : Colors.black).withValues(alpha: 0.06),
+        ),
         boxShadow: [
           BoxShadow(
-            color: Colors.black.withValues(alpha: 0.4),
+            color: Colors.black.withValues(alpha: isDark ? 0.4 : 0.1),
             blurRadius: 40,
             offset: const Offset(0, 8),
           ),
         ],
       ),
       child: ClipRRect(
-        borderRadius: BorderRadius.circular(24),
-        child: BackdropFilter(
-          filter: ImageFilter.blur(sigmaX: 20, sigmaY: 20),
-          child: Column(
-            mainAxisSize: MainAxisSize.min,
-            children: [
-              if (showDragHandle)
-                Padding(
-                  padding: const EdgeInsets.only(top: 12, bottom: 4),
-                  child: Container(
-                    width: 36,
-                    height: 4,
-                    decoration: BoxDecoration(
-                      color: Colors.white.withValues(alpha: 0.15),
-                      borderRadius: BorderRadius.circular(2),
-                    ),
+        borderRadius: BorderRadius.circular(20),
+        child: Column(
+          mainAxisSize: MainAxisSize.min,
+          children: [
+            if (showDragHandle)
+              Padding(
+                padding: const EdgeInsets.only(top: 10, bottom: 2),
+                child: Container(
+                  width: 32,
+                  height: 4,
+                  decoration: BoxDecoration(
+                    color: cs.onSurface.withValues(alpha: 0.15),
+                    borderRadius: BorderRadius.circular(2),
                   ),
                 ),
-              Flexible(child: child),
-            ],
-          ),
+              ),
+            Flexible(child: child),
+          ],
         ),
       ),
     );
@@ -178,9 +179,12 @@ class PremiumConfirmDialog extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    final cs = Theme.of(context).colorScheme;
+    final isDark = Theme.of(context).brightness == Brightness.dark;
+
     return AlertDialog(
-      backgroundColor: const Color(0xFF1E1E2E),
-      shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(24)),
+      backgroundColor: isDark ? cs.surface : cs.surface,
+      shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(20)),
       content: Column(
         mainAxisSize: MainAxisSize.min,
         children: [
@@ -198,10 +202,10 @@ class PremiumConfirmDialog extends StatelessWidget {
           ],
           Text(
             title,
-            style: const TextStyle(
+            style: TextStyle(
               fontSize: 18,
               fontWeight: FontWeight.w600,
-              color: Colors.white,
+              color: cs.onSurface,
             ),
             textAlign: TextAlign.center,
           ),
@@ -210,7 +214,7 @@ class PremiumConfirmDialog extends StatelessWidget {
             message,
             style: TextStyle(
               fontSize: 14,
-              color: Colors.white.withValues(alpha: 0.6),
+              color: cs.onSurface.withValues(alpha: 0.6),
               height: 1.4,
             ),
             textAlign: TextAlign.center,
@@ -221,33 +225,34 @@ class PremiumConfirmDialog extends StatelessWidget {
       actions: [
         SizedBox(
           width: double.infinity,
-          child: TextButton(
+          child: OutlinedButton(
             onPressed: () => Navigator.of(context).pop(false),
-            style: TextButton.styleFrom(
-              foregroundColor: Colors.white.withValues(alpha: 0.6),
+            style: OutlinedButton.styleFrom(
+              foregroundColor: cs.onSurface.withValues(alpha: 0.6),
+              side: BorderSide(color: cs.onSurface.withValues(alpha: 0.12)),
               padding: const EdgeInsets.symmetric(vertical: 14),
               shape: RoundedRectangleBorder(
-                borderRadius: BorderRadius.circular(14),
-                side: BorderSide(color: Colors.white.withValues(alpha: 0.1)),
+                borderRadius: BorderRadius.circular(12),
               ),
             ),
-            child: Text(cancelLabel, style: const TextStyle(fontSize: 15, fontWeight: FontWeight.w500)),
+            child: Text(cancelLabel, style: TextStyle(fontSize: 15, fontWeight: FontWeight.w500, color: cs.onSurface.withValues(alpha: 0.6))),
           ),
         ),
         SizedBox(height: 8),
         SizedBox(
           width: double.infinity,
-          child: TextButton(
+          child: ElevatedButton(
             onPressed: onConfirm,
-            style: TextButton.styleFrom(
-              foregroundColor: Colors.white,
-              backgroundColor: confirmColor ?? AppColors.neonRose,
+            style: ElevatedButton.styleFrom(
+              foregroundColor: cs.onPrimary,
+              backgroundColor: confirmColor ?? cs.primary,
               padding: const EdgeInsets.symmetric(vertical: 14),
               shape: RoundedRectangleBorder(
-                borderRadius: BorderRadius.circular(14),
+                borderRadius: BorderRadius.circular(12),
               ),
+              elevation: 0,
             ),
-            child: Text(confirmLabel, style: const TextStyle(fontSize: 15, fontWeight: FontWeight.w600)),
+            child: Text(confirmLabel, style: TextStyle(fontSize: 15, fontWeight: FontWeight.w600)),
           ),
         ),
       ],
@@ -316,35 +321,38 @@ class _PremiumInputDialogState extends State<PremiumInputDialog> {
 
   @override
   Widget build(BuildContext context) {
+    final cs = Theme.of(context).colorScheme;
+    final isDark = Theme.of(context).brightness == Brightness.dark;
+
     return AlertDialog(
-      backgroundColor: const Color(0xFF1E1E2E),
-      shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(24)),
+      backgroundColor: isDark ? cs.surface : cs.surface,
+      shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(20)),
       content: Column(
         mainAxisSize: MainAxisSize.min,
         crossAxisAlignment: CrossAxisAlignment.start,
         children: [
           Text(
             widget.title,
-            style: const TextStyle(
+            style: TextStyle(
               fontSize: 18,
               fontWeight: FontWeight.w600,
-              color: Colors.white,
+              color: cs.onSurface,
             ),
           ),
           SizedBox(height: 16),
           Container(
             decoration: BoxDecoration(
-              color: Colors.white.withValues(alpha: 0.06),
-              borderRadius: BorderRadius.circular(14),
-              border: Border.all(color: Colors.white.withValues(alpha: 0.1)),
+              color: cs.onSurface.withValues(alpha: 0.06),
+              borderRadius: BorderRadius.circular(12),
+              border: Border.all(color: cs.onSurface.withValues(alpha: 0.1)),
             ),
             child: TextField(
               controller: _controller,
               autofocus: true,
-              style: const TextStyle(color: Colors.white, fontSize: 16),
+              style: TextStyle(color: cs.onSurface, fontSize: 16),
               decoration: InputDecoration(
                 hintText: widget.hintText,
-                hintStyle: TextStyle(color: Colors.white.withValues(alpha: 0.3)),
+                hintStyle: TextStyle(color: cs.onSurface.withValues(alpha: 0.3)),
                 border: InputBorder.none,
                 contentPadding: const EdgeInsets.symmetric(horizontal: 16, vertical: 14),
               ),
@@ -356,17 +364,18 @@ class _PremiumInputDialogState extends State<PremiumInputDialog> {
       actions: [
         SizedBox(
           width: double.infinity,
-          child: TextButton(
+          child: ElevatedButton(
             onPressed: _isValid ? () => widget.onConfirm(_controller.text.trim()) : null,
-            style: TextButton.styleFrom(
-              foregroundColor: Colors.white,
-              backgroundColor: _isValid ? AppColors.neonIndigo : Colors.white.withValues(alpha: 0.06),
+            style: ElevatedButton.styleFrom(
+              foregroundColor: cs.onPrimary,
+              backgroundColor: _isValid ? cs.primary : cs.onSurface.withValues(alpha: 0.06),
               padding: const EdgeInsets.symmetric(vertical: 14),
               shape: RoundedRectangleBorder(
-                borderRadius: BorderRadius.circular(14),
+                borderRadius: BorderRadius.circular(12),
               ),
+              elevation: 0,
             ),
-            child: Text(widget.confirmLabel, style: const TextStyle(fontSize: 15, fontWeight: FontWeight.w600)),
+            child: Text(widget.confirmLabel, style: TextStyle(fontSize: 15, fontWeight: FontWeight.w600)),
           ),
         ),
       ],

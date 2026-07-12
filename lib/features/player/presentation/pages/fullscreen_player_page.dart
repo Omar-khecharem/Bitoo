@@ -12,6 +12,7 @@ import '../../domain/entities/playback_state.dart';
 import '../widgets/album_art_view.dart';
 import '../widgets/seek_bar.dart';
 import '../widgets/player_controls.dart';
+import '../widgets/volume_booster.dart';
 import '../providers/player_provider.dart';
 
 class FullscreenPlayerPage extends ConsumerStatefulWidget {
@@ -389,7 +390,7 @@ class _FullscreenPlayerPageState extends ConsumerState<FullscreenPlayerPage>
             width: artSize,
             height: artSize,
             child: AlbumArtView(
-              imageUrl: 'https://via.placeholder.com/400',
+              imageUrl: '',
               size: artSize,
               mode: _artMode,
               isPlaying: _isPlaying,
@@ -607,7 +608,7 @@ class _FullscreenPlayerPageState extends ConsumerState<FullscreenPlayerPage>
         Padding(
           padding: EdgeInsets.symmetric(horizontal: Spacing.x3l),
           child: AlbumArtView(
-            imageUrl: 'https://via.placeholder.com/400',
+            imageUrl: '',
             size: MediaQuery.of(context).size.shortestSide * 0.72,
             mode: _artMode,
             isPlaying: _isPlaying,
@@ -692,15 +693,7 @@ class _FullscreenPlayerPageState extends ConsumerState<FullscreenPlayerPage>
         SizedBox(height: Spacing.lg),
         Padding(
           padding: EdgeInsets.symmetric(horizontal: Spacing.xxl),
-          child: _PremiumVolumeBooster(
-            volume: _volume,
-            onChanged: _onVolumeChanged,
-          ),
-        ),
-        SizedBox(height: Spacing.lg),
-        Padding(
-          padding: EdgeInsets.symmetric(horizontal: Spacing.xxl),
-          child: _PremiumVolumeBooster(
+          child: VolumeBooster(
             volume: _volume,
             onChanged: _onVolumeChanged,
           ),
@@ -731,7 +724,7 @@ class _FullscreenPlayerPageState extends ConsumerState<FullscreenPlayerPage>
           flex: 4,
           child: Center(
             child: AlbumArtView(
-              imageUrl: 'https://via.placeholder.com/400',
+              imageUrl: '',
               size: MediaQuery.of(context).size.height * 0.55,
               mode: _artMode,
               isPlaying: _isPlaying,
@@ -814,7 +807,7 @@ class _FullscreenPlayerPageState extends ConsumerState<FullscreenPlayerPage>
                   onEqualizerTap: () {},
                 ),
                 SizedBox(height: Spacing.lg),
-                _PremiumVolumeBooster(
+                VolumeBooster(
                   volume: _volume,
                   onChanged: _onVolumeChanged,
                 ),
@@ -909,224 +902,4 @@ class _MorphPlayButton extends StatelessWidget {
   }
 }
 
-class _PremiumVolumeBooster extends StatefulWidget {
-  final double volume;
-  final ValueChanged<double> onChanged;
 
-  const _PremiumVolumeBooster({required this.volume, required this.onChanged});
-
-  @override
-  State<_PremiumVolumeBooster> createState() => _PremiumVolumeBoosterState();
-}
-
-class _PremiumVolumeBoosterState extends State<_PremiumVolumeBooster>
-    with SingleTickerProviderStateMixin {
-  late AnimationController _pulseController;
-  late Animation<double> _pulseAnimation;
-
-  @override
-  void initState() {
-    super.initState();
-    _pulseController = AnimationController(
-      vsync: this,
-      duration: const Duration(milliseconds: 1200),
-    );
-    _pulseAnimation = Tween<double>(begin: 0.7, end: 1.0).animate(
-      CurvedAnimation(parent: _pulseController, curve: Curves.easeInOut),
-    );
-    if (_isBoosted) _pulseController.repeat(reverse: true);
-  }
-
-  @override
-  void didUpdateWidget(_PremiumVolumeBooster old) {
-    super.didUpdateWidget(old);
-    if (_isBoosted && !_pulseController.isAnimating) {
-      _pulseController.repeat(reverse: true);
-    } else if (!_isBoosted && _pulseController.isAnimating) {
-      _pulseController.stop();
-      _pulseController.reset();
-    }
-  }
-
-  @override
-  void dispose() {
-    _pulseController.dispose();
-    super.dispose();
-  }
-
-  bool get _isBoosted => widget.volume > 1.0;
-  double get _displayLevel => (widget.volume / 2.0).clamp(0.0, 1.0);
-
-  void _decrease() =>
-      widget.onChanged((widget.volume - 0.05).clamp(0.0, 2.0));
-  void _increase() =>
-      widget.onChanged((widget.volume + 0.05).clamp(0.0, 2.0));
-
-  @override
-  Widget build(BuildContext context) {
-    return AnimatedBuilder(
-      animation: _pulseAnimation,
-      builder: (context, _) {
-        return Container(
-          height: 56,
-          decoration: BoxDecoration(
-            color: _isBoosted
-                ? AppColors.neonRose.withValues(alpha: 0.08)
-                : Colors.white.withValues(alpha: 0.04),
-            borderRadius: BorderRadius.circular(AppRadius.lg),
-            border: Border.all(
-              color: _isBoosted
-                  ? AppColors.neonRose.withValues(alpha: 0.2 * _pulseAnimation.value)
-                  : Colors.white.withValues(alpha: 0.06),
-            ),
-          ),
-          child: Row(
-            children: [
-              SizedBox(width: 4),
-              _VolumeButton(
-                text: '−',
-                onTap: _decrease,
-                isBoosted: _isBoosted,
-              ),
-              SizedBox(width: Spacing.sm),
-              Expanded(
-                child: Column(
-                  mainAxisAlignment: MainAxisAlignment.center,
-                  children: [
-                    Stack(
-                      alignment: Alignment.centerLeft,
-                      children: [
-                        Container(
-                          height: 4,
-                          decoration: BoxDecoration(
-                            borderRadius: BorderRadius.circular(2),
-                            color: Colors.white.withValues(alpha: 0.08),
-                          ),
-                        ),
-                        FractionallySizedBox(
-                          alignment: Alignment.centerLeft,
-                          widthFactor: _displayLevel,
-                          child: Container(
-                            height: 4,
-                            decoration: BoxDecoration(
-                              borderRadius: BorderRadius.circular(2),
-                              gradient: LinearGradient(
-                                colors: _isBoosted
-                                    ? [AppColors.neonRose, Colors.orangeAccent]
-                                    : [AppColors.neonIndigo, AppColors.neonBlue],
-                              ),
-                              boxShadow: _isBoosted
-                                  ? [
-                                      BoxShadow(
-                                        color: AppColors.neonRose.withValues(alpha: 0.4 * _pulseAnimation.value),
-                                        blurRadius: 6,
-                                      ),
-                                    ]
-                                  : [
-                                      BoxShadow(
-                                        color: AppColors.neonIndigo.withValues(alpha: 0.3),
-                                        blurRadius: 4,
-                                      ),
-                                    ],
-                            ),
-                          ),
-                        ),
-                      ],
-                    ),
-                    SizedBox(height: 4),
-                    Row(
-                      mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                      children: [
-                        Text(
-                          _isBoosted ? 'BOOST' : 'VOL',
-                          style: TextStyle(
-                            fontSize: 9,
-                            fontWeight: FontWeight.w700,
-                            color: _isBoosted
-                                ? AppColors.neonRose.withValues(alpha: 0.8 * _pulseAnimation.value)
-                                : Colors.white.withValues(alpha: 0.25),
-                            letterSpacing: 1.5,
-                          ),
-                        ),
-                        Text(
-                          widget.volume >= 1.0
-                              ? '×${widget.volume.toStringAsFixed(1)}'
-                              : '×${widget.volume.toStringAsFixed(1)}',
-                          style: TextStyle(
-                            fontSize: 11,
-                            fontWeight: FontWeight.w600,
-                            color: _isBoosted
-                                ? AppColors.neonRose
-                                : Colors.white.withValues(alpha: 0.5),
-                          ),
-                        ),
-                      ],
-                    ),
-                  ],
-                ),
-              ),
-              SizedBox(width: Spacing.sm),
-              _VolumeButton(
-                text: '+',
-                onTap: _increase,
-                isBoosted: _isBoosted,
-              ),
-              SizedBox(width: 4),
-            ],
-          ),
-        );
-      },
-    );
-  }
-}
-
-class _VolumeButton extends StatelessWidget {
-  final String text;
-  final VoidCallback onTap;
-  final bool isBoosted;
-
-  const _VolumeButton({
-    required this.text,
-    required this.onTap,
-    this.isBoosted = false,
-  });
-
-  @override
-  Widget build(BuildContext context) {
-    return GestureDetector(
-      onTap: onTap,
-      child: Container(
-        width: 36,
-        height: 36,
-        decoration: BoxDecoration(
-          gradient: LinearGradient(
-            colors: isBoosted
-                ? [AppColors.neonRose.withValues(alpha: 0.3), AppColors.neonRose.withValues(alpha: 0.15)]
-                : [Colors.white.withValues(alpha: 0.1), Colors.white.withValues(alpha: 0.04)],
-            begin: Alignment.topLeft,
-            end: Alignment.bottomRight,
-          ),
-          shape: BoxShape.circle,
-          border: Border.all(
-            color: isBoosted
-                ? AppColors.neonRose.withValues(alpha: 0.3)
-                : Colors.white.withValues(alpha: 0.1),
-          ),
-        ),
-        child: Center(
-          child: Text(
-            text,
-            style: TextStyle(
-              fontSize: 18,
-              fontWeight: FontWeight.w300,
-              color: isBoosted
-                  ? AppColors.neonRose
-                  : Colors.white.withValues(alpha: 0.7),
-              height: 1.0,
-            ),
-          ),
-        ),
-      ),
-    );
-  }
-}

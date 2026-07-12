@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
 import '../../core/animations/curves.dart';
-import '../../core/animations/durations.dart';
+import '../../core/theme/tokens.dart';
 import 'micro_animations.dart';
 import 'animated_list_item.dart';
 
@@ -39,7 +39,7 @@ class _AnimatedSearchBarState extends State<AnimatedSearchBar>
     super.initState();
     _expandController = AnimationController(
       vsync: this,
-      duration: AnimationDurations.normal,
+      duration: AppDurations.normal,
     );
     _widthFactor = Tween<double>(begin: 0.0, end: 1.0).animate(
       CurvedAnimation(parent: _expandController, curve: AnimationCurves.premiumEase),
@@ -208,7 +208,7 @@ class _AnimatedFilterChipsState extends State<AnimatedFilterChips>
     super.initState();
     _controller = AnimationController(
       vsync: this,
-      duration: AnimationDurations.fast,
+      duration: AppDurations.fast,
     );
     _controller.forward();
   }
@@ -272,7 +272,7 @@ class _AnimatedChipState extends State<_AnimatedChip>
     super.initState();
     _controller = AnimationController(
       vsync: this,
-      duration: AnimationDurations.fast,
+      duration: AppDurations.fast,
     );
     _slide = Tween<Offset>(
       begin: Offset(-0.2, 0),
@@ -301,7 +301,7 @@ class _AnimatedChipState extends State<_AnimatedChip>
         child: ScaleOnTap(
           onTap: widget.onTap,
           child: AnimatedContainer(
-            duration: AnimationDurations.fast,
+            duration: AppDurations.fast,
             curve: AnimationCurves.premiumEase,
             padding: EdgeInsets.symmetric(horizontal: 14, vertical: 8),
             decoration: BoxDecoration(
@@ -381,7 +381,7 @@ class _SearchResultItemState extends State<_SearchResultItem>
     super.initState();
     _controller = AnimationController(
       vsync: this,
-      duration: AnimationDurations.normal,
+      duration: AppDurations.normal,
     );
     _fade = Tween<double>(begin: 0.0, end: 1.0).animate(
       CurvedAnimation(parent: _controller, curve: AnimationCurves.premiumEaseOut),

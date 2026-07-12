@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
 import '../../core/animations/curves.dart';
-import '../../core/animations/durations.dart';
+import '../../core/theme/tokens.dart';
 
 class AnimatedLyricsView extends StatefulWidget {
   final List<LyricLine> lines;
@@ -54,7 +54,7 @@ class _AnimatedLyricsViewState extends State<AnimatedLyricsView> {
     final offset = (index * 60.0) - (MediaQuery.of(context).size.height * 0.25);
     _scrollController.animateTo(
       offset.clamp(0.0, _scrollController.position.maxScrollExtent),
-      duration: AnimationDurations.normal,
+      duration: AppDurations.normal,
       curve: AnimationCurves.premiumEaseOut,
     );
   }
@@ -145,11 +145,11 @@ class _LyricLineWidget extends StatelessWidget {
 
     return RepaintBoundary(
       child: AnimatedContainer(
-        duration: AnimationDurations.fast,
+        duration: AppDurations.fast,
         curve: AnimationCurves.premiumEase,
         padding: EdgeInsets.symmetric(horizontal: 32, vertical: 12),
         child: AnimatedDefaultTextStyle(
-          duration: AnimationDurations.normal,
+          duration: AppDurations.normal,
           curve: AnimationCurves.premiumEase,
           style: TextStyle(
             fontSize: isCurrent ? 22 : (isPast ? 15 : 17),

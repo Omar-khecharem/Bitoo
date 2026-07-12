@@ -124,14 +124,15 @@ enum HiResMode {
 }
 
 enum AudioOutputFormat {
-  pcm16Bit(2, '16-bit PCM'),
-  pcm24Bit(3, '24-bit PCM'),
-  pcm32Bit(4, '32-bit PCM'),
-  pcmFloat(4, 'Float PCM');
+  pcm16Bit(2, '16-bit PCM', 16),
+  pcm24Bit(3, '24-bit PCM', 24),
+  pcm32Bit(4, '32-bit PCM', 32),
+  pcmFloat(4, 'Float PCM', 32);
 
   final int bytesPerSample;
   final String label;
-  const AudioOutputFormat(this.bytesPerSample, this.label);
+  final int bitDepth;
+  const AudioOutputFormat(this.bytesPerSample, this.label, this.bitDepth);
 }
 
 enum ReplayGainMode { track, album }

@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
 import '../../core/animations/curves.dart';
-import '../../core/animations/durations.dart';
+import '../../core/theme/tokens.dart';
 import 'micro_animations.dart';
 
 class NowPlayingBar extends StatefulWidget {
@@ -43,7 +43,7 @@ class _NowPlayingBarState extends State<NowPlayingBar>
     super.initState();
     _slideController = AnimationController(
       vsync: this,
-      duration: AnimationDurations.slow,
+      duration: AppDurations.slow,
     );
     _slideUp = Tween<Offset>(
       begin: Offset(0, 1),
@@ -122,7 +122,7 @@ class _NowPlayingBarState extends State<NowPlayingBar>
                             crossAxisAlignment: CrossAxisAlignment.start,
                             children: [
                               AnimatedDefaultTextStyle(
-                                duration: AnimationDurations.normal,
+                                duration: AppDurations.normal,
                                 style: TextStyle(
                                   color: Colors.white,
                                   fontSize: 14,
@@ -158,7 +158,7 @@ class _NowPlayingBarState extends State<NowPlayingBar>
                             shape: BoxShape.circle,
                           ),
                           child: AnimatedSwitcher(
-                            duration: AnimationDurations.fast,
+                            duration: AppDurations.fast,
                             transitionBuilder: (child, animation) =>
                                 ScaleTransition(scale: animation, child: child),
                             child: Icon(
@@ -229,7 +229,7 @@ class _VinylRotationWidgetState extends State<VinylRotationWidget>
     super.initState();
     _controller = AnimationController(
       vsync: this,
-      duration: AnimationDurations.vinyl,
+      duration: AppDurations.vinyl,
     );
     if (widget.isPlaying) _controller.repeat();
   }
@@ -322,7 +322,7 @@ class _AlbumArtParallaxState extends State<AlbumArtParallax>
     super.initState();
     _controller = AnimationController(
       vsync: this,
-      duration: AnimationDurations.slower,
+      duration: AppDurations.slower,
     );
     _controller.repeat(reverse: true);
   }

@@ -1,7 +1,7 @@
 import 'dart:math';
 import 'package:flutter/material.dart';
 import '../../core/animations/curves.dart';
-import '../../core/animations/durations.dart';
+import '../../core/theme/tokens.dart';
 import 'micro_animations.dart';
 
 class AnimatedAlbumCard extends StatefulWidget {
@@ -43,7 +43,7 @@ class _AnimatedAlbumCardState extends State<AnimatedAlbumCard>
     super.initState();
     _tiltController = AnimationController(
       vsync: this,
-      duration: AnimationDurations.normal,
+      duration: AppDurations.normal,
     );
   }
 
@@ -231,7 +231,7 @@ class _AnimatedPlaylistCardState extends State<AnimatedPlaylistCard>
     super.initState();
     _controller = AnimationController(
       vsync: this,
-      duration: AnimationDurations.fast,
+      duration: AppDurations.fast,
     );
     _scale = Tween<double>(begin: 1.0, end: 0.97).animate(
       CurvedAnimation(parent: _controller, curve: AnimationCurves.premiumEase),
@@ -391,7 +391,7 @@ class _AnimatedTrackTileState extends State<AnimatedTrackTile>
     super.initState();
     _controller = AnimationController(
       vsync: this,
-      duration: AnimationDurations.fast,
+      duration: AppDurations.fast,
     );
     _highlight = Tween<double>(begin: 0.0, end: 1.0).animate(
       CurvedAnimation(parent: _controller, curve: AnimationCurves.premiumEase),
@@ -438,7 +438,7 @@ class _AnimatedTrackTileState extends State<AnimatedTrackTile>
                   GestureDetector(
                     onTap: widget.onPlay,
                     child: AnimatedContainer(
-                      duration: AnimationDurations.fast,
+                      duration: AppDurations.fast,
                       width: 44,
                       height: 44,
                       decoration: BoxDecoration(

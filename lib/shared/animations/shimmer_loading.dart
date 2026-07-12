@@ -1,5 +1,5 @@
 import 'package:flutter/material.dart';
-import '../../core/animations/durations.dart';
+import '../../core/theme/tokens.dart';
 
 class ShimmerWidget extends StatefulWidget {
   final double width;
@@ -31,7 +31,7 @@ class _ShimmerWidgetState extends State<ShimmerWidget>
     super.initState();
     _controller = AnimationController(
       vsync: this,
-      duration: AnimationDurations.shimmer,
+      duration: AppDurations.shimmer,
     );
     _shimmer = Tween<double>(begin: -1.0, end: 2.0).animate(
       CurvedAnimation(parent: _controller, curve: Curves.linear),
@@ -277,7 +277,7 @@ class _PulseDotState extends State<PulseDot>
     super.initState();
     _controller = AnimationController(
       vsync: this,
-      duration: AnimationDurations.slower,
+      duration: AppDurations.slower,
     );
     _pulse = Tween<double>(begin: 0.3, end: 1.0).animate(
       CurvedAnimation(parent: _controller, curve: Curves.easeInOut),
