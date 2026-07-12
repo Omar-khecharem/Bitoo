@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
 import '../../core/animations/curves.dart';
-import '../../core/animations/durations.dart';
+import '../../core/theme/tokens.dart';
 
 class ScaleOnTap extends StatefulWidget {
   final Widget child;
@@ -17,7 +17,7 @@ class ScaleOnTap extends StatefulWidget {
     this.onLongPress,
     this.scaleDown = 0.96,
     this.scaleUp = 1.0,
-    this.duration = AnimationDurations.micro,
+    this.duration = AppDurations.micro,
   });
 
   @override
@@ -124,7 +124,7 @@ class _TapFlashState extends State<TapFlash>
         valueListenable: _opacity,
         builder: (context, opacity, child) => AnimatedOpacity(
           opacity: 1.0 - opacity,
-          duration: AnimationDurations.fast,
+          duration: AppDurations.fast,
           child: Container(
             foregroundDecoration: BoxDecoration(
               color: Colors.white.withValues(alpha: opacity),
@@ -149,7 +149,7 @@ class PulseEffect extends StatefulWidget {
     required this.child,
     this.minScale = 1.0,
     this.maxScale = 1.03,
-    this.period = AnimationDurations.pulse,
+    this.period = AppDurations.pulse,
   });
 
   @override
@@ -254,7 +254,7 @@ class _GlassHoverState extends State<GlassHover> {
       child: ValueListenableBuilder<bool>(
         valueListenable: _isHovered,
         builder: (context, isHovered, child) => AnimatedContainer(
-          duration: AnimationDurations.fast,
+          duration: AppDurations.fast,
           curve: AnimationCurves.premiumEase,
           decoration: BoxDecoration(
             borderRadius: BorderRadius.circular(12),
@@ -300,7 +300,7 @@ class _HeartBounceState extends State<HeartBounce>
     super.initState();
     _controller = AnimationController(
       vsync: this,
-      duration: AnimationDurations.normal,
+      duration: AppDurations.normal,
     );
     _bounce = TweenSequence<double>([
       TweenSequenceItem(tween: Tween(begin: 1.0, end: 1.3), weight: 30),
@@ -357,7 +357,7 @@ class ChevronRotate extends StatelessWidget {
   Widget build(BuildContext context) {
     return AnimatedRotation(
       turns: isExpanded ? 0.5 : 0.0,
-      duration: AnimationDurations.fast,
+      duration: AppDurations.fast,
       curve: AnimationCurves.premiumEase,
       child: Icon(
         Icons.chevron_right_rounded,
@@ -387,7 +387,7 @@ class AnimatedToggle extends StatelessWidget {
     return GestureDetector(
       onTap: () => onChanged?.call(!value),
       child: AnimatedContainer(
-        duration: AnimationDurations.fast,
+        duration: AppDurations.fast,
         curve: AnimationCurves.premiumEase,
         width: 44,
         height: 24,
@@ -396,7 +396,7 @@ class AnimatedToggle extends StatelessWidget {
           borderRadius: BorderRadius.circular(12),
         ),
         child: AnimatedAlign(
-          duration: AnimationDurations.fast,
+          duration: AppDurations.fast,
           curve: AnimationCurves.premiumEase,
           alignment: value ? Alignment.centerRight : Alignment.centerLeft,
           child: Container(
@@ -447,7 +447,7 @@ class _PulseRingState extends State<PulseRing>
     super.initState();
     _controller = AnimationController(
       vsync: this,
-      duration: AnimationDurations.slower,
+      duration: AppDurations.slower,
     );
     _ring = Tween<double>(begin: 0.0, end: 1.0).animate(
       CurvedAnimation(parent: _controller, curve: Curves.easeOut),
@@ -516,7 +516,7 @@ class NumberPop extends StatelessWidget {
   Widget build(BuildContext context) {
     return TweenAnimationBuilder<int>(
       tween: IntTween(begin: 0, end: value),
-      duration: AnimationDurations.normal,
+      duration: AppDurations.normal,
       curve: AnimationCurves.premiumEaseOut,
       builder: (context, value, _) => Text(
         '$value',
@@ -535,7 +535,7 @@ class StaggeredFadeIn extends StatefulWidget {
     super.key,
     required this.index,
     required this.child,
-    this.baseDelay = AnimationDurations.staggerItem,
+    this.baseDelay = AppDurations.staggerItem,
   });
 
   @override
@@ -553,7 +553,7 @@ class _StaggeredFadeInState extends State<StaggeredFadeIn>
     super.initState();
     _controller = AnimationController(
       vsync: this,
-      duration: AnimationDurations.normal,
+      duration: AppDurations.normal,
     );
     _opacity = Tween<double>(begin: 0.0, end: 1.0).animate(
       CurvedAnimation(parent: _controller, curve: AnimationCurves.premiumEaseOut),

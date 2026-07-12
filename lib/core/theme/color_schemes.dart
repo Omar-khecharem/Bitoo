@@ -14,7 +14,7 @@ class AppColors {
   static const Color vibrantPurple = Color(0xFF9C27B0);
   static const Color vibrantWarmPink = Color(0xFFFF4081);
 
-  // ─── Accent color variants (mutable helpers) ───
+  // ─── Accent color variants ───
   static Color primary500 = vibrantAmber;
   static Color primary300 = const Color(0xFFFFB74D);
   static Color primary700 = const Color(0xFFE65100);
@@ -64,12 +64,11 @@ class AppColors {
   static const Color warning = Color(0xFFF59E0B);
   static const Color info = Color(0xFF00E0FF);
 
-  // ─── Backward-compat getters (maps to current accent) ───
+  // ─── Backward-compat getters ───
   static Color get neonIndigo => primary500;
   static Color get neonRose => secondary500;
   static Color get neonBlue => tertiary500;
 
-  // ─── Update accent helpers ───
   static void applyAccent({
     required Color primary,
     required Color secondary,
@@ -132,24 +131,4 @@ class AppGradients {
   static LinearGradient get indigoToRose => sunsetToMagenta;
 }
 
-class DarkColorTheme {
-  DarkColorTheme._();
 
-  Color background = AppColors.darkBackground;
-  Color surface = AppColors.darkSurface;
-  Color surfaceLight = AppColors.darkSurfaceLight;
-  Color textPrimary = AppColors.darkTextPrimary;
-  Color textSecondary = AppColors.darkTextSecondary;
-  Color textTertiary = AppColors.darkTextTertiary;
-}
-
-class LightColorTheme {
-  LightColorTheme._();
-
-  Color background = AppColors.lightBackground;
-  Color surface = AppColors.lightSurface;
-  Color surfaceLight = AppColors.lightSurfaceLight;
-  Color textPrimary = AppColors.lightTextPrimary;
-  Color textSecondary = AppColors.lightTextSecondary;
-  Color textTertiary = AppColors.lightTextTertiary;
-}

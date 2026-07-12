@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
 import '../../core/animations/curves.dart';
-import '../../core/animations/durations.dart';
+import '../../core/theme/tokens.dart';
 
 class StaggeredList extends StatelessWidget {
   final int itemCount;
@@ -11,7 +11,7 @@ class StaggeredList extends StatelessWidget {
     super.key,
     required this.itemCount,
     required this.itemBuilder,
-    this.baseDelay = AnimationDurations.staggerItem,
+    this.baseDelay = AppDurations.staggerItem,
   });
 
   @override
@@ -54,7 +54,7 @@ class _StaggeredItemState extends State<_StaggeredItem>
     super.initState();
     _controller = AnimationController(
       vsync: this,
-      duration: AnimationDurations.normal,
+      duration: AppDurations.normal,
     );
 
     _slide = Tween<Offset>(
@@ -122,7 +122,7 @@ class _AnimatedListInsertState extends State<AnimatedListInsert>
     super.initState();
     _controller = AnimationController(
       vsync: this,
-      duration: AnimationDurations.normal,
+      duration: AppDurations.normal,
     );
     _scale = Tween<double>(begin: 0.8, end: 1.0).animate(
       CurvedAnimation(parent: _controller, curve: AnimationCurves.premiumEase),
@@ -208,7 +208,7 @@ class ReorderableDragHandle extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return AnimatedContainer(
-      duration: AnimationDurations.fast,
+      duration: AppDurations.fast,
       curve: AnimationCurves.premiumEase,
       width: 24,
       height: 24,
@@ -278,7 +278,7 @@ class AnimatedSectionHeader extends StatelessWidget {
                   padding: EdgeInsets.only(left: 8),
                   child: AnimatedRotation(
                     turns: isExpanded ? 0.0 : 0.5,
-                    duration: AnimationDurations.fast,
+                    duration: AppDurations.fast,
                     curve: AnimationCurves.premiumEase,
                     child: Icon(
                       Icons.expand_more_rounded,
@@ -321,7 +321,7 @@ class _AnimatedCollapsibleSectionState
     super.initState();
     _controller = AnimationController(
       vsync: this,
-      duration: AnimationDurations.normal,
+      duration: AppDurations.normal,
     );
     _height = Tween<double>(begin: 0.0, end: 1.0).animate(
       CurvedAnimation(parent: _controller, curve: AnimationCurves.premiumEase),

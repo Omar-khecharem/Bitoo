@@ -1,6 +1,6 @@
+import 'dart:io';
 import 'dart:math';
 import 'package:flutter/material.dart';
-import '../../../../core/theme/color_schemes.dart';
 
 enum AlbumArtMode { standard, vinyl, visualizer }
 
@@ -93,12 +93,9 @@ class _AlbumArtViewState extends State<AlbumArtView>
       animation: _breatheController,
       builder: (context, child) {
         final pulse = 1.0 + 0.015 * sin(_breatheController.value * 2 * pi);
-        return Transform.scale(
-          scale: pulse,
-          child: child,
-        );
+        return Transform.scale(scale: pulse, child: child);
       },
-      child: _buildPremiumArt(),
+      child: RepaintBoundary(child: _buildPremiumArt()),
     );
   }
 
@@ -135,13 +132,19 @@ class _AlbumArtViewState extends State<AlbumArtView>
       child: Stack(
         children: [
           _buildPremiumArt(),
-          CustomPaint(
-            painter: _CircularWavePainter(
-              amplitude: widget.amplitude,
-              color: AppColors.neonIndigo,
-              isPlaying: widget.isPlaying,
-            ),
-            size: Size(widget.size, widget.size),
+          AnimatedBuilder(
+            animation: _breatheController,
+            builder: (context, _) {
+              return CustomPaint(
+                painter: _CircularWavePainter(
+                  amplitude: widget.amplitude,
+                  color: Theme.of(context).colorScheme.primary,
+                  isPlaying: widget.isPlaying,
+                  time: _breatheController.value,
+                ),
+                size: Size(widget.size, widget.size),
+              );
+            },
           ),
         ],
       ),
@@ -149,29 +152,30 @@ class _AlbumArtViewState extends State<AlbumArtView>
   }
 
   Widget _buildPremiumArt() {
+    final cs = Theme.of(context).colorScheme;
     return SizedBox(
       width: widget.size,
       height: widget.size,
       child: Stack(
         children: [
-          // Sound wave bars
           if (widget.isPlaying) _buildSoundWaves(),
-          // Main album container
           Center(
             child: Container(
               width: widget.size * 0.88,
               height: widget.size * 0.88,
               decoration: BoxDecoration(
                 borderRadius: BorderRadius.circular(24),
-                gradient: AppGradients.indigoToRose,
+                gradient: LinearGradient(
+                  colors: [cs.primary.withValues(alpha: 0.6), cs.secondary.withValues(alpha: 0.3)],
+                ),
                 boxShadow: [
                   BoxShadow(
-                    color: AppColors.neonIndigo.withValues(alpha: 0.3),
+                    color: cs.primary.withValues(alpha: 0.3),
                     blurRadius: 30,
                     spreadRadius: 2,
                   ),
                   BoxShadow(
-                    color: AppColors.neonRose.withValues(alpha: 0.2),
+                    color: cs.secondary.withValues(alpha: 0.2),
                     blurRadius: 60,
                     spreadRadius: 5,
                   ),
@@ -197,7 +201,7 @@ class _AlbumArtViewState extends State<AlbumArtView>
           painter: _SoundWavePainter(
             amplitude: widget.amplitude,
             time: _breatheController.value,
-            color: AppColors.neonIndigo,
+            color: Theme.of(context).colorScheme.primary,
           ),
         );
       },
@@ -205,19 +209,34 @@ class _AlbumArtViewState extends State<AlbumArtView>
   }
 
   Widget _buildArtImage() {
-    return Image.network(
-      widget.imageUrl,
-      fit: BoxFit.cover,
-      errorBuilder: (_, __, ___) => Center(
-        child: Text(
-          'B',
-          style: TextStyle(
-            fontFamily: 'Outfit',
-            fontWeight: FontWeight.w900,
-            fontSize: widget.size * 0.45,
-            color: Colors.white.withValues(alpha: 0.3),
-            letterSpacing: -4,
-          ),
+    final path = widget.imageUrl;
+    if (path.startsWith('http') || path.startsWith('https')) {
+      return Image.network(
+        path,
+        fit: BoxFit.cover,
+        errorBuilder: (_, __, ___) => _buildFallback(),
+      );
+    }
+    if (path.isNotEmpty && File(path).existsSync()) {
+      return Image.file(
+        File(path),
+        fit: BoxFit.cover,
+        errorBuilder: (_, __, ___) => _buildFallback(),
+      );
+    }
+    return _buildFallback();
+  }
+
+  Widget _buildFallback() {
+    return Center(
+      child: Text(
+        'B',
+        style: TextStyle(
+          fontFamily: 'Outfit',
+          fontWeight: FontWeight.w900,
+          fontSize: widget.size * 0.45,
+          color: Colors.white.withValues(alpha: 0.3),
+          letterSpacing: -4,
         ),
       ),
     );
@@ -318,11 +337,13 @@ class _CircularWavePainter extends CustomPainter {
     required this.amplitude,
     required this.color,
     required this.isPlaying,
+    required this.time,
   });
 
   final double amplitude;
   final Color color;
   final bool isPlaying;
+  final double time;
 
   @override
   void paint(Canvas canvas, Size size) {
@@ -337,7 +358,7 @@ class _CircularWavePainter extends CustomPainter {
 
       for (var i = 0; i <= points; i++) {
         final angle = (i / points) * 2 * pi;
-        final wave = sin(angle * 4 + DateTime.now().millisecondsSinceEpoch / 500.0 + phase);
+        final wave = sin(angle * 4 + time * 8 + phase);
         final r = baseRadius + amplitude * 20 * wave;
         final x = center.dx + r * cos(angle);
         final y = center.dy + r * sin(angle);
@@ -362,5 +383,7 @@ class _CircularWavePainter extends CustomPainter {
 
   @override
   bool shouldRepaint(covariant _CircularWavePainter oldDelegate) =>
-      oldDelegate.amplitude != amplitude || oldDelegate.isPlaying != isPlaying;
+      oldDelegate.amplitude != amplitude ||
+      oldDelegate.isPlaying != isPlaying ||
+      oldDelegate.time != time;
 }

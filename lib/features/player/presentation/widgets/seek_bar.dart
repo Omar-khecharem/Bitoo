@@ -1,5 +1,4 @@
 import 'package:flutter/material.dart';
-import '../../../../core/theme/color_schemes.dart';
 import '../../../../core/theme/tokens.dart';
 
 class SeekBar extends StatefulWidget {
@@ -27,16 +26,7 @@ class SeekBar extends StatefulWidget {
 class _SeekBarState extends State<SeekBar> with SingleTickerProviderStateMixin {
   double _sliderValue = 0;
   bool _isDragging = false;
-  late AnimationController _waveController;
-
-  @override
-  void initState() {
-    super.initState();
-    _waveController = AnimationController(
-      vsync: this,
-      duration: const Duration(milliseconds: 2000),
-    )..repeat();
-  }
+  bool _isHovering = false;
 
   @override
   void didUpdateWidget(SeekBar oldWidget) {
@@ -48,83 +38,142 @@ class _SeekBarState extends State<SeekBar> with SingleTickerProviderStateMixin {
     }
   }
 
-  @override
-  void dispose() {
-    _waveController.dispose();
-    super.dispose();
+  void _onTapDown(TapDownDetails details) {
+    final box = context.findRenderObject() as RenderBox;
+    final width = box.size.width;
+    final ratio = (details.localPosition.dx / width).clamp(0.0, 1.0);
+    setState(() {
+      _sliderValue = ratio;
+      _isDragging = true;
+    });
+    widget.onSeekStart?.call();
+  }
+
+  void _onTapUp(TapUpDetails details) {
+    final duration = widget.duration.inSeconds;
+    setState(() => _isDragging = false);
+    widget.onSeek?.call(Duration(
+      seconds: (_sliderValue * duration).round(),
+    ));
+    widget.onSeekEnd?.call();
+  }
+
+  void _onDragUpdate(DragUpdateDetails details) {
+    final box = context.findRenderObject() as RenderBox;
+    final width = box.size.width;
+    setState(() {
+      _sliderValue = ((details.localPosition.dx / width).clamp(0.0, 1.0));
+    });
+  }
+
+  void _onDragEnd(DragEndDetails details) {
+    final duration = widget.duration.inSeconds;
+    setState(() => _isDragging = false);
+    widget.onSeek?.call(Duration(
+      seconds: (_sliderValue * duration).round(),
+    ));
+    widget.onSeekEnd?.call();
   }
 
   @override
   Widget build(BuildContext context) {
+    final cs = Theme.of(context).colorScheme;
     final duration = widget.duration.inSeconds;
     final position = _isDragging
         ? Duration(seconds: (_sliderValue * duration).round())
         : widget.position;
-
     final progress = duration > 0 ? _sliderValue : 0.0;
+    final bufferedProgress = widget.duration.inMilliseconds > 0
+        ? widget.buffered.inMilliseconds / widget.duration.inMilliseconds
+        : 0.0;
 
     return Column(
       mainAxisSize: MainAxisSize.min,
       children: [
-        SizedBox(
-          height: 40,
-          child: GestureDetector(
-            onTapDown: (details) {
-              final width = context.size?.width ?? 1;
-              final ratio = (details.localPosition.dx / width).clamp(0.0, 1.0);
-              widget.onSeek?.call(Duration(
-                seconds: (ratio * duration).round(),
-              ));
-            },
-            child: Stack(
-              alignment: Alignment.centerLeft,
-              children: [
-                Container(
-                  height: 4,
-                  decoration: BoxDecoration(
-                    borderRadius: BorderRadius.circular(2),
-                    color: Theme.of(context).brightness == Brightness.dark ? Colors.white.withValues(alpha: 0.08) : Colors.black.withValues(alpha: 0.08),
-                  ),
-                ),
-                FractionallySizedBox(
-                  widthFactor: progress.clamp(0.0, 1.0),
-                  child: Container(
-                    height: 4,
-                    decoration: BoxDecoration(
-                      borderRadius: BorderRadius.circular(2),
-                      gradient: LinearGradient(
-                        colors: [AppColors.neonIndigo, AppColors.neonRose],
+        // Seek track — Apple Music style, always shows thumb
+        Padding(
+          padding: const EdgeInsets.symmetric(horizontal: 24),
+          child: SizedBox(
+            height: 40,
+            child: GestureDetector(
+              onTapDown: _onTapDown,
+              onTapUp: _onTapUp,
+              onHorizontalDragStart: (_) {
+                setState(() => _isDragging = true);
+                widget.onSeekStart?.call();
+              },
+              onHorizontalDragUpdate: _onDragUpdate,
+              onHorizontalDragEnd: _onDragEnd,
+              child: MouseRegion(
+                onEnter: (_) => setState(() => _isHovering = true),
+                onExit: (_) => setState(() => _isHovering = false),
+                child: Stack(
+                  alignment: Alignment.centerLeft,
+                  children: [
+                    // Background track
+                    Container(
+                      height: 4,
+                      decoration: BoxDecoration(
+                        borderRadius: BorderRadius.circular(2),
+                        color: cs.onSurface.withValues(alpha: 0.08),
                       ),
                     ),
-                  ),
-                ),
-                Positioned(
-                  left: (progress * (MediaQuery.of(context).size.width - 48)).clamp(-8, MediaQuery.of(context).size.width - 56),
-                  child: _isDragging
-                      ? Container(
-                          width: 16,
-                          height: 16,
-                          decoration: BoxDecoration(
-                            shape: BoxShape.circle,
-                            gradient: LinearGradient(
-                              colors: [AppColors.neonIndigo, AppColors.neonRose],
-                            ),
-                            boxShadow: [
-                              BoxShadow(
-                                color: AppColors.neonIndigo.withValues(alpha: 0.4),
-                                blurRadius: 8,
-                              ),
-                            ],
+                    // Buffered progress
+                    FractionallySizedBox(
+                      widthFactor: bufferedProgress.clamp(0.0, 1.0),
+                      child: Container(
+                        height: 4,
+                        decoration: BoxDecoration(
+                          borderRadius: BorderRadius.circular(2),
+                          color: cs.onSurface.withValues(alpha: 0.12),
+                        ),
+                      ),
+                    ),
+                    // Playback progress
+                    FractionallySizedBox(
+                      widthFactor: progress.clamp(0.0, 1.0),
+                      child: Container(
+                        height: 4,
+                        decoration: BoxDecoration(
+                          borderRadius: BorderRadius.circular(2),
+                          gradient: LinearGradient(
+                            colors: [cs.primary, cs.secondary],
                           ),
-                        )
-                      : const SizedBox.shrink(),
+                        ),
+                      ),
+                    ),
+                    // Thumb — always visible like Apple Music
+                    Positioned(
+                      left: (progress * (MediaQuery.of(context).size.width - 72)).clamp(-10, MediaQuery.of(context).size.width - 86),
+                      child: AnimatedContainer(
+                        duration: const Duration(milliseconds: 100),
+                        width: _isDragging || _isHovering ? 18 : 8,
+                        height: _isDragging || _isHovering ? 18 : 8,
+                        decoration: BoxDecoration(
+                          shape: BoxShape.circle,
+                          color: cs.primary,
+                          boxShadow: _isDragging || _isHovering
+                              ? [
+                                  BoxShadow(
+                                    color: cs.primary.withValues(alpha: 0.4),
+                                    blurRadius: 8,
+                                    spreadRadius: 1,
+                                  ),
+                                ]
+                              : null,
+                        ),
+                      ),
+                    ),
+                  ],
                 ),
-              ],
+              ),
             ),
           ),
         ),
+        const SizedBox(height: 4),
+        // Time labels — Apple Music style
         Padding(
-          padding: EdgeInsets.symmetric(horizontal: Spacing.pageHorizontal),
+          padding: const EdgeInsets.symmetric(horizontal: 28),
           child: Row(
             mainAxisAlignment: MainAxisAlignment.spaceBetween,
             children: [
@@ -132,9 +181,9 @@ class _SeekBarState extends State<SeekBar> with SingleTickerProviderStateMixin {
                 _formatDuration(position),
                 style: TextStyle(
                   fontFamily: 'Inter',
-                  fontSize: 12,
+                  fontSize: 11,
                   fontWeight: FontWeight.w500,
-                  color: Theme.of(context).colorScheme.onSurface.withValues(alpha: 0.5),
+                  color: cs.onSurface.withValues(alpha: 0.5),
                   fontFeatures: const [FontFeature.tabularFigures()],
                 ),
               ),
@@ -142,9 +191,9 @@ class _SeekBarState extends State<SeekBar> with SingleTickerProviderStateMixin {
                 '-${_formatDuration(widget.duration - position)}',
                 style: TextStyle(
                   fontFamily: 'Inter',
-                  fontSize: 12,
+                  fontSize: 11,
                   fontWeight: FontWeight.w500,
-                  color: Theme.of(context).colorScheme.onSurface.withValues(alpha: 0.5),
+                  color: cs.onSurface.withValues(alpha: 0.5),
                   fontFeatures: const [FontFeature.tabularFigures()],
                 ),
               ),

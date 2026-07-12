@@ -1,9 +1,7 @@
 import 'dart:async';
-import 'dart:ui' as ui;
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'core/theme/color_schemes.dart';
-import 'core/theme/tokens.dart';
 import 'core/theme/preferences_provider.dart';
 import 'core/theme/theme_provider.dart';
 import 'core/animations/curves.dart';
@@ -149,13 +147,13 @@ class MainShell extends ConsumerStatefulWidget {
 class _MainShellState extends ConsumerState<MainShell> with WidgetsBindingObserver {
   StreamSubscription? _playbackSub;
   StreamSubscription? _itemSub;
-  StreamSubscription? _positionSub;
   String _trackPath = '';
   String _trackTitle = '';
   String _trackArtist = '';
   bool _isPlaying = false;
   Duration _position = Duration.zero;
   Duration _duration = Duration.zero;
+
   double get _progress => _duration.inMicroseconds > 0
       ? (_position.inMicroseconds / _duration.inMicroseconds).clamp(0.0, 1.0)
       : 0.0;
@@ -174,7 +172,6 @@ class _MainShellState extends ConsumerState<MainShell> with WidgetsBindingObserv
     WidgetsBinding.instance.removeObserver(this);
     _playbackSub?.cancel();
     _itemSub?.cancel();
-    _positionSub?.cancel();
     _playerOverlay?.remove();
     super.dispose();
   }
@@ -258,11 +255,7 @@ class _MainShellState extends ConsumerState<MainShell> with WidgetsBindingObserv
               progress: _progress,
               onPlayPause: () {
                 final handler = ref.read(audioHandlerProvider);
-                if (_isPlaying) {
-                  handler.pause();
-                } else {
-                  handler.play();
-                }
+                if (_isPlaying) { handler.pause(); } else { handler.play(); }
               },
               onNext: () => ref.read(audioHandlerProvider).skipToNext(),
               onPrevious: () => ref.read(audioHandlerProvider).skipToPrevious(),
@@ -273,7 +266,7 @@ class _MainShellState extends ConsumerState<MainShell> with WidgetsBindingObserv
   }
 }
 
-class _PremiumMiniPlayerBar extends StatelessWidget {
+class _PremiumMiniPlayerBar extends StatefulWidget {
   final String title;
   final String artist;
   final bool isPlaying;
@@ -295,107 +288,123 @@ class _PremiumMiniPlayerBar extends StatelessWidget {
   });
 
   @override
+  State<_PremiumMiniPlayerBar> createState() => _PremiumMiniPlayerBarState();
+}
+
+class _PremiumMiniPlayerBarState extends State<_PremiumMiniPlayerBar>
+    with SingleTickerProviderStateMixin {
+  late AnimationController _pulseController;
+
+  @override
+  void initState() {
+    super.initState();
+    _pulseController = AnimationController(
+      vsync: this,
+      duration: const Duration(milliseconds: 200),
+    );
+  }
+
+  @override
+  void didUpdateWidget(_PremiumMiniPlayerBar old) {
+    super.didUpdateWidget(old);
+    if (widget.isPlaying && !old.isPlaying) {
+      _pulseController.forward().then((_) => _pulseController.reverse());
+    }
+  }
+
+  @override
+  void dispose() {
+    _pulseController.dispose();
+    super.dispose();
+  }
+
+  @override
   Widget build(BuildContext context) {
     final cs = Theme.of(context).colorScheme;
     final isDark = Theme.of(context).brightness == Brightness.dark;
 
     return GestureDetector(
-      onTap: onTap,
+      onTap: widget.onTap,
       child: Container(
-        height: 80,
+        height: 72,
         decoration: BoxDecoration(
-          gradient: LinearGradient(
-            begin: Alignment.topCenter,
-            end: Alignment.bottomCenter,
-            colors: [
-              isDark
-                  ? AppColors.darkSurfaceLight.withValues(alpha: 0.95)
-                  : AppColors.lightSurfaceDark.withValues(alpha: 0.95),
-              isDark
-                  ? AppColors.darkSurface.withValues(alpha: 0.98)
-                  : AppColors.lightBackground.withValues(alpha: 0.98),
-            ],
-          ),
-          borderRadius: BorderRadius.vertical(top: const Radius.circular(AppRadius.xl)),
+          color: isDark ? AppColors.darkSurface : cs.surface,
+          borderRadius: const BorderRadius.vertical(top: Radius.circular(16)),
           boxShadow: [
             BoxShadow(
-              color: isDark
-                  ? Colors.black.withValues(alpha: 0.4)
-                  : Colors.black.withValues(alpha: 0.08),
+              color: Colors.black.withValues(alpha: isDark ? 0.4 : 0.08),
               blurRadius: 20,
-              offset: const Offset(0, -4),
+              offset: const Offset(0, -2),
             ),
           ],
         ),
         child: ClipRRect(
-          borderRadius: BorderRadius.vertical(top: const Radius.circular(AppRadius.xl)),
-          child: BackdropFilter(
-            filter: ui.ImageFilter.blur(sigmaX: 12, sigmaY: 12),
-            child: Column(
-              mainAxisSize: MainAxisSize.min,
-              children: [
-                Padding(
-                  padding: EdgeInsets.fromLTRB(Spacing.md, Spacing.sm, Spacing.sm, Spacing.sm),
-                  child: Row(
-                    children: [
-                      Container(
-                        width: 48,
-                        height: 48,
+          borderRadius: const BorderRadius.vertical(top: Radius.circular(16)),
+          child: Column(
+            mainAxisSize: MainAxisSize.min,
+            children: [
+              // iOS-style progress bar at top edge
+              Container(
+                height: 2,
+                child: Row(
+                  children: [
+                    FractionallySizedBox(
+                      widthFactor: widget.progress.clamp(0.0, 1.0),
+                      child: Container(
+                        height: 2,
                         decoration: BoxDecoration(
                           gradient: LinearGradient(
                             colors: [cs.primary, cs.secondary],
-                            begin: Alignment.topLeft,
-                            end: Alignment.bottomRight,
-                          ),
-                          borderRadius: BorderRadius.circular(AppRadius.md),
-                          boxShadow: [
-                            BoxShadow(
-                              color: cs.primary.withValues(alpha: 0.3),
-                              blurRadius: 8,
-                              offset: const Offset(0, 2),
-                            ),
-                          ],
-                        ),
-                        child: ClipRRect(
-                          borderRadius: BorderRadius.circular(AppRadius.md),
-                          child: Stack(
-                            alignment: Alignment.center,
-                            children: [
-                              Container(color: Colors.black.withValues(alpha: 0.2)),
-                              Icon(
-                                Icons.music_note_rounded,
-                                size: 22,
-                                color: Colors.white.withValues(alpha: 0.8),
-                              ),
-                            ],
                           ),
                         ),
                       ),
-                      SizedBox(width: Spacing.md),
+                    ),
+                  ],
+                ),
+              ),
+              Expanded(
+                child: Padding(
+                  padding: const EdgeInsets.fromLTRB(12, 0, 8, 0),
+                  child: Row(
+                    children: [
+                      // Album art (rounded square like Apple Music)
+                      Hero(
+                        tag: 'mini_art',
+                        child: Container(
+                          width: 48,
+                          height: 48,
+                          decoration: BoxDecoration(
+                            borderRadius: BorderRadius.circular(12),
+                            gradient: LinearGradient(
+                              colors: [cs.primary.withValues(alpha: 0.7), cs.secondary.withValues(alpha: 0.5)],
+                            ),
+                          ),
+                          child: Icon(Icons.music_note_rounded, size: 22, color: cs.onPrimary.withValues(alpha: 0.7)),
+                        ),
+                      ),
+                      const SizedBox(width: 12),
+                      // Track info
                       Expanded(
                         child: Column(
                           crossAxisAlignment: CrossAxisAlignment.start,
-                          mainAxisSize: MainAxisSize.min,
+                          mainAxisAlignment: MainAxisAlignment.center,
                           children: [
                             Text(
-                              title.isNotEmpty ? title : 'No track',
+                              widget.title.isNotEmpty ? widget.title : 'No track',
                               style: TextStyle(
                                 fontWeight: FontWeight.w600,
                                 fontSize: 15,
                                 color: cs.onSurface,
-                                height: 1.2,
                               ),
                               maxLines: 1,
                               overflow: TextOverflow.ellipsis,
                             ),
-                            SizedBox(height: 2),
+                            const SizedBox(height: 1),
                             Text(
-                              artist.isNotEmpty ? artist : 'Feel the sound',
+                              widget.artist.isNotEmpty ? widget.artist : 'Feel the sound',
                               style: TextStyle(
-                                fontWeight: FontWeight.w400,
                                 fontSize: 12,
                                 color: cs.onSurface.withValues(alpha: 0.5),
-                                height: 1.2,
                               ),
                               maxLines: 1,
                               overflow: TextOverflow.ellipsis,
@@ -403,67 +412,61 @@ class _PremiumMiniPlayerBar extends StatelessWidget {
                           ],
                         ),
                       ),
-                      _MiniControlButton(
+                      // Apple Music-style controls
+                      _SquishyIconButton(
                         icon: Icons.skip_previous_rounded,
-                        onTap: onPrevious,
-                        color: cs.onSurface.withValues(alpha: 0.7),
+                        size: 22,
+                        color: cs.onSurface.withValues(alpha: 0.6),
+                        onTap: widget.onPrevious,
                       ),
-                      GestureDetector(
-                        onTap: onPlayPause,
-                        child: Padding(
-                          padding: const EdgeInsets.symmetric(horizontal: 4),
-                          child: SizedBox(
-                            width: 48,
-                            height: 48,
-                            child: Stack(
-                              alignment: Alignment.center,
-                              children: [
-                                CircularProgressIndicator(
-                                  value: progress.clamp(0.0, 1.0),
-                                  strokeWidth: 2.5,
-                                  strokeCap: StrokeCap.round,
-                                  backgroundColor: cs.onSurface.withValues(alpha: 0.08),
-                                  valueColor: AlwaysStoppedAnimation<Color>(cs.primary),
-                                ),
-                                Container(
-                                  width: 36,
-                                  height: 36,
-                                  decoration: BoxDecoration(
-                                    gradient: LinearGradient(
-                                      colors: [cs.primary, cs.secondary],
-                                      begin: Alignment.topLeft,
-                                      end: Alignment.bottomRight,
+                      AnimatedBuilder(
+                        animation: _pulseController,
+                        builder: (context, _) {
+                          final scale = 1.0 + _pulseController.value * 0.05;
+                          return Transform.scale(
+                            scale: scale,
+                            child: GestureDetector(
+                              onTap: widget.onPlayPause,
+                              child: Container(
+                                width: 44,
+                                height: 44,
+                                margin: const EdgeInsets.symmetric(horizontal: 4),
+                                decoration: BoxDecoration(
+                                  gradient: LinearGradient(
+                                    colors: [cs.primary, cs.secondary],
+                                    begin: Alignment.topLeft,
+                                    end: Alignment.bottomRight,
+                                  ),
+                                  shape: BoxShape.circle,
+                                  boxShadow: [
+                                    BoxShadow(
+                                      color: cs.primary.withValues(alpha: 0.3),
+                                      blurRadius: 8,
+                                      offset: const Offset(0, 2),
                                     ),
-                                    shape: BoxShape.circle,
-                                    boxShadow: [
-                                      BoxShadow(
-                                        color: cs.primary.withValues(alpha: 0.4),
-                                        blurRadius: 6,
-                                        offset: const Offset(0, 2),
-                                      ),
-                                    ],
-                                  ),
-                                  child: Icon(
-                                    isPlaying ? Icons.pause_rounded : Icons.play_arrow_rounded,
-                                    size: 20,
-                                    color: cs.onPrimary,
-                                  ),
+                                  ],
                                 ),
-                              ],
+                                child: Icon(
+                                  widget.isPlaying ? Icons.pause_rounded : Icons.play_arrow_rounded,
+                                  size: 22,
+                                  color: cs.onPrimary,
+                                ),
+                              ),
                             ),
-                          ),
-                        ),
+                          );
+                        },
                       ),
-                      _MiniControlButton(
+                      _SquishyIconButton(
                         icon: Icons.skip_next_rounded,
-                        onTap: onNext,
-                        color: cs.onSurface.withValues(alpha: 0.7),
+                        size: 22,
+                        color: cs.onSurface.withValues(alpha: 0.6),
+                        onTap: widget.onNext,
                       ),
                     ],
                   ),
                 ),
-              ],
-            ),
+              ),
+            ],
           ),
         ),
       ),
@@ -471,24 +474,64 @@ class _PremiumMiniPlayerBar extends StatelessWidget {
   }
 }
 
-class _MiniControlButton extends StatelessWidget {
+class _SquishyIconButton extends StatefulWidget {
   final IconData icon;
-  final VoidCallback onTap;
+  final double size;
   final Color color;
+  final VoidCallback onTap;
 
-  const _MiniControlButton({
+  const _SquishyIconButton({
     required this.icon,
-    required this.onTap,
+    required this.size,
     required this.color,
+    required this.onTap,
   });
+
+  @override
+  State<_SquishyIconButton> createState() => _SquishyIconButtonState();
+}
+
+class _SquishyIconButtonState extends State<_SquishyIconButton>
+    with SingleTickerProviderStateMixin {
+  late AnimationController _controller;
+  late Animation<double> _anim;
+
+  @override
+  void initState() {
+    super.initState();
+    _controller = AnimationController(
+      vsync: this,
+      duration: const Duration(milliseconds: 150),
+    );
+    _anim = Tween<double>(begin: 1.0, end: 0.85).animate(
+      CurvedAnimation(parent: _controller, curve: Curves.easeOut),
+    );
+  }
+
+  @override
+  void dispose() {
+    _controller.dispose();
+    super.dispose();
+  }
 
   @override
   Widget build(BuildContext context) {
     return GestureDetector(
-      onTap: onTap,
-      child: Padding(
-        padding: const EdgeInsets.all(8),
-        child: Icon(icon, size: 20, color: color),
+      onTapDown: (_) => _controller.forward(),
+      onTapUp: (_) {
+        _controller.reverse();
+        widget.onTap();
+      },
+      onTapCancel: () => _controller.reverse(),
+      child: AnimatedBuilder(
+        animation: _anim,
+        builder: (context, _) => Transform.scale(
+          scale: _anim.value,
+          child: Padding(
+            padding: const EdgeInsets.all(8),
+            child: Icon(widget.icon, size: widget.size, color: widget.color),
+          ),
+        ),
       ),
     );
   }
